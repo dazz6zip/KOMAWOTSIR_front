@@ -1,1 +1,0 @@
-# KOMAWOTSIR_front
