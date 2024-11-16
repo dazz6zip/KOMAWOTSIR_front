@@ -1,26 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import App from './App';
 import { ThemeProvider } from 'styled-components';
 
 const darkTheme = {
   textColor: "whitesmoke",
   backgroundColor: "#111",
-}
+};
 
-const lightTheme = {
-  textColor: "#111",
-  backgroundColor: "whitesmoke",
-}
+//const lightTheme = {
+//  textColor: "#111",
+// backgroundColor: "whitesmoke",
+//};
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={darkTheme}>
       <App />
     </ThemeProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById('root') // root 엘리먼트 지정
 );
