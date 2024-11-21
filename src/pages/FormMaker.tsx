@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "../components/common/Button";
 
 const Title = styled.h2`
   font-size: 2rem;
@@ -21,25 +22,6 @@ const Description = styled.p`
   @media (min-width: 1024px) {
     font-size: 20px;
   }
-`;
-
-interface ButtonProps {
-  width?: string;
-  bgColor?: string;
-}
-
-const Button = styled.button<ButtonProps>`
-  display: block;
-  width: ${(props) => props.width};
-  padding: 10px 20px;
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 10px 0;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: ${(props) => props.bgColor};
-  color: white;
 `;
 
 const QuestionBox = styled.div`
@@ -88,12 +70,12 @@ function FormMaker(){
         추가적으로 알아야 할 정보가 있다면<br/>
         질문을 추가해 보세요!
       </Description>
-      <Button bgColor="pink">+ 질문 추가하기</Button>
+      <Button category="pink-s">+ 질문 추가하기</Button>
 
       <QuestionBox>
         <QuestionRow>
           <Label>질문 *</Label>
-          <Button>삭제</Button>
+          <span>삭제</span>
         </QuestionRow>
         <InputGroup>
           <Input type="text" placeholder="나한테 할 말" />
@@ -102,11 +84,11 @@ function FormMaker(){
 
         <QuestionRow>
           <Label>질문 *</Label>
-          <Button>삭제</Button>
+          <span>삭제</span>
         </QuestionRow>
 
-        <Button>저장하기</Button>
-        <Button>링크 공유하기</Button>
+        <Button category="pink-l">저장하기</Button><br/>
+        <Button category="hotpink-l">링크 공유하기</Button>
       </QuestionBox>
     </>
   );

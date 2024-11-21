@@ -1,10 +1,15 @@
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import Coin from "./routes/Coin";
-import Home from "./routes/Home";
-import Header from "./routes/Header";
-import Footer from "./routes/Footer";
-import FormMaker from "./routes/FormMaker";
+import Coin from "./pages/Coin";
+import Home from "./pages/Home";
+import Header from "./pages/Header";
+import Footer from "./pages/Footer";
+import FormMaker from "./pages/FormMaker";
 import styled from "styled-components";
+import Home1 from "./pages/Home1";
+import ApplicantHome from "./pages/ApplicantHome";
+import ApplicantDone from "./pages/ApplicantDone";
+import CardWriter from "./pages/CardWriter";
+import BackgroundList from "./pages/BackgroundList";
 
 const Container = styled.div`
   display: flex;
@@ -34,8 +39,23 @@ function Router(){
                 <Route path="/" exact>
                     <Home />
                 </Route>
+                <Route path="/1" exact>
+                    <Home1 />
+                </Route>
                 <Route path="/create-form">
                     <FormMaker />
+                </Route>
+                <Route path="/write">
+                    <CardWriter />
+                </Route>
+                <Route path="/apply" exact>
+                    <ApplicantHome />
+                </Route>
+                <Route path="/apply/done" exact>
+                    <ApplicantDone />
+                </Route>
+                <Route path="/background" exact>
+                    <BackgroundList />
                 </Route>
             </Switch>
             </Container>
