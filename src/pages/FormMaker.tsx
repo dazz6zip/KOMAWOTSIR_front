@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import Button from "../components/common/Button";
+import ButtonS from "../components/common/ButtonS";
+import ButtonL from "../components/common/ButtonL";
 
 const Title = styled.h2`
   font-size: 2rem;
@@ -70,7 +71,7 @@ function FormMaker(){
         추가적으로 알아야 할 정보가 있다면<br/>
         질문을 추가해 보세요!
       </Description>
-      <Button category="pink-s">+ 질문 추가하기</Button>
+      <ButtonS category="pink">+ 질문 추가하기</ButtonS>
 
       <QuestionBox>
         <QuestionRow>
@@ -87,8 +88,8 @@ function FormMaker(){
           <span>삭제</span>
         </QuestionRow>
 
-        <Button category="pink-l">저장하기</Button><br/>
-        <Button category="hotpink-l">링크 공유하기</Button>
+        <ButtonL category="pink">저장하기</ButtonL><br/>
+        <ButtonL category="hotpink">링크 공유하기</ButtonL>
       </QuestionBox>
     </>
   );

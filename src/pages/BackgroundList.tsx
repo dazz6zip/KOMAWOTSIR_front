@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Button from "../components/common/Button";
+import ButtonS from "../components/common/ButtonS";
+import ButtonL from "../components/common/ButtonL";
 import ButtonRow from "../components/common/ButtonRow";
 
 const Header = styled.div`
@@ -114,8 +115,8 @@ function BackgroundList() {
       </ColorGrid>
 
       <ButtonRow>
-        <Button category="pink-s">+ 직접 등록하기</Button>
-        <Button category="hotpink-s">저장하기</Button>
+        <ButtonL category="blue">+ 직접 등록하기</ButtonL>
+        <ButtonL category="pink">저장하기</ButtonL>
       </ButtonRow>
     </>
   );

@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Coin from "./pages/Coin";
 import Home from "./pages/Home";
 import Header from "./pages/Header";
@@ -10,6 +10,8 @@ import ApplicantHome from "./pages/ApplicantHome";
 import ApplicantDone from "./pages/ApplicantDone";
 import CardWriter from "./pages/CardWriter";
 import BackgroundList from "./pages/BackgroundList";
+import UpdateMyInfo from "./pages/UpdateMyInfo";
+import CardDesigner from "./pages/CardDesigner";
 
 const Container = styled.div`
   display: flex;
@@ -30,38 +32,44 @@ const Container = styled.div`
   }
 `;
 
-function Router(){
-    return(
-        <BrowserRouter>
-            <Header />
-            <Container>
-            <Switch>
-                <Route path="/" exact>
-                    <Home />
-                </Route>
-                <Route path="/1" exact>
-                    <Home1 />
-                </Route>
-                <Route path="/create-form">
-                    <FormMaker />
-                </Route>
-                <Route path="/write">
-                    <CardWriter />
-                </Route>
-                <Route path="/apply" exact>
-                    <ApplicantHome />
-                </Route>
-                <Route path="/apply/done" exact>
-                    <ApplicantDone />
-                </Route>
-                <Route path="/background" exact>
-                    <BackgroundList />
-                </Route>
-            </Switch>
-            </Container>
-            <Footer />
-        </BrowserRouter>
-    );
+function Router() {
+  return (
+    <BrowserRouter>
+      <Header />
+      <Container>
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/1" exact>
+            <Home1 />
+          </Route>
+          <Route path="/create-form">
+            <FormMaker />
+          </Route>
+          <Route path="/write">
+            <CardWriter />
+          </Route>
+          <Route path="/design" exact>
+            <CardDesigner />
+          </Route>
+          <Route path="/update-info">
+            <UpdateMyInfo />
+          </Route>
+          <Route path="/apply" exact>
+            <ApplicantHome />
+          </Route>
+          <Route path="/apply/done" exact>
+            <ApplicantDone />
+          </Route>
+          <Route path="/background" exact>
+            <BackgroundList />
+          </Route>
+        </Switch>
+      </Container>
+      <Footer />
+    </BrowserRouter>
+  );
 }
 
 export default Router;
