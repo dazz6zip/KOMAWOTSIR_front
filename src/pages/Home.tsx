@@ -2,13 +2,10 @@ import styled from "styled-components";
 import main from "../images/main.png";
 import kakao from "../images/kakao.png";
 import Description from "../components/common/Description";
+import Img from "../components/common/Img";
 
 const LogoSection = styled.div`
   text-align: center;
-`;
-
-const Img = styled.img`
-    width: {(props) => props.width};
 `;
 
 function Home() {

@@ -5,6 +5,7 @@ import ButtonL from "../components/common/ButtonL";
 import Title from "../components/common/Title";
 import Description from "../components/common/Description";
 import ButtonRow from "../components/common/ButtonRow";
+import Img from "../components/common/Img";
 
 const Options = styled.div`
   width: 100%;
@@ -51,10 +52,6 @@ const TextArea = styled.textarea`
   border: 1px solid #ddd;
   border-radius: 5px;
   resize: none;
-`;
-
-const Img = styled.img`
-    width: {(props) => props.width};
 `;
 
 function CardDesigner() {

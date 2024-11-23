@@ -16,17 +16,14 @@ const FooterContainer = styled.footer`
     font-size: 18px;
   }
 `;
-const Img = styled.img`
-    width: {(props) => props.width};
-`
 
-function Footer(){
+function Footer() {
   return (
     <FooterContainer>
       앤드이어 <br />
       team.cobbu@gmail.com
     </FooterContainer>
   );
-};
+}
 
 export default Footer;

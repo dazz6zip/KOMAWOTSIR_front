@@ -6,6 +6,7 @@ import ButtonL from "../components/common/ButtonL";
 import Title from "../components/common/Title";
 import ButtonColumn from "../components/common/ButtonColumn";
 import DescriptionS from "../components/common/DescriptionS";
+import Img from "../components/common/Img";
 
 const TextAreaContainer = styled.div`
   margin-bottom: 20px;
@@ -25,10 +26,6 @@ const TextArea = styled.textarea`
   border: 1px solid #ddd;
   border-radius: 5px;
   resize: none;
-`;
-
-const Img = styled.img`
-    width: {(props) => props.width};
 `;
 
 function CardWriter() {
