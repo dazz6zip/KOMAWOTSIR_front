@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Coin from "./pages/Coin";
 import Home from "./pages/Home";
-import Header from "./pages/Header";
-import Footer from "./pages/Footer";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import FormMaker from "./pages/FormMaker";
 import styled from "styled-components";
 import Home1 from "./pages/Home1";
@@ -12,6 +12,10 @@ import CardWriter from "./pages/CardWriter";
 import BackgroundList from "./pages/BackgroundList";
 import UpdateMyInfo from "./pages/UpdateMyInfo";
 import CardDesigner from "./pages/CardDesigner";
+import Apply1 from "./pages/Apply1";
+import Apply2 from "./pages/Apply2";
+import ReceiverAdder from "./pages/ReceiverAdder";
+import DesignList from "./pages/DesignList";
 
 const Container = styled.div`
   display: flex;
@@ -20,7 +24,7 @@ const Container = styled.div`
   justify-content: space-between;
   height: 85vh;
   font-family: "Apple SD Gothic Neo", sans-serif;
-  padding: 30px 10px 40px 10px;
+  padding: 15px 10px 25px 10px;
   box-sizing: border-box;
 
   @media (min-width: 768px) {
@@ -36,6 +40,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Header />
+      <hr />
       <Container>
         <Switch>
           <Route path="/" exact>
@@ -59,11 +64,23 @@ function Router() {
           <Route path="/apply" exact>
             <ApplicantHome />
           </Route>
+          <Route path="/apply1" exact>
+            <Apply1 />
+          </Route>
+          <Route path="/apply2" exact>
+            <Apply2 />
+          </Route>
           <Route path="/apply/done" exact>
             <ApplicantDone />
           </Route>
           <Route path="/background" exact>
             <BackgroundList />
+          </Route>
+          <Route path="/add-receiver" exact>
+            <ReceiverAdder />
+          </Route>
+          <Route path="/design-list" exact>
+            <DesignList />
           </Route>
         </Switch>
       </Container>

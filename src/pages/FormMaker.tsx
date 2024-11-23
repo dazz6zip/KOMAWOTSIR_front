@@ -1,34 +1,12 @@
 import styled from "styled-components";
 import ButtonS from "../components/common/ButtonS";
 import ButtonL from "../components/common/ButtonL";
-
-const Title = styled.h2`
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-  margin: 0px 3px 10px 3px;
-  color: #333;
-`;
-
-const Description = styled.p`
-  font-size: 16px;
-  color: #555;
-  text-align: center;
-  line-height: 1.5;
-
-  @media (min-width: 768px) {
-    font-size: 18px;
-  }
-
-  @media (min-width: 1024px) {
-    font-size: 20px;
-  }
-`;
+import Title from "../components/common/Title";
+import Description from "../components/common/Description";
 
 const QuestionBox = styled.div`
-  border-top: 1px solid #ddd;
-  padding-top: 20px;
-  margin-top: 20px;
+  padding-top: 3px;
+  margin-top: 10px;
 `;
 
 const QuestionRow = styled.div`
@@ -43,7 +21,7 @@ const InputGroup = styled.div`
 `;
 
 const Label = styled.label`
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: bold;
   color: #f28b8b;
   margin-bottom: 5px;
@@ -59,40 +37,42 @@ const Input = styled.input`
   margin-bottom: 5px;
 `;
 
-
-function FormMaker(){
+function FormMaker() {
   return (
     <>
-      <Title>
-        연하장 신청받기
-      </Title>
+      <Title>연하장 신청받기</Title>
       <Description>
-        기본적으로 닉네임과 전화번호를 수집해요.<br/>
-        추가적으로 알아야 할 정보가 있다면<br/>
-        질문을 추가해 보세요!
+        기본적으로 닉네임과 전화번호를 수집해요.
+        <br />
+        추가적으로 수집할 정보를 등록해주세요.
+        <ButtonS category="pink">+ 질문 추가하기</ButtonS>
       </Description>
-      <ButtonS category="pink">+ 질문 추가하기</ButtonS>
-
       <QuestionBox>
         <QuestionRow>
           <Label>질문 *</Label>
-          <span>삭제</span>
+          <ButtonS category="white">삭제</ButtonS>
+        </QuestionRow>
+        <InputGroup>
+          <Input type="text" placeholder="꼭 적어줬으면 하는 내용이 뭐야?" />
+          <Input
+            type="text"
+            placeholder="올해 나랑 함께한 최고의 추억에 대해 써줘."
+          />
+        </InputGroup>
+
+        <QuestionRow>
+          <Label>질문 *</Label>
+          <ButtonS category="white">삭제</ButtonS>
         </QuestionRow>
         <InputGroup>
           <Input type="text" placeholder="나한테 할 말" />
           <Input type="text" placeholder="할 말 있으면 해라" />
         </InputGroup>
-
-        <QuestionRow>
-          <Label>질문 *</Label>
-          <span>삭제</span>
-        </QuestionRow>
-
-        <ButtonL category="pink">저장하기</ButtonL><br/>
-        <ButtonL category="hotpink">링크 공유하기</ButtonL>
       </QuestionBox>
+      <ButtonL category="pink">저장하기</ButtonL>
+      <ButtonL category="hotpink">링크 공유하기</ButtonL>
     </>
   );
-};
+}
 
 export default FormMaker;

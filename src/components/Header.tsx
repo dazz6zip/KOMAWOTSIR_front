@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import logo from "../images/logo.png";
-import Img from "../components/common/Img";
+import Img from "./common/Img";
+import Title from "./common/Title";
 
 const HeaderContainer = styled.div`
-  height: 8vh;
+  height: 6vh;
   display: flex;
   justify-content: space-between;
   padding: 8px 10px 2px 10px;
@@ -11,12 +12,15 @@ const HeaderContainer = styled.div`
   .menu {
     font-size: 24px;
     cursor: pointer;
+    background-color: white;
+    border: none;
   }
 
   .profile {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     background-color: #e0e0e0;
+    border: none;
     border-radius: 50%;
   }
 
@@ -36,7 +40,7 @@ function Header() {
   return (
     <HeaderContainer>
       <button className="menu">☰</button>
-      <Img src={logo} width="30%" alt="Logo" className="logo-image" />
+      <Img src={logo} alt="Logo" className="logo-image" />
       <button className="profile"></button>
     </HeaderContainer>
   );

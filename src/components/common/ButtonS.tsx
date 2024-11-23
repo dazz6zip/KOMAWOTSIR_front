@@ -26,8 +26,7 @@ export const ButtonS = styled.button<ButtonProps>`
   border: none;
   cursor: pointer;
   border-radius: 15px;
-  padding: 5px;
-  width: 40%;
+  padding: 8px;
   font-size: 11px;
 
   color: ${({ category }) =>

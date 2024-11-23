@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-const DescriptionS = styled.p`
+interface DescriptionSProps {
+  align?: string;
+}
+
+const DescriptionS = styled.p<DescriptionSProps>`
   font-size: 10px;
   color: #555;
-  text-align: center;
+  ext-align: ${({ align }) => align || "center"};
   line-height: 1.4;
 
   @media (min-width: 768px) {

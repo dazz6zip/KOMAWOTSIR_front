@@ -15,7 +15,7 @@ function Home1() {
   return (
     <>
       <LogoSection>
-        <Img src={main} width="70%" alt="Main" className="logo-image" />
+        <Img src={main} width="60%" alt="Main" className="logo-image" />
       </LogoSection>
       <Description>
         디지털 연하장 서비스에 <br />
@@ -23,7 +23,9 @@ function Home1() {
         따뜻한 마음을 담아
         <br /> AI와 함께 연하장을 제작해 보세요.
       </Description>
+      <br />
       <ButtonS category="pink">연하장 신청받기</ButtonS>
+      <br />
       <Img src={imsi} width="90%" />
     </>
   );

@@ -21,7 +21,6 @@ const defaultStyle = {
   fontSize: "14px",
   color: "#fff",
   backgroundColor: "#ed798d",
-  height: "2rem",
 };
 
 export const ButtonL = styled.button<ButtonProps>`
@@ -30,6 +29,8 @@ export const ButtonL = styled.button<ButtonProps>`
   border-radius: 5px;
   padding: 8px;
   width: 80%;
+  height: 2rem;
+  margin: 2px 0;
 
   color: ${({ category }) =>
     variantStyles[category]?.color || defaultStyle.color};
