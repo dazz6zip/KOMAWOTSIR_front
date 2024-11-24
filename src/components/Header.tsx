@@ -39,17 +39,17 @@ const MenuContent = styled.div`
   flex-direction: column;
 `;
 
-const MenuItem = styled(Link)<{ isSubMenu?: boolean }>`
+const MenuItem = styled(Link)<{ $isSubMenu?: boolean }>`
   display: block;
   text-decoration: none;
-  color: ${(props) => (props.isSubMenu ? "gray" : "black")};
-  font-size: ${(props) => (props.isSubMenu ? "16px" : "18px")};
-  margin-top: ${(props) => (props.isSubMenu ? "0" : "16px")};
+  color: ${(props) => (props.$isSubMenu ? "gray" : "black")};
+  font-size: ${(props) => (props.$isSubMenu ? "16px" : "18px")};
+  margin-top: ${(props) => (props.$isSubMenu ? "0" : "16px")};
   margin-bottom: 15px;
-  margin-left: ${(props) => (props.isSubMenu ? "20px" : "0")};
+  margin-left: ${(props) => (props.$isSubMenu ? "20px" : "0")};
 
   &:hover {
-    color: ${(props) => (props.isSubMenu ? "#333" : "#555")};
+    color: ${(props) => (props.$isSubMenu ? "#333" : "#555")};
   }
 `;
 
@@ -68,35 +68,27 @@ function Header() {
     <>
       <Sidebar
         sidebar={
-          <MenuContent>
-            <FaArrowLeft onClick={closeMenu} />
-            <MenuItem to="/update-info" onClick={closeMenu}>
-              회원정보 수정
-            </MenuItem>
-            <MenuItem to="" onClick={closeMenu}>
-              나의 편지함
-            </MenuItem>
-            <MenuItem to="" onClick={closeMenu} isSubMenu>
+          <MenuContent onClick={closeMenu}>
+            <FaArrowLeft />
+            <MenuItem to="/update-info">회원정보 수정</MenuItem>
+            <MenuItem to="">나의 편지함</MenuItem>
+            <MenuItem to="" $isSubMenu>
               올해 받은 연하장
             </MenuItem>
-            <MenuItem to="" onClick={closeMenu} isSubMenu>
+            <MenuItem to="" $isSubMenu>
               전체 수신 목록
             </MenuItem>
-            <MenuItem to="" onClick={closeMenu}>
-              편지 보내기
-            </MenuItem>
-            <MenuItem to="" onClick={closeMenu} isSubMenu>
+            <MenuItem to="">편지 보내기</MenuItem>
+            <MenuItem to="" $isSubMenu>
               신청받기
             </MenuItem>
-            <MenuItem to="" onClick={closeMenu} isSubMenu>
+            <MenuItem to="" $isSubMenu>
               작성하기
             </MenuItem>
-            <MenuItem to="" onClick={closeMenu} isSubMenu>
+            <MenuItem to="" $isSubMenu>
               디자인하기
             </MenuItem>
-            <MenuItem to="" onClick={closeMenu}>
-              로그아웃
-            </MenuItem>
+            <MenuItem to="">로그아웃</MenuItem>
           </MenuContent>
         }
         open={isOpen}

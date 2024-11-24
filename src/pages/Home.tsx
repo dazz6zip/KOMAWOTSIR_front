@@ -20,6 +20,7 @@ function Home() {
         따뜻한 마음을 담아
         <br /> AI와 함께 연하장을 제작해 보세요.
       </Description>
+
       <Img src={kakao} width="50%" />
     </>
   );

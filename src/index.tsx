@@ -4,6 +4,9 @@ import App from "./App";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./theme";
 import { RecoilRoot } from "recoil";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 // 폰트 적용
 const fontLink = document.createElement("link");
@@ -16,7 +19,9 @@ ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
       <ThemeProvider theme={theme}>
-        <App />
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
       </ThemeProvider>
     </RecoilRoot>
   </React.StrictMode>,
