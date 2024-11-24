@@ -38,7 +38,7 @@ const Container = styled.div`
 
 function Router() {
   return (
-    <BrowserRouter>
+    <>
       <Header />
       <hr />
       <Container>
@@ -85,7 +85,7 @@ function Router() {
         </Switch>
       </Container>
       <Footer />
-    </BrowserRouter>
+    </>
   );
 }
 

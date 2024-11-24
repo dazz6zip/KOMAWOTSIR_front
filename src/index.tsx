@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./theme";
+import { RecoilRoot } from "recoil";
 
 // 폰트 적용
 const fontLink = document.createElement("link");
@@ -13,9 +14,11 @@ document.head.appendChild(fontLink);
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById("root")
 );
