@@ -3,10 +3,10 @@ import axios from "axios";
 
 export interface IUserInfoType {
   id: number;
-  kakao_id: string;
+  kakaoId: string;
   name: string;
   tel: string;
-  is_sms_allowed: boolean;
+  isSmsAllowed: boolean;
 }
 
 export const loadUserInfo = async (userId: number): Promise<IUserInfoType> => {

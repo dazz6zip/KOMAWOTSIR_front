@@ -18,7 +18,7 @@ const Form = styled.form`
     font-size: 16px;
     color: #333;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
+
     &:focus {
       border-color: #007bff;
       outline: none; /* 기본 포커스 테두리 제거 */
@@ -33,6 +33,7 @@ const Form = styled.form`
       background-color: #f5f5f5;
       color: #999;
     }
+  }
 `;
 
 export default Form;
