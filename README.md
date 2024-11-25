@@ -4,4 +4,6 @@ https://github.com/zacanger/styled-reset/blob/master/src/index.ts
 ```npm install styled-components```
 ```npm install react-hook-form```
 ```npm install react-icons```
-```npm install react-pro-sidebar```
+```npm install react-sliding-pane```
+```npm install react-modal```
+
