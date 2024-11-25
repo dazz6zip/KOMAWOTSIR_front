@@ -36,7 +36,7 @@ const Withdrawal = styled.span`
   color: #666;
 `;
 
-const ModalContent = styled.div`
+export const ModalContent = styled.div`
   text-align: center;
   h3 {
     font-size: 18px;
@@ -49,7 +49,7 @@ const ModalContent = styled.div`
   }
 `;
 
-const customStyles = {
+export const customStyles = {
   content: {
     top: "50%",
     left: "50%",
