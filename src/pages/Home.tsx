@@ -9,19 +9,22 @@ const LogoSection = styled.div`
 `;
 
 function Home() {
+  const Login = () => {};
+
   return (
     <>
       <LogoSection>
         <Img src={main} width="100%" alt="Main" className="logo-image" />
       </LogoSection>
       <Description>
-        디지털 연하장 서비스에 <br />
-        오신 것을 환영합니다! <br />
-        따뜻한 마음을 담아
-        <br /> AI와 함께 연하장을 제작해 보세요.
+        디지털 연하장 서비스 <b>고마워써</b>에
+        <br />
+        오신 것을 환영합니다!
+        <br /> 따뜻한 마음을 담아, <br />
+        AI와 함께 연하장을 제작해 보세요.
       </Description>
 
-      <Img src={kakao} width="50%" />
+      <Img src={kakao} width="50%" onClick={Login} />
     </>
   );
 }

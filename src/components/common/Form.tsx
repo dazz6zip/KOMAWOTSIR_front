@@ -34,6 +34,10 @@ const Form = styled.form`
       color: #999;
     }
   }
+  input[type="checkbox"] {
+    border: none; /* 테두리 제거 */
+    box-shadow: none; /* 그림자 제거 */
+  }
 `;
 
 export default Form;

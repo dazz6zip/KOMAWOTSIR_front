@@ -28,7 +28,7 @@ export const ButtonL = styled.button<ButtonProps>`
   cursor: pointer;
   border-radius: 5px;
   padding: 8px;
-  width: 80%;
+  width: 100%;
   height: 2rem;
   margin: 2px 0;
 
