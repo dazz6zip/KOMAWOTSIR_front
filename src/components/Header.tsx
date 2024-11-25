@@ -95,7 +95,7 @@ function Header() {
           <CustomIcon>✷</CustomIcon>전체 수신 목록
         </StyledMenuItem>
         <StyledMenuItem to="">편지 보내기</StyledMenuItem>
-        <StyledMenuItem to="" onClick={closeMenu} $isSubMenu>
+        <StyledMenuItem to="/create-form" onClick={closeMenu} $isSubMenu>
           <CustomIcon>✶</CustomIcon>신청받기
         </StyledMenuItem>
         <StyledMenuItem to="" onClick={closeMenu} $isSubMenu>

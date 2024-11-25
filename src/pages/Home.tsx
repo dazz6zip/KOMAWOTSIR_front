@@ -9,7 +9,9 @@ const LogoSection = styled.div`
 `;
 
 function Home() {
-  const Login = () => {};
+  const Login = () => {
+    // 협업
+  };
 
   return (
     <>
