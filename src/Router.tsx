@@ -16,6 +16,7 @@ import Apply1 from "./pages/Apply1";
 import Apply2 from "./pages/Apply2";
 import ReceiverAdder from "./pages/ReceiverAdder";
 import DesignList from "./pages/DesignList";
+import ReceiverList from "./pages/ReceiverList";
 
 const Container = styled.div`
   display: flex;
@@ -78,6 +79,9 @@ function Router() {
           </Route>
           <Route path="/add-receiver" exact>
             <ReceiverAdder />
+          </Route>
+          <Route path="/receiver-list" exact>
+            <ReceiverList />
           </Route>
           <Route path="/design-list" exact>
             <DesignList />

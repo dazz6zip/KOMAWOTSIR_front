@@ -6,6 +6,7 @@ import ButtonL from "../components/common/ButtonL";
 import Title from "../components/common/Title";
 import DescriptionS from "../components/common/DescriptionS";
 import Img from "../components/common/Img";
+import { useState } from "react";
 
 const TextAreaContainer = styled.div`
   margin-bottom: 20px;
@@ -18,17 +19,52 @@ const Label = styled.div`
 `;
 
 const TextArea = styled.textarea`
-  width: 100%;
+  width: 300px;
   height: 100px;
   padding: 10px;
-  font-size: 1rem;
+  font-size: 0.8rem;
   border: 1px solid #ddd;
   border-radius: 5px;
   resize: none;
 `;
 
+const PreviewArea = styled.div<{ bimage?: string }>`
+  /* background-image: url(${(props) => props.bimage});
+   */
+  background-color: tomato;
+  width: 300px;
+  min-height: 160px;
+  display: block;
+  text-align: center;
+  align-items: center;
+  padding: 30px;
+`;
+
 function CardWriter() {
+  const userId = 5;
+  const [contents, setContents] = useState("Happy new year!");
   const receiver = "깨꿈이";
+
+  const inputContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContents(e.currentTarget.value);
+  };
+
+  const savePost = (value: string) => {
+    let state = "";
+    if (value === "pre") {
+      state = "progressing";
+    } else if (value === "final") {
+      state = "completed";
+    }
+
+    axios.post(`/api/posts/${state}`, {
+      // senderId : ,
+      // sender_nickname:,
+      // receiver_id:,
+      contents: contents,
+    });
+  };
+
   return (
     <>
       <Title>
@@ -36,19 +72,24 @@ function CardWriter() {
         <br />
         연하장 작성하기
       </Title>
-      <Img src={imsi1} width="90%" alt="Main" className="logo-image" />
+      <PreviewArea>
+        <span>{contents}</span>
+      </PreviewArea>
       <ButtonRow>
         <ButtonS category="gray">초안 불러오기</ButtonS>
         <ButtonS category="gray">초안 등록하기</ButtonS>
         <ButtonS category="blue">ChatGPT로 작성하기</ButtonS>
       </ButtonRow>
       <TextAreaContainer>
-        <Label>내용</Label>
-        <TextArea maxLength={300} />
+        <TextArea onChange={inputContents} value={contents} maxLength={300} />
       </TextAreaContainer>
       <ButtonRow>
-        <ButtonL category="hotpink">임시 저장</ButtonL>
-        <ButtonL category="pink">저장하기</ButtonL>
+        <ButtonL onClick={() => savePost("pre")} category="hotpink">
+          임시저장
+        </ButtonL>
+        <ButtonL onClick={() => savePost("final")} category="pink">
+          저장하기
+        </ButtonL>
       </ButtonRow>
       <DescriptionS>
         연하장이 공개되는 1월 1일 전까지는 <br />
