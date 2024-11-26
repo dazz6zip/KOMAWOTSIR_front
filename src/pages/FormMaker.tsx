@@ -9,7 +9,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { createQuestion, IQuestionItem, IUserInfoType } from "../fetcher";
 import axios from "axios";
-import { customStyles, ModalContent } from "./UpdateMyInfo";
+import { customStyles, ModalContent } from "./UpdateProfile";
 
 const QuestionBox = styled.div`
   padding-top: 3px;

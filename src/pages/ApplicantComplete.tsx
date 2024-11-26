@@ -10,7 +10,7 @@ const LogoSection = styled.div`
   text-align: center;
 `;
 
-function ApplicantDone() {
+function ApplicantComplete() {
   const username = "하하호호";
   return (
     <>
@@ -36,4 +36,4 @@ function ApplicantDone() {
   );
 }
 
-export default ApplicantDone;
+export default ApplicantComplete;

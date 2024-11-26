@@ -7,15 +7,15 @@ import FormMaker from "./pages/FormMaker";
 import styled from "styled-components";
 import Home1 from "./pages/Home1";
 import ApplicantHome from "./pages/ApplicantHome";
-import ApplicantDone from "./pages/ApplicantDone";
+import ApplicantComplete from "./pages/ApplicantComplete";
 import CardWriter from "./pages/CardWriter";
-import BackgroundList from "./pages/BackgroundList";
-import UpdateMyInfo from "./pages/UpdateMyInfo";
+import ThumbnailSelection from "./pages/ThumbnailSelection";
+import UpdateMyInfo from "./pages/UpdateProfile";
 import CardDesigner from "./pages/CardDesigner";
 import Apply1 from "./pages/Apply1";
 import Apply2 from "./pages/Apply2";
 import ReceiverAdder from "./pages/ReceiverAdder";
-import DesignList from "./pages/DesignList";
+import BackgroundSelection from "./pages/BackgroundSelection";
 
 const Container = styled.div`
   display: flex;
@@ -71,16 +71,16 @@ function Router() {
             <Apply2 />
           </Route>
           <Route path="/apply/done" exact>
-            <ApplicantDone />
+            <ApplicantComplete />
           </Route>
           <Route path="/background" exact>
-            <BackgroundList />
+            <ThumbnailSelection />
           </Route>
           <Route path="/add-receiver" exact>
             <ReceiverAdder />
           </Route>
           <Route path="/design-list" exact>
-            <DesignList />
+            <BackgroundSelection />
           </Route>
         </Switch>
       </Container>

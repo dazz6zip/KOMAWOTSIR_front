@@ -7,7 +7,7 @@ import Title from "../components/common/Title";
 import DescriptionS from "../components/common/DescriptionS";
 import Img from "../components/common/Img";
 
-function DesignList() {
+function BackgroundSelection() {
   return (
     <>
       <Title>연하장 배경 변경하기</Title>
@@ -24,4 +24,4 @@ function DesignList() {
   );
 }
 
-export default DesignList;
+export default BackgroundSelection;

@@ -70,7 +70,7 @@ export const customStyles = {
   },
 };
 
-function UpdateMyInfo() {
+function UpdateProfile() {
   // userId 임의로 가정하기
   const userId = 5;
 
@@ -205,4 +205,4 @@ function UpdateMyInfo() {
   );
 }
 
-export default UpdateMyInfo;
+export default UpdateProfile;

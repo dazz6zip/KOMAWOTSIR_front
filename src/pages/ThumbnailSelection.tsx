@@ -76,13 +76,18 @@ const ColorBox = styled.div<{ color: string; isSelected: boolean }>`
   }
 `;
 
-
-
-function BackgroundList() {
+function ThumbnailSelection() {
   const [activeTab, setActiveTab] = useState("단색");
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
 
-  const colors = ["#ff6b6b", "#ffa8a8", "#74c0fc", "#a5d8ff", "#343a40", "#f1f3f5"];
+  const colors = [
+    "#ff6b6b",
+    "#ffa8a8",
+    "#74c0fc",
+    "#a5d8ff",
+    "#343a40",
+    "#f1f3f5",
+  ];
 
   return (
     <>
@@ -122,4 +127,4 @@ function BackgroundList() {
   );
 }
 
-export default BackgroundList;
+export default ThumbnailSelection;
