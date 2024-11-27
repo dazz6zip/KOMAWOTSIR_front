@@ -51,6 +51,14 @@ export interface IReceiverQuestionList {
   question: string;
 }
 
+export interface IPostContentsLoad {
+  id: number;
+  senderId: number;
+  senderNickname: string;
+  receiverId: number;
+  contents: string;
+}
+
 export const loadUserInfo = async (userId: number): Promise<IUserInfoType> => {
   try {
     const response = await axios.get<IUserInfoType>(`/api/users/${userId}`);
@@ -101,6 +109,33 @@ export const ReceiverInquiryList = async (
     return response.data.map((item) => ({
       ...item,
     }));
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const PostContentsCheck = async (
+  userId: number,
+  receiverId: number
+): Promise<number> => {
+  try {
+    const response = await axios.get<number>(
+      `/api/posts/check/${userId}/${receiverId}`
+    );
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const PostContentsLoad = async (
+  postId: number
+): Promise<IPostContentsLoad> => {
+  try {
+    const response = await axios.get<IPostContentsLoad>(`/api/posts/${postId}`);
+    return response.data;
   } catch (err) {
     console.error(err);
     throw err;
