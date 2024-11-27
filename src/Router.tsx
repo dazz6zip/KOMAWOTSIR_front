@@ -17,6 +17,8 @@ import Apply2 from "./pages/Apply2";
 import ReceiverAdder from "./pages/ReceiverAdder";
 import DesignList from "./pages/DesignList";
 import ReceiverList from "./pages/ReceiverList";
+import Carousel from "./pages/Carousel";
+import CardList from "./pages/CardList";
 
 const Container = styled.div`
   display: flex;
@@ -85,6 +87,12 @@ function Router() {
           </Route>
           <Route path="/design-list" exact>
             <DesignList />
+          </Route>
+          <Route path="/present-box">
+            <CardList />
+          </Route>
+          <Route path="/carousel-test">
+            <Carousel />
           </Route>
         </Switch>
       </Container>
