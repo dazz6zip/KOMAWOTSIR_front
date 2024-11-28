@@ -1,4 +1,3 @@
-import { useState } from "react";
 import axios from "axios";
 
 export interface IUserInfoType {
@@ -56,6 +55,13 @@ export interface IPostContentsLoad {
   senderId: number;
   senderNickname: string;
   receiverId: number;
+  contents: string;
+}
+
+export interface IDraftLoad {
+  id: number;
+  userId: number;
+  title: string;
   contents: string;
 }
 
@@ -135,6 +141,34 @@ export const PostContentsLoad = async (
 ): Promise<IPostContentsLoad> => {
   try {
     const response = await axios.get<IPostContentsLoad>(`/api/posts/${postId}`);
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const DraftLoad = async (userId: number): Promise<IDraftLoad[]> => {
+  try {
+    const response = await axios.get<IDraftLoad[]>(
+      `/api/users/${userId}/drafts`
+    );
+    return response.data.map((item) => ({
+      ...item,
+    }));
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const GptLoad = async (prompt: string): Promise<String> => {
+  try {
+    const response = await axios.get<string>(`/api/posts/write/gpt`, {
+      params: {
+        prompt: prompt,
+      },
+    });
     return response.data;
   } catch (err) {
     console.error(err);

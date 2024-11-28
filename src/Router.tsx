@@ -19,6 +19,7 @@ import DesignList from "./pages/DesignList";
 import ReceiverList from "./pages/ReceiverList";
 import Carousel from "./pages/Carousel";
 import CardList from "./pages/CardList";
+import DraftList from "./pages/DraftList";
 
 const Container = styled.div`
   display: flex;
@@ -93,6 +94,9 @@ function Router() {
           </Route>
           <Route path="/carousel-test">
             <Carousel />
+          </Route>
+          <Route path="/draft">
+            <DraftList />
           </Route>
         </Switch>
       </Container>

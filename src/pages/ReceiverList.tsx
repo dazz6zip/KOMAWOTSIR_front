@@ -3,9 +3,9 @@ import ButtonRow from "../components/common/ButtonRow";
 import ButtonS from "../components/common/ButtonS";
 import Title from "../components/common/Title";
 import { customStyles, ModalContent } from "./UpdateMyInfo";
-import { memo, useState } from "react";
+import { useState } from "react";
 import Description from "../components/common/Description";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import Modal from "react-modal";
 import axios from "axios";
 import {
@@ -149,6 +149,8 @@ function ReceiverList() {
   const [memoEdits, setMemoEdits] = useState<{ [key: number]: boolean }>({});
   const [memoContent, setMemoContent] = useState<{ [key: number]: string }>({});
 
+  const queryClient = useQueryClient();
+
   const { isLoading: rlIsLoading, data: rlData } = useQuery<IReceiverList[]>(
     ["receiver", userId],
     () => PostList(userId),
@@ -195,6 +197,8 @@ function ReceiverList() {
       })
       .then(() => {
         handleMemoEditToggle(receiverId);
+        queryClient.invalidateQueries(["receiver", userId]);
+        // invalidateQueries : useQuery가 캐시에 저장해 둔 값을 무효화하여 다시 로드하게 함
       })
       .catch((error) => {
         console.error(error);
@@ -229,6 +233,8 @@ function ReceiverList() {
           <ButtonS category="pink">디자인 수정하기</ButtonS>{" "}
         </Link>
       </ButtonRow>
+
+      <b>체크박스 **별 보기</b>
       {rlData?.map((sdata) => (
         <CardContainer key={sdata.id}>
           <CardHeader statusForHeader={sdata.postStatus}>
@@ -258,8 +264,8 @@ function ReceiverList() {
                 <WriteButton>+ 연하장 작성하기</WriteButton>
               ) : (
                 <ContentsBox>
-                  {sdata.postContents.length > 50
-                    ? sdata.postContents.slice(0, 50) + "..."
+                  {sdata.postContents.length > 35
+                    ? sdata.postContents.slice(0, 34) + "..."
                     : sdata.postContents}
                   <WriteButton>+ 편집하기</WriteButton>
                 </ContentsBox>

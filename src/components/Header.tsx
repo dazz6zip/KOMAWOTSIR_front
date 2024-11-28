@@ -20,7 +20,7 @@ const MenuStyles = {
     width: "20px",
     height: "20px",
     left: "20px",
-    top: "15px",
+    top: "10px",
   },
   bmBurgerBars: {
     background: "#373a47",
@@ -46,6 +46,7 @@ const LogoImg = styled.img`
   width: 100px;
   height: auto;
   display: inline-block;
+  margin-top: 5px;
 `;
 
 const CustomIcon = styled.b`
@@ -98,7 +99,7 @@ function Header() {
         <StyledMenuItem to="/create-form" onClick={closeMenu} $isSubMenu>
           <CustomIcon>✶</CustomIcon>신청받기
         </StyledMenuItem>
-        <StyledMenuItem to="" onClick={closeMenu} $isSubMenu>
+        <StyledMenuItem to="/receiver-list" onClick={closeMenu} $isSubMenu>
           <CustomIcon>✷</CustomIcon>작성하기
         </StyledMenuItem>
         <StyledMenuItem to="" onClick={closeMenu} $isSubMenu>
