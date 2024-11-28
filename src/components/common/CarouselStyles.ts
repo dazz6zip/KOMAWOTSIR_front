@@ -10,35 +10,28 @@ const COLORS = {
 const CARD_SIZE_DESKTOP = "23rem";
 const CARD_SIZE_MOBILE = "16rem";
 
-export const AppContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background-image: linear-gradient(45deg, ${COLORS.hotpink}, ${COLORS.pink});
-  font-family: "Montserrat", sans-serif;
-
-  @media (max-width: 768px) {
-    background-image: linear-gradient(
-      135deg,
-      ${COLORS.hotpink},
-      ${COLORS.pink}
-    );
-  }
-`;
-
 export const CarouselWrapper = styled.div`
   position: relative;
   width: ${CARD_SIZE_DESKTOP};
   height: ${CARD_SIZE_DESKTOP};
-  perspective: 500px;
+  perspective: 800px; /* 깊이를 위한 3D */
   transform-style: preserve-3d;
+
+  @media (max-width: 1024px) {
+    width: 20rem;
+    height: 20rem;
+    perspective: 600px;
+  }
 
   @media (max-width: 768px) {
     width: ${CARD_SIZE_MOBILE};
     height: ${CARD_SIZE_MOBILE};
+    perspective: 400px;
+  }
+
+  @media (max-width: 480px) {
+    width: 14rem;
+    height: 14rem;
     perspective: 300px;
   }
 `;
@@ -52,43 +45,42 @@ export const CardContainer = styled.div<{
   position: absolute;
   width: 100%;
   height: 100%;
-  transform: rotateY(${(props) => props.offset * 50}deg)
-    scaleY(${(props) => 1 + props.absOffset * -0.4})
+  transform: rotateX(${(props) => props.offset * 50}deg)
+    scale(${(props) => 1 + props.absOffset * -0.4})
     translateZ(${(props) => props.absOffset * -30}rem)
-    translateX(${(props) => props.direction * -5}rem);
+    translateY(${(props) => props.direction * -2.5}rem); /* 간격 설정 */
   filter: blur(${(props) => props.absOffset}rem);
   transition: all 0.3s ease-out;
   display: ${(props) => (props.absOffset > 3 ? "none" : "block")};
   opacity: ${(props) => (props.absOffset >= 3 ? 0 : 1)};
 
   @media (max-width: 768px) {
-    transform: rotateY(${(props) => props.offset * 30}deg)
-      scaleY(${(props) => 1 + props.absOffset * -0.3})
+    transform: rotateX(${(props) => props.offset * 30}deg)
+      scale(${(props) => 1 + props.absOffset * -0.3})
       translateZ(${(props) => props.absOffset * -20}rem)
-      translateX(${(props) => props.direction * -3}rem);
+      translateY(${(props) => props.direction * -2}rem);
     filter: blur(${(props) => props.absOffset * 0.8}rem);
   }
 `;
 
 export const CardStyled = styled.div<{ absOffset: number }>`
   width: 100%;
-  height: 100%;
   padding: 2rem;
   background-color: hsl(
-    280deg,
-    40%,
-    calc(100% - ${(props) => props.absOffset * 50}%)
+    340deg,
+    60%,
+    calc(100% - ${(props) => props.absOffset * 30}%)
   );
   border-radius: 1rem;
   color: ${COLORS.gray};
   text-align: justify;
   transition: all 0.3s ease-out;
 
-  h2 {
+  h3 {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
-    margin: 0 0 0.7em;
+    margin: 0.3em 0 0.7em;
     color: ${COLORS.black};
   }
 
@@ -109,23 +101,24 @@ export const CardStyled = styled.div<{ absOffset: number }>`
   }
 `;
 
-export const NavigationButton = styled.button<{ direction: "left" | "right" }>`
-  color: white;
+export const NavigationButton = styled.button<{ direction: "up" | "down" }>`
+  color: pink;
   font-size: 5rem;
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 50%;
+  left: 50%;
   z-index: 2;
   cursor: pointer;
   user-select: none;
   background: unset;
   border: unset;
-  transform: translateY(-50%)
+  transform: translateX(-50%)
     ${(props) =>
-      props.direction === "left" ? "translateX(-100%)" : "translateX(100%)"};
-  right: ${(props) => (props.direction === "right" ? "0" : "unset")};
+      props.direction === "up" ? "translateY(-100%)" : "translateY(100%)"};
+  top: ${(props) => (props.direction === "up" ? "0" : "unset")};
+  bottom: ${(props) => (props.direction === "down" ? "0" : "unset")};
 
   @media (max-width: 768px) {
     font-size: 3rem;

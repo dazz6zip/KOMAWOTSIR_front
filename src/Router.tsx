@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Coin from "./pages/Coin";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -17,7 +16,7 @@ import Apply2 from "./pages/Apply2";
 import ReceiverAdder from "./pages/ReceiverAdder";
 import DesignList from "./pages/DesignList";
 import ReceiverList from "./pages/ReceiverList";
-import Carousel from "./pages/Carousel";
+import CarouselEx from "./pages/ExCarousel";
 import CardList from "./pages/CardList";
 
 const Container = styled.div`
@@ -92,7 +91,7 @@ function Router() {
             <CardList />
           </Route>
           <Route path="/carousel-test">
-            <Carousel />
+            <CarouselEx />
           </Route>
         </Switch>
       </Container>
