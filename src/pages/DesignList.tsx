@@ -4,7 +4,6 @@ import ButtonRow from "../components/common/ButtonRow";
 import ButtonS from "../components/common/ButtonS";
 import ButtonL from "../components/common/ButtonL";
 import Title from "../components/common/Title";
-import DescriptionS from "../components/common/DescriptionS";
 import Img from "../components/common/Img";
 
 function DesignList() {
