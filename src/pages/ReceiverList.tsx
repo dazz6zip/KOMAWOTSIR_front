@@ -140,7 +140,7 @@ const ContentsBox = styled.div`
 `;
 
 function ReceiverList() {
-  const userId = 5;
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedReceiverId, setSelectedReceiverId] = useState<number | null>(

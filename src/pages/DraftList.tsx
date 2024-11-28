@@ -52,7 +52,7 @@ function DraftList() {
   const receiverId = location?.state?.id || null;
   const receiverNickname = location?.state?.nickname || "Unknown";
 
-  const userId = 5;
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const nav = useHistory();
 

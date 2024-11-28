@@ -20,7 +20,7 @@ const MenuStyles = {
     width: "20px",
     height: "20px",
     left: "20px",
-    top: "10px",
+    top: "15px",
   },
   bmBurgerBars: {
     background: "#373a47",
@@ -46,7 +46,6 @@ const LogoImg = styled.img`
   width: 100px;
   height: auto;
   display: inline-block;
-  margin-top: 5px;
 `;
 
 const CustomIcon = styled.b`

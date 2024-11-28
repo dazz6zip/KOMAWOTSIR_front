@@ -98,7 +98,7 @@ export const customStyles = {
 
 function UpdateMyInfo() {
   // userId 임의로 가정하기
-  const userId = 5;
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const nav = useHistory();
 
