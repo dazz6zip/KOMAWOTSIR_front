@@ -47,7 +47,7 @@ export const CardContainer = styled.div<{
   height: 100%;
   transform: rotateX(${(props) => props.offset * 50}deg)
     scale(${(props) => 1 + props.absOffset * -0.4})
-    translateZ(${(props) => props.absOffset * -30}rem)
+    translateZ(${(props) => props.absOffset * -5}rem)
     translateY(${(props) => props.direction * -2.5}rem); /* 간격 설정 */
   filter: blur(${(props) => props.absOffset}rem);
   transition: all 0.3s ease-out;
