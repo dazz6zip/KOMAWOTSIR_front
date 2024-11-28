@@ -94,7 +94,7 @@ const Carousel: React.FC = () => {
     <CarouselWrapper>
       {active > 0 && (
         <NavigationButton
-          direction="left"
+          direction="up"
           onClick={() => setActive((i) => i - 1)}
         >
           <TiChevronLeftOutline />
@@ -121,7 +121,7 @@ const Carousel: React.FC = () => {
       ))}
       {active < count - 1 && (
         <NavigationButton
-          direction="right"
+          direction="down"
           onClick={() => setActive((i) => i + 1)}
         >
           <TiChevronRightOutline />

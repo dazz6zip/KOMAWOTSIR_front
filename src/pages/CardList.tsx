@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
+import { CiSquareChevUp, CiSquareChevDown } from "react-icons/ci";
 import thumbnail from "../images/thumbnail.png";
 import {
   CarouselWrapper,
@@ -82,14 +82,13 @@ function CardList() {
   return (
     <>
       <Title>2025 내가 받은 연하장</Title>
-
       <CarouselWrapper>
         {active > 0 && (
           <NavigationButton
-            direction="left"
+            direction="up"
             onClick={() => setActive((i) => i - 1)}
           >
-            <TiChevronLeftOutline />
+            <CiSquareChevUp />
           </NavigationButton>
         )}
         {images.map((image, i) => (
@@ -106,17 +105,18 @@ function CardList() {
                 alt={image.name}
                 style={{ width: "100%", borderRadius: "1rem" }}
               />
-              <h2>{image.name}</h2>
-              <p>{image.category}</p>
+              <DescriptionS align="center">
+                클릭하여 내용을 확인하세요!
+              </DescriptionS>
             </CardStyled>
           </CardContainer>
         ))}
         {active < count - 1 && (
           <NavigationButton
-            direction="right"
+            direction="down"
             onClick={() => setActive((i) => i + 1)}
           >
-            <TiChevronRightOutline />
+            <CiSquareChevDown />
           </NavigationButton>
         )}
       </CarouselWrapper>
