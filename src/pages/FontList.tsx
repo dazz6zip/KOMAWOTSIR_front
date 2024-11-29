@@ -3,9 +3,11 @@ import ButtonL from "../components/common/ButtonL";
 import Title from "../components/common/Title";
 
 import { useQuery } from "react-query";
-import { FontLoad, IFont } from "../fetcher";
+import { FontLoad, IDesignPost, IFont } from "../fetcher";
 import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { ADesignState } from "../atoms";
 
 const FontCard = styled.div`
   width: 90%;
@@ -39,39 +41,46 @@ const FontTitle = styled.div<{ fName: string }>`
 `;
 
 function FontList() {
-  const location = useLocation() as {
-    state: { id?: number; nickname?: string };
-  };
-
-  const receiverId = location?.state?.id || null;
-  const receiverNickname = location?.state?.nickname || "Unknown";
-
-  const userId = parseInt(sessionStorage.getItem("userId") || "0");
+  const userId = 5;
+  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const nav = useHistory();
 
-  const [selectedFont, setSelectedFont] = useState<string | null>(null);
+  const [selectFont, setSelectFont] = useState<IFont>();
 
   const { isLoading, data } = useQuery<IFont[]>(["fontLoad", userId], () =>
     FontLoad()
   );
 
-  const handleFontSelect = (fontUrl: string) => {
-    setSelectedFont(fontUrl);
+  const handleFontSelect = (
+    fontId: number,
+    fontName: string,
+    fontUrl: string
+  ) => {
+    setSelectFont({
+      id: fontId,
+      name: fontName,
+      url: fontUrl,
+    });
   };
 
+  const [design, setDesign] = useRecoilState(ADesignState);
+
   const LoadFont = () => {
-    nav.push("../design", {
-      selectFont: selectedFont,
+    setDesign({
+      ...design,
+      fontId: selectFont?.id,
+      fontName: selectFont?.name,
+      fontUrl: selectFont?.url,
     });
+    nav.push("../design");
   };
 
   useEffect(() => {
     if (data) {
-      // 모든 폰트의 URL을 동적으로 추가
       data.forEach((font) => {
         const link = document.createElement("link");
-        link.href = font.url; // 폰트 URL
+        link.href = font.url;
         link.rel = "stylesheet";
         document.head.appendChild(link);
 
@@ -91,7 +100,7 @@ function FontList() {
             type="radio"
             name="font"
             value={font.id}
-            onClick={() => handleFontSelect(font.name)}
+            onClick={() => handleFontSelect(font.id, font.name, font.url)}
           />
           <div>
             <FontTitle fName={font.name || "inherit"}>{font.name}</FontTitle>

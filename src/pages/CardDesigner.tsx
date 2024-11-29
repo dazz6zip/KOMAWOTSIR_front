@@ -3,13 +3,15 @@ import ButtonS from "../components/common/ButtonS";
 import ButtonL from "../components/common/ButtonL";
 import Title from "../components/common/Title";
 import Description from "../components/common/Description";
-import ButtonRow from "../components/common/ButtonRow";
+import axios from "axios";
 import Img from "../components/common/Img";
 import { PreviewArea } from "./CardWriter";
 import { useQuery } from "react-query";
-import { DesignPostLoad, fontColor, IDesignPost } from "../fetcher";
+import { DesignPostLoad, EFontColor, EFontSize, IDesignPost } from "../fetcher";
 import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { ADesignLoadState, ADesignState } from "../atoms";
 
 const Options = styled.div`
   width: 100%;
@@ -45,6 +47,22 @@ const Options = styled.div`
   }
 `;
 
+const White = styled.button`
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 3px;
+  border-radius: 5px;
+`;
+
+const Black = styled.button`
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 5px;
+`;
+
 const FontPreview = styled.p<{ fontFamily: string }>`
   font-family: ${(props) => props.fontFamily};
   font-size: 20px;
@@ -52,39 +70,35 @@ const FontPreview = styled.p<{ fontFamily: string }>`
 
 function CardDesigner() {
   const userId = 5;
+  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
+
+  const [design, setDesign] = useRecoilState(ADesignState);
+  const [designLoad, setDesignLoad] = useRecoilState(ADesignLoadState);
 
   const nav = useHistory();
-
-  const [fontSize, setFontSize] = useState<number>();
-  const [background, setBackground] = useState<string>();
-  const [thumbnail, setThumbnail] = useState<string>();
-  const [fontName, setFontName] = useState<string>();
-  // const [fontColor, setFontColor] = useState<fontColor>(FontColor);
-
-  const location = useLocation() as {
-    state: { selectFont?: string };
-  };
 
   const { isLoading, data } = useQuery<IDesignPost>(
     ["designPost", userId],
     () => DesignPostLoad(userId),
     {
-      enabled: location.state == null,
+      enabled: designLoad,
       onSuccess: (data) => {
-        setBackground(data.backgroundPic);
-        setThumbnail(data.thumbnailPic);
-        setFontName(data.fontName);
-        // setFontColor(data.fontColor);
-        // setFontSize(data.fontSize);
+        setDesign({
+          designId: data.designId,
+          thumbnailPic: data.thumbnailPic,
+          thumbnailId: data.thumbnailId,
+          backgroundPic: data.backgroundPic,
+          backgroundId: data.backgroundId,
+          fontId: data.fontId,
+          fontSize: data.fontSize,
+          fontColor: data.fontColor,
+          fontUrl: data.fontUrl,
+          fontName: data.fontName,
+        });
+        setDesignLoad(false);
       },
     }
   );
-
-  useEffect(() => {
-    if (location.state) {
-      setFontName(location.state.selectFont);
-    }
-  }, []);
 
   useEffect(() => {
     if (data?.fontUrl) {
@@ -97,30 +111,54 @@ function CardDesigner() {
         document.head.removeChild(link);
       };
     }
-  }, [data?.fontUrl]);
+  }, [[design.fontUrl]]);
 
   const editFontSize = (option: string) => {
-    if (option === "default") {
-      setFontSize(16);
-    } else if (option === "big") {
-      setFontSize(24);
-    }
+    setDesign({
+      ...design,
+      fontSize:
+        option === "default" ? EFontSize.defaultSize : EFontSize.bigSize,
+    });
+  };
+
+  const editFontColor = (option: string) => {
+    setDesign({
+      ...design,
+      fontColor: option === "white" ? EFontColor.white : EFontColor.black,
+    });
   };
 
   const SaveDesign = () => {
-    console.log("");
-    // // 배경화면
-    // axios.put(
-    //   `/api/users/${userId}/designs/${data?.designId}/${true}/${imageId}`
-    // );
-    // // 썸네일
-    // axios.put(
-    //   `/api/users/${userId}/designs/${data?.designId}/${false}/${imageId}`
-    // );
-    // // 폰트
-    // axios.put(
-    //   `/api/users/${userId}/designs/font/${fontId}/${fontSize}/${fontColor}`
-    // );
+    alert("savaDesign");
+    console.log(design);
+
+    // 배경화면
+    axios
+      .put(
+        `/api/users/${userId}/designs/${design.designId}/${true}/${
+          design.backgroundId
+        }`
+      )
+      .then(() => {
+        alert("배경화면 끝");
+        // 썸네일
+        axios.put(
+          `/api/users/${userId}/designs/${design.designId}/${false}/${
+            design.thumbnailId
+          }`
+        );
+      })
+      .then(() => {
+        alert("썸네일 끝");
+        // 폰트
+        axios.put(
+          `/api/users/${userId}/designs/font/${design.fontId}/${design.fontSize}/${design.fontColor}`
+        );
+      })
+      .catch((err) => {
+        alert(err);
+        console.error(err);
+      });
   };
 
   return (
@@ -136,23 +174,27 @@ function CardDesigner() {
 
       <PreviewArea
         bimage={`/image/${data?.backgroundPic}`}
-        fFamily={fontName}
-        fsize={fontSize}
+        fFamily={design.fontName}
+        fsize={design.fontSize === EFontSize.defaultSize ? 16 : 24}
+        fColor={design.fontColor === EFontColor.white ? "white" : "black"}
       >
-        <span>와아아아</span>
+        <span>
+          고마워써로 신년 인사를 전해 보세요!
+          <br />이 공간에 연하장을 작성할 수 있어요.
+        </span>
       </PreviewArea>
 
       <Options>
         <div>
           <label>배경화면</label>
           <ButtonS category="whitehotpink">변경하기</ButtonS>
-          <Img src={`/image/${background}`} width="20%" />
+          <Img src={`/image/${design.backgroundPic}`} width="20%" />
         </div>
 
         <div>
           <label>썸네일</label>
           <ButtonS category="whitehotpink">변경하기</ButtonS>
-          <Img src={`/image/${thumbnail}`} width="20%" />
+          <Img src={`/image/${design.thumbnailPic}`} width="20%" />
         </div>
 
         <div>
@@ -163,8 +205,8 @@ function CardDesigner() {
           >
             변경하기
           </ButtonS>
-          <FontPreview fontFamily={fontName || "inherit"}>
-            {fontName}
+          <FontPreview fontFamily={design.fontName || "inherit"}>
+            {design.fontName}
           </FontPreview>
         </div>
 
@@ -176,8 +218,8 @@ function CardDesigner() {
 
         <div>
           <label>글씨 색상</label>
-          <button onClick={() => editFontSize("default")}>흰색</button>
-          <button onClick={() => editFontSize("big")}>검은색</button>
+          <White onClick={() => editFontColor("white")}>흰색</White>
+          <Black onClick={() => editFontColor("black")}>검은색</Black>
         </div>
       </Options>
 

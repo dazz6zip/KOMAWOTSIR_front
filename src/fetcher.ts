@@ -66,21 +66,24 @@ export interface IDraftLoad {
 }
 
 export interface IDesignPost {
-  designId: number;
-  thumbnailPic: string;
-  backgroundPic: string;
-  fontSize: fontSize;
-  fontColor: fontColor;
-  fontUrl: string;
-  fontName: string;
+  designId?: number;
+  thumbnailPic?: string;
+  backgroundPic?: string;
+  thumbnailId?: number;
+  backgroundId?: number;
+  fontId?: number;
+  fontSize?: EFontSize;
+  fontColor?: EFontColor;
+  fontUrl?: string;
+  fontName?: string;
 }
 
-export enum fontSize {
+export enum EFontSize {
   bigSize = "bigSize",
   defaultSize = "defaultSize",
 }
 
-export enum fontColor {
+export enum EFontColor {
   white = "white",
   black = "black",
 }

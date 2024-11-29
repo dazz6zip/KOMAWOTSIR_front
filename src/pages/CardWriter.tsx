@@ -11,7 +11,6 @@ import { useQuery } from "react-query";
 import Modal from "react-modal";
 import axios from "axios";
 import {
-  fontSize,
   GptLoad,
   IDraftLoad,
   IPostContentsLoad,
@@ -43,12 +42,13 @@ const TextArea = styled.textarea`
 export const PreviewArea = styled.div<{
   bimage?: string;
   fsize?: number;
+  fColor?: string;
   fFamily?: string;
 }>`
   background-image: url(${(props) => props.bimage});
   font-size: ${(props) => props.fsize}px;
+  color: ${(props) => props.fColor};
   font-family: ${(props) => props.fFamily};
-  /* background-color: tomato; */
   width: 300px;
   min-height: 160px;
   display: block;

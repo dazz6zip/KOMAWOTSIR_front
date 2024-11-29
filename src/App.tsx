@@ -1,12 +1,15 @@
 import Router from "./Router";
 import GlobalStyle from "./GlobalStyle";
 import { BrowserRouter, Link } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 
 function App() {
   return (
     <BrowserRouter>
-      <GlobalStyle />
-      <Router />
+      <RecoilRoot>
+        <GlobalStyle />
+        <Router />
+      </RecoilRoot>
     </BrowserRouter>
   );
 }
