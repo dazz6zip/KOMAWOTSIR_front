@@ -19,6 +19,7 @@ import ReceiverList from "./pages/ReceiverList";
 import CarouselEx from "./pages/ExCarousel";
 import CardList from "./pages/CardList";
 import DraftList from "./pages/DraftList";
+import FontList from "./pages/FontList";
 
 const Container = styled.div`
   display: flex;
@@ -96,6 +97,9 @@ function Router() {
           </Route>
           <Route path="/draft">
             <DraftList />
+          </Route>
+          <Route path="/font-list">
+            <FontList />
           </Route>
         </Switch>
       </Container>

@@ -101,7 +101,7 @@ function Header() {
         <StyledMenuItem to="/receiver-list" onClick={closeMenu} $isSubMenu>
           <CustomIcon>✷</CustomIcon>작성하기
         </StyledMenuItem>
-        <StyledMenuItem to="" onClick={closeMenu} $isSubMenu>
+        <StyledMenuItem to="/design" onClick={closeMenu} $isSubMenu>
           <CustomIcon>✸</CustomIcon>디자인하기
         </StyledMenuItem>
         <StyledMenuItem to="" onClick={closeMenu}>

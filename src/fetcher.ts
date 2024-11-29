@@ -65,6 +65,32 @@ export interface IDraftLoad {
   contents: string;
 }
 
+export interface IDesignPost {
+  designId: number;
+  thumbnailPic: string;
+  backgroundPic: string;
+  fontSize: fontSize;
+  fontColor: fontColor;
+  fontUrl: string;
+  fontName: string;
+}
+
+export enum fontSize {
+  bigSize = "bigSize",
+  defaultSize = "defaultSize",
+}
+
+export enum fontColor {
+  white = "white",
+  black = "black",
+}
+
+export interface IFont {
+  id: number;
+  name: string;
+  url: string;
+}
+
 export const loadUserInfo = async (userId: number): Promise<IUserInfoType> => {
   try {
     const response = await axios.get<IUserInfoType>(`/api/users/${userId}`);
@@ -170,6 +196,30 @@ export const GptLoad = async (prompt: string): Promise<String> => {
       },
     });
     return response.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const DesignPostLoad = async (userId: number): Promise<IDesignPost> => {
+  try {
+    const response = await axios.get<IDesignPost>(
+      `/api/posts/design/${userId}`
+    );
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const FontLoad = async (): Promise<IFont[]> => {
+  try {
+    const response = await axios.get<IFont[]>(`/api/fonts`);
+    return response.data.map((item) => ({
+      ...item,
+    }));
   } catch (err) {
     console.error(err);
     throw err;

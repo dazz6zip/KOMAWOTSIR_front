@@ -11,6 +11,7 @@ import { useQuery } from "react-query";
 import Modal from "react-modal";
 import axios from "axios";
 import {
+  fontSize,
   GptLoad,
   IDraftLoad,
   IPostContentsLoad,
@@ -39,10 +40,15 @@ const TextArea = styled.textarea`
   resize: none;
 `;
 
-const PreviewArea = styled.div<{ bimage?: string }>`
-  /* background-image: url(${(props) => props.bimage});
-   */
-  background-color: tomato;
+export const PreviewArea = styled.div<{
+  bimage?: string;
+  fsize?: number;
+  fFamily?: string;
+}>`
+  background-image: url(${(props) => props.bimage});
+  font-size: ${(props) => props.fsize}px;
+  font-family: ${(props) => props.fFamily};
+  /* background-color: tomato; */
   width: 300px;
   min-height: 160px;
   display: block;
@@ -182,9 +188,7 @@ function CardWriter() {
         <br />
         연하장 작성하기
       </Title>
-      <PreviewArea>
-        <span>{contents}</span>
-      </PreviewArea>
+
       <ButtonRow>
         <ButtonS
           category="gray"
