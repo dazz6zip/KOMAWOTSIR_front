@@ -88,10 +88,10 @@ function Header() {
         <StyledMenuItem to="" onClick={closeMenu}>
           나의 편지함
         </StyledMenuItem>
-        <StyledMenuItem to="/present-box" onClick={closeMenu} $isSubMenu>
+        <StyledMenuItem to="/yearly-presents" onClick={closeMenu} $isSubMenu>
           <CustomIcon>✶</CustomIcon>올해 받은 연하장
         </StyledMenuItem>
-        <StyledMenuItem to="/present-box-all" onClick={closeMenu} $isSubMenu>
+        <StyledMenuItem to="/all-presents" onClick={closeMenu} $isSubMenu>
           <CustomIcon>✷</CustomIcon>전체 수신 목록
         </StyledMenuItem>
         <StyledMenuItem to="">편지 보내기</StyledMenuItem>

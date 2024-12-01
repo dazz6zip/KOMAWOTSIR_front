@@ -1,13 +1,16 @@
-import { useState } from "react";
-import { CiSquareChevDown, CiSquareChevUp } from "react-icons/ci";
+import React, { useState } from "react";
+import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
+import { useQuery } from "react-query";
 import {
   CardContainer,
   CardStyled,
   CarouselWrapper,
   NavigationButton,
-} from "../components/common/CarouselStyle";
-import DescriptionS from "../components/common/DescriptionS";
+} from "../components/common/CarouselStyle1";
+import Description from "../components/common/Description";
+import { Select } from "../components/common/Select";
 import Title from "../components/common/Title";
+import { IPresent, PresentLoad } from "../fetcher";
 import thumbnail from "../images/thumbnail.png";
 
 interface ImageDto {
@@ -74,21 +77,50 @@ const images: ImageDto[] = [
   },
 ];
 
-function CardList() {
+const AllPresents: React.FC = () => {
   const [active, setActive] = useState(0);
+  const receiverId = 2;
+  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const count = images.length;
 
+  const { isLoading, data } = useQuery<IPresent[]>(
+    ["presentLoad", receiverId],
+    () => PresentLoad(receiverId)
+  );
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(2024);
+  const openSelect = () => setIsOpen(!isOpen);
+  const handleOptionClick = (option: number) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+  };
+
   return (
     <>
-      <Title>2025 내가 받은 연하장</Title>
+      <Title>연하장 수신 목록</Title>
+      <Select isOpen={isOpen}>
+        <div className="select-btn" onClick={openSelect}>
+          {selectedOption}
+          <i>▼</i>
+        </div>
+        <div className="options">
+          <div className="option" onClick={() => handleOptionClick(2024)}>
+            2024
+          </div>
+          <div className="option" onClick={() => handleOptionClick(2025)}>
+            2025
+          </div>
+        </div>
+      </Select>
       <CarouselWrapper>
         {active > 0 && (
           <NavigationButton
-            direction="up"
+            direction="left"
             onClick={() => setActive((i) => i - 1)}
           >
-            <CiSquareChevUp />
+            <TiChevronLeftOutline />
           </NavigationButton>
         )}
         {images.map((image, i) => (
@@ -105,29 +137,29 @@ function CardList() {
                 alt={image.name}
                 style={{ width: "100%", borderRadius: "1rem" }}
               />
-              <DescriptionS align="center">
-                클릭하여 내용을 확인하세요!
-              </DescriptionS>
+              <h2>{image.name}</h2>
+              <p>{image.category}</p>
             </CardStyled>
           </CardContainer>
         ))}
         {active < count - 1 && (
           <NavigationButton
-            direction="down"
+            direction="right"
             onClick={() => setActive((i) => i + 1)}
           >
-            <CiSquareChevDown />
+            <TiChevronRightOutline />
           </NavigationButton>
         )}
       </CarouselWrapper>
-
-      <DescriptionS>
+      <Description>
         연하장을 클릭하면 내용을 확인할 수 있어요!
         <br />
         스크롤해서 다른 연하장들도 확인해 보세요.
-      </DescriptionS>
+      </Description>
+      <br />
+      <br />
     </>
   );
-}
+};
 
-export default CardList;
+export default AllPresents;

@@ -1,25 +1,27 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "./pages/Home";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import FormMaker from "./pages/FormMaker";
+import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-import Home1 from "./pages/Home1";
-import ApplicantHome from "./pages/ApplicantHome";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import AllPresents from "./pages/AllPresents";
 import ApplicantDone from "./pages/ApplicantDone";
-import CardWriter from "./pages/CardWriter";
-import BackgroundList from "./pages/BackgroundList";
-import UpdateMyInfo from "./pages/UpdateMyInfo";
-import CardDesigner from "./pages/CardDesigner";
+import ApplicantHome from "./pages/ApplicantHome";
 import Apply1 from "./pages/Apply1";
 import Apply2 from "./pages/Apply2";
-import ReceiverAdder from "./pages/ReceiverAdder";
+import BackgroundList from "./pages/BackgroundList";
+import CardDesigner from "./pages/CardDesigner";
+import CardWriter from "./pages/CardWriter";
+import Carousel1 from "./pages/Carousel1";
 import DesignList from "./pages/DesignList";
-import ReceiverList from "./pages/ReceiverList";
-import CarouselEx from "./pages/ExCarousel";
-import CardList from "./pages/CardList";
 import DraftList from "./pages/DraftList";
+import CarouselEx from "./pages/ExCarousel";
 import FontList from "./pages/FontList";
+import FormMaker from "./pages/FormMaker";
+import Home from "./pages/Home";
+import Home1 from "./pages/Home1";
+import ReceiverAdder from "./pages/ReceiverAdder";
+import ReceiverList from "./pages/ReceiverList";
+import UpdateMyInfo from "./pages/UpdateMyInfo";
+import YearlyPresents from "./pages/YearlyPresents";
 
 const Container = styled.div`
   display: flex;
@@ -89,11 +91,17 @@ function Router() {
           <Route path="/design-list" exact>
             <DesignList />
           </Route>
-          <Route path="/present-box">
-            <CardList />
+          <Route path="/yearly-presents">
+            <YearlyPresents />
+          </Route>
+          <Route path="/all-presents">
+            <AllPresents />
           </Route>
           <Route path="/carousel-test">
             <CarouselEx />
+          </Route>
+          <Route path="/carousel-test1">
+            <Carousel1 />
           </Route>
           <Route path="/draft">
             <DraftList />

@@ -99,6 +99,30 @@ export interface IFont {
   url: string;
 }
 
+export interface IPresent {
+  // 내가 받은 연하장
+  id: number;
+  senderId: string;
+  senderNickname: string;
+  receiverId: string;
+  contents: string;
+  year: number;
+}
+
+export const PresentLoad = async (receiverId: number): Promise<IPresent[]> => {
+  try {
+    const response = await axios.get<IPresent[]>(
+      `/api/receivers/${receiverId}/posts`
+    );
+    return response.data.map((item) => ({
+      ...item,
+    }));
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
 export const loadUserInfo = async (userId: number): Promise<IUserInfoType> => {
   try {
     const response = await axios.get<IUserInfoType>(`/api/users/${userId}`);
