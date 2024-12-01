@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { CiSquareChevUp, CiSquareChevDown } from "react-icons/ci";
-import thumbnail from "../images/thumbnail.png";
+import { useState } from "react";
+import { CiSquareChevDown, CiSquareChevUp } from "react-icons/ci";
 import {
-  CarouselWrapper,
   CardContainer,
   CardStyled,
+  CarouselWrapper,
   NavigationButton,
-} from "../components/common/CarouselStyles";
-import Title from "../components/common/Title";
+} from "../components/common/CarouselStyle";
 import DescriptionS from "../components/common/DescriptionS";
+import Title from "../components/common/Title";
+import thumbnail from "../images/thumbnail.png";
 
 interface ImageDto {
   id: number;

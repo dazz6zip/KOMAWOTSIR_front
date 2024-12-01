@@ -1,8 +1,9 @@
+// 회원이 수신자 신청
 import { useForm } from "react-hook-form";
 import ButtonL from "../components/common/ButtonL";
-import Title from "../components/common/Title";
-import Form from "../components/common/Form";
 import DescriptionS from "../components/common/DescriptionS";
+import Form from "../components/common/Form";
+import Title from "../components/common/Title";
 
 function Apply1() {
   const { register, watch, handleSubmit } = useForm();
@@ -10,6 +11,7 @@ function Apply1() {
   // watch: form의 입력값 추적
   // handleSubmit: validation, preventDefault 담당
 
+  const receiverId = parseInt(sessionStorage.getItem("userId") || "0");
   const sender = "하하하호호";
 
   const onValid = (data: any) => {};

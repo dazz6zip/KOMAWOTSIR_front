@@ -8,6 +8,11 @@ export interface IUserInfoType {
   isSmsAllowed: boolean;
 }
 
+export interface KakaoLoginResponse {
+  redirectUri: string;
+  clientId: string;
+}
+
 export interface IQuestionItem {
   id?: number;
   inquiryId?: number;

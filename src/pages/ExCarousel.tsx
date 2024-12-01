@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
-import thumbnail from "../images/thumbnail.png";
 import {
-  CarouselWrapper,
   CardContainer,
   CardStyled,
+  CarouselWrapper,
   NavigationButton,
-} from "../components/common/CarouselStyles";
+} from "../components/common/CarouselStyle";
+import thumbnail from "../images/thumbnail.png";
 
 interface ImageDto {
   id: number;

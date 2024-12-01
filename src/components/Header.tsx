@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import logo from "../images/logo.png";
-import { Link } from "react-router-dom";
-import { slide as Menu } from "react-burger-menu";
 import { useState } from "react";
+import { slide as Menu } from "react-burger-menu";
 import { FaArrowLeft } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import logo from "../images/logo.png";
 
 const HeaderContainer = styled.div`
   height: 40px;
@@ -88,10 +88,10 @@ function Header() {
         <StyledMenuItem to="" onClick={closeMenu}>
           나의 편지함
         </StyledMenuItem>
-        <StyledMenuItem to="" onClick={closeMenu} $isSubMenu>
+        <StyledMenuItem to="/present-box" onClick={closeMenu} $isSubMenu>
           <CustomIcon>✶</CustomIcon>올해 받은 연하장
         </StyledMenuItem>
-        <StyledMenuItem to="" onClick={closeMenu} $isSubMenu>
+        <StyledMenuItem to="/present-box-all" onClick={closeMenu} $isSubMenu>
           <CustomIcon>✷</CustomIcon>전체 수신 목록
         </StyledMenuItem>
         <StyledMenuItem to="">편지 보내기</StyledMenuItem>

@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { EFontColor, EFontSize, IDesignPost } from "./fetcher";
+import { EFontColor, EFontSize, IDesignPost, IUserInfoType } from "./fetcher";
 
 export const ADesignState = atom<IDesignPost>({
   key: "ADesign",
@@ -20,4 +20,15 @@ export const ADesignState = atom<IDesignPost>({
 export const ADesignLoadState = atom<boolean>({
   key: "ADesignLoadState",
   default: true,
+});
+
+export const AUserState = atom<IUserInfoType>({
+  key: "userState",
+  default: {
+    id: 0,
+    kakaoId: "",
+    name: "",
+    tel: "",
+    isSmsAllowed: true,
+  },
 });
