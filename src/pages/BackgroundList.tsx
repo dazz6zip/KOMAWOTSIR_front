@@ -40,7 +40,7 @@ const ColorBox = styled.div<{ color: string; isSelected: boolean }>`
   padding-top: 75%; /* 4:3 Aspect Ratio */
   position: relative;
   background-image: url(${(props) => `image/${props.color}`});
-  background-size: cover;
+  background-size: contain;
   border: ${(props) => (props.isSelected ? "4px solid #000" : "none")};
   border-radius: 10px;
   cursor: pointer;
@@ -137,10 +137,8 @@ function BackgroundList() {
 
       // 파일 업로드 후 처리
       setSelectImageUrl(fileUrl as string);
-      alert("파일 업로드 성공!");
     } catch (error) {
       console.error("파일 업로드 실패:", error);
-      alert("파일 업로드 중 오류가 발생했습니다.");
     }
   };
 
