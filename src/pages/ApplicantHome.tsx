@@ -1,6 +1,7 @@
 // 카카오 로그인: 해당 유저 receiver 등록 여부 체크
 // 비회원 신청: ApplyWithoutLogin
 
+import axios from "axios";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -24,9 +25,10 @@ function ApplicantHome() {
   const history = useHistory();
 
   useEffect(() => {
-    // validate/url에서 가져옴
-    const urlParams = new URLSearchParams(window.location.search);
-    const senderId = urlParams.get("sender");
+    const senderId = 12;
+    // 나중에 밑에 두 줄로 바꾸기
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const senderId = urlParams.get("sender");
 
     if (senderId) {
       axios
@@ -58,7 +60,7 @@ function ApplicantHome() {
   };
 
   const applyWithoutLogin = () => {
-    history.push("/apply/guest", { userType: "guest" }); // userType은 페이지 다르게 처리할거면 필요없을듯
+    history.push("/apply/guest");
   };
 
   return (

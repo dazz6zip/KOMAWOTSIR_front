@@ -1,4 +1,5 @@
 // 비회원 신청: 전화번호로 회원 & receiver 등록 여부 체크
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "react-modal";
@@ -12,15 +13,15 @@ import DescriptionS from "../components/common/DescriptionS";
 import Form from "../components/common/Form";
 import { ModalContent, ModalStyle } from "../components/common/ModalStyle";
 import Title from "../components/common/Title";
+import TitleS from "../components/common/TitleS";
 import { IQuestionItem } from "../fetcher";
 
 function ApplyWithoutLogin() {
   const [isMemberModalOpen, setIsMemberModalOpen] = useState(false); // 회원이거나 이미 신청했을 때
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
+  const [continueApply, setContinueApply] = useState(false);
   const closeMemberModal = () => setIsMemberModalOpen(false);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
-  const closeInquiryModal = () => setIsInquiryModalOpen(false);
   const history = useHistory();
   const {
     register,
@@ -33,22 +34,14 @@ function ApplyWithoutLogin() {
   const sender = useRecoilValue(ASenderState);
   const [questions, setQuestions] = useState<IQuestionItem[]>();
 
-  const onValid = async (data: any) => {
-    const tel = data.tel;
-    try {
-      const response = await axios.get<string>(
-        `/api/users/check/${sender.id}/${tel}`
-      );
-      if (response.data == "member") {
-        alert("회원입니다."); // 회원 -> 카카오 로그인 ㄱㄱ
-        setIsMemberModalOpen(true);
-      } else if (response.data == "receiver") {
-        history.push("/apply/already");
-      } else {
-        getInquiry();
-      }
-    } catch (error) {
-      console.error("사용자 검사 실패:", error);
+  const checkUser = async (data: any) => {
+    const response = await axios.get<boolean>(
+      `/api/users/${sender.id}/receiverscheck`,
+      data.tel
+    );
+    if (response.data) {
+      history.push(`/already`);
+    } else {
     }
   };
 
@@ -59,7 +52,7 @@ function ApplyWithoutLogin() {
       );
       if (response.data.length > 0) {
         setQuestions(response.data);
-        setIsInquiryModalOpen(true);
+        setContinueApply(true);
       } else {
         getInquiry();
       }
@@ -68,6 +61,8 @@ function ApplyWithoutLogin() {
     }
   };
 
+  const onValid = (data: any) => {};
+
   return (
     <>
       <Title>
@@ -75,21 +70,11 @@ function ApplyWithoutLogin() {
         <br /> 연하장 신청하기
       </Title>
       <Form onSubmit={handleSubmit(onValid)}>
-        <label htmlFor="nickname">닉네임</label>
-        <DescriptionS>
-          {sender.name}님이 알아볼 수 있는 이름으로 입력해 주세요.
-        </DescriptionS>
-        <input
-          {...register("nickname", { required: "닉네임을 입력해 주세요." })}
-        />
-        {errors.nickname && (
-          <p style={{ color: "red" }}>{errors.nickname.message}</p>
-        )}
-
         <label htmlFor="tel">전화번호</label>
         <DescriptionS>
           1월 1일, 연하장 확인 안내 메시지 전송을 위해서만 사용됩니다.
         </DescriptionS>
+        {errors.tel && <p style={{ color: "red" }}>{errors.tel.message}</p>}
         <input
           {...register("tel", {
             required: "전화번호를 입력해 주세요.",
@@ -99,40 +84,43 @@ function ApplyWithoutLogin() {
             },
           })}
         />
-        {errors.tel && <p style={{ color: "red" }}>{errors.tel.message}</p>}
+        <ButtonS category="hotpink" onClick={checkUser}>
+          등록 확인
+        </ButtonS>
+        <br />
+        <br />
+        <br />
+        <label htmlFor="nickname">닉네임</label>
+        <DescriptionS>
+          {sender.name}님이 알아볼 수 있는 이름으로 입력해 주세요.
+        </DescriptionS>
+        {errors.nickname && (
+          <p style={{ color: "red" }}>{errors.nickname.message}</p>
+        )}
+        <input
+          {...register("nickname", { required: "닉네임을 입력해 주세요." })}
+        />
 
         <label htmlFor="info">소속 / 기타</label>
         <DescriptionS>확실한 구분을 위한 정보를 입력해 주세요.</DescriptionS>
+        {errors.info && <p style={{ color: "red" }}>{errors.info.message}</p>}
         <input
           {...register("info", { required: "소속 정보를 입력해 주세요." })}
         />
-        {errors.info && <p style={{ color: "red" }}>{errors.info.message}</p>}
+
+        <TitleS>질문 목록</TitleS>
+        {questions?.map((q) => (
+          <>
+            <h2>{q.question}</h2>
+            <DescriptionS>{q.description}</DescriptionS>
+            <input type="text" />
+          </>
+        ))}
 
         <ButtonL category="pink" type="submit">
           신청하기
         </ButtonL>
       </Form>
-
-      <Modal
-        isOpen={isInquiryModalOpen}
-        onRequestClose={closeInquiryModal}
-        style={ModalStyle}
-      >
-        <ModalContent>
-          <Title>질문 목록</Title>
-          {questions?.map((q) => (
-            <>
-              <h2>{q.question}</h2>
-              <DescriptionS>{q.description}</DescriptionS>
-              <input type="text" />
-            </>
-          ))}
-          {/* 입력자료 검사. form으로 변경 */}
-          <ButtonS category="white" onClick={() => setIsConfirmModalOpen(true)}>
-            신청하기
-          </ButtonS>
-        </ModalContent>
-      </Modal>
 
       <Modal
         isOpen={isMemberModalOpen}

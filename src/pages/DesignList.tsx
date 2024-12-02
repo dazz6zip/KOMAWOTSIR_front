@@ -3,10 +3,10 @@ import ButtonL from "../components/common/ButtonL";
 import ButtonRow from "../components/common/ButtonRow";
 import ButtonS from "../components/common/ButtonS";
 import Title from "../components/common/Title";
-import { DesignLoad, IDesignPost } from "../fetcher";
+import { DesignLoad, IDesign } from "../fetcher";
 
 function DesignList() {
-  const { isLoading, data } = useQuery<IDesignPost[]>(["designLoad"], () =>
+  const { isLoading, data } = useQuery<IDesign[]>(["designLoad"], () =>
     DesignLoad()
   );
   return (
@@ -20,7 +20,10 @@ function DesignList() {
       </ButtonRow>
       {data?.map((design) => (
         <div>
-          <img />
+          <img
+            src={require(`../images/${design.name}.png`).default}
+            alt={design.name}
+          />
         </div>
       ))}
       <ButtonL category="blue">+ 직접 등록하기</ButtonL>

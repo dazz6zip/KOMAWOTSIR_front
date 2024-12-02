@@ -83,6 +83,16 @@ export interface IDesignPost {
   fontName?: string;
 }
 
+export interface IDesign {
+  id?: number;
+  category?: string;
+  name?: string;
+  pic?: string;
+  isFront?: boolean;
+  sourceType?: string;
+  userId: string;
+}
+
 export enum EFontSize {
   bigSize = "bigSize",
   defaultSize = "defaultSize",
@@ -277,9 +287,9 @@ export const FontLoad = async (): Promise<IFont[]> => {
   }
 };
 
-export const DesignLoad = async (): Promise<IDesignPost[]> => {
+export const DesignLoad = async (): Promise<IDesign[]> => {
   try {
-    const response = await axios.get<IDesignPost[]>(`/api/design`);
+    const response = await axios.get<IDesign[]>(`/api/design`);
     return response.data.map((item) => ({
       ...item,
     }));

@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { ASenderState } from "../atoms";
@@ -13,6 +14,7 @@ const LogoSection = styled.div`
 
 function AlreadyApplied() {
   const sender = useRecoilValue(ASenderState);
+  const history = useHistory();
 
   return (
     <>
@@ -33,7 +35,9 @@ function AlreadyApplied() {
         <br />
         내년에 만나요!
       </Description>
-      <ButtonL category="pink">홈으로 이동</ButtonL>
+      <ButtonL category="pink" onClick={() => history.push("/")}>
+        홈으로 이동
+      </ButtonL>
     </>
   );
 }
