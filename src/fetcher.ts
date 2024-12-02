@@ -109,6 +109,21 @@ export interface IPresent {
   year: number;
 }
 
+export interface Iimage {
+  id: number;
+  category: string;
+  name: string;
+  pic: string;
+  isFront: boolean;
+  sourceType: ESoureceType;
+  userId: number;
+}
+
+export enum ESoureceType {
+  SERVICE = "SERVICE",
+  USER = "USER",
+}
+
 export const loadUserInfo = async (userId: number): Promise<IUserInfoType> => {
   try {
     const response = await axios.get<IUserInfoType>(`/api/users/${userId}`);
@@ -267,6 +282,18 @@ export const PresentLoad = async (receiverId: number): Promise<IPresent[]> => {
     const response = await axios.get<IPresent[]>(
       `/api/receivers/${receiverId}/posts`
     );
+    return response.data.map((item) => ({
+      ...item,
+    }));
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const imageLoad = async (isFront: boolean): Promise<Iimage[]> => {
+  try {
+    const response = await axios.get<Iimage[]>(`/api/images`);
     return response.data.map((item) => ({
       ...item,
     }));

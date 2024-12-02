@@ -129,7 +129,6 @@ function CardDesigner() {
   };
 
   const SaveDesign = () => {
-    alert("savaDesign");
     console.log(design);
 
     // 배경화면
@@ -140,7 +139,6 @@ function CardDesigner() {
         }`
       )
       .then(() => {
-        alert("배경화면 끝");
         // 썸네일
         axios.put(
           `/api/users/${userId}/designs/${design.designId}/${false}/${
@@ -149,14 +147,12 @@ function CardDesigner() {
         );
       })
       .then(() => {
-        alert("썸네일 끝");
         // 폰트
         axios.put(
           `/api/users/${userId}/designs/font/${design.fontId}/${design.fontSize}/${design.fontColor}`
         );
       })
       .catch((err) => {
-        alert(err);
         console.error(err);
       });
   };
@@ -173,7 +169,7 @@ function CardDesigner() {
       </Description>
 
       <PreviewArea
-        bimage={`/image/${data?.backgroundPic}`}
+        bimage={`/image/${design.backgroundPic}`}
         fFamily={design.fontName}
         fsize={design.fontSize === EFontSize.defaultSize ? 16 : 24}
         fColor={design.fontColor === EFontColor.white ? "white" : "black"}
@@ -187,13 +183,23 @@ function CardDesigner() {
       <Options>
         <div>
           <label>배경화면</label>
-          <ButtonS category="whitehotpink">변경하기</ButtonS>
+          <ButtonS
+            category="whitehotpink"
+            onClick={() => nav.push(`../background`, { isFront: true })}
+          >
+            변경하기
+          </ButtonS>
           <Img src={`/image/${design.backgroundPic}`} width="20%" />
         </div>
 
         <div>
           <label>썸네일</label>
-          <ButtonS category="whitehotpink">변경하기</ButtonS>
+          <ButtonS
+            category="whitehotpink"
+            onClick={() => nav.push(`../background`, { isFront: false })}
+          >
+            변경하기
+          </ButtonS>
           <Img src={`/image/${design.thumbnailPic}`} width="20%" />
         </div>
 
