@@ -31,6 +31,7 @@ export const ModalContent = styled.div`
     font-size: 14px;
     color: #666;
     margin-bottom: 20px;
+    line-height: 1.2rem;
   }
 
   input {

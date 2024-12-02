@@ -1,4 +1,4 @@
-// 비회원이 수신 신청
+// 비회원 신청: 전화번호로 회원 & receiver 등록 여부 체크
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "react-modal";
@@ -9,7 +9,7 @@ import Form from "../components/common/Form";
 import { ModalContent, ModalStyle } from "../components/common/ModalStyle";
 import Title from "../components/common/Title";
 
-function Apply2() {
+function ApplyWithoutLogin() {
   const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
   const closeCheckModal = () => setIsCheckModalOpen(false);
   const { register, watch, handleSubmit } = useForm();
@@ -17,6 +17,12 @@ function Apply2() {
   const sender = "하하하호호";
 
   const onValid = (data: any) => {};
+
+  // 전화번호로 회원 여부 & 신청 여부 체크
+  const checkIsAlreadyReceiver = () => {};
+  // 회원 -> 카카오 로그인 ㄱㄱ
+  // 신청 -> 이미 신청했습니다
+  // X -> 계속 진행
 
   return (
     <>
@@ -49,14 +55,14 @@ function Apply2() {
         isOpen={isCheckModalOpen}
         onRequestClose={closeCheckModal}
         style={ModalStyle}
-        ariaHideApp={false}
       >
         <ModalContent>
           <h3>신청하시겠습니까?</h3>
           <p>
             정보를 제대로 입력했는지 확인해 주세요.
             <br />
-            신청한 이후에는 수정하거나, 취소할 수 없어요.
+            신청한 이후에는 수정하거나, <br />
+            취소할 수 없어요.
           </p>
           <ButtonS category="white" onClick={closeCheckModal}>
             다시 확인하기
@@ -69,4 +75,4 @@ function Apply2() {
   );
 }
 
-export default Apply2;
+export default ApplyWithoutLogin;

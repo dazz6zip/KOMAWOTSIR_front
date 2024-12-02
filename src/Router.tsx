@@ -3,10 +3,11 @@ import styled from "styled-components";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import AllPresents from "./pages/AllPresents";
+import AlreadyApplied from "./pages/AlreadyApplied";
 import ApplicantDone from "./pages/ApplicantDone";
 import ApplicantHome from "./pages/ApplicantHome";
 import Apply1 from "./pages/Apply1";
-import Apply2 from "./pages/Apply2";
+import ApplyWithoutLogin from "./pages/ApplyWithoutLogin";
 import BackgroundList from "./pages/BackgroundList";
 import CardDesigner from "./pages/CardDesigner";
 import CardWriter from "./pages/CardWriter";
@@ -73,8 +74,8 @@ function Router() {
           <Route path="/apply1" exact>
             <Apply1 />
           </Route>
-          <Route path="/apply2" exact>
-            <Apply2 />
+          <Route path="/apply/guest" exact>
+            <ApplyWithoutLogin />
           </Route>
           <Route path="/apply/done" exact>
             <ApplicantDone />
@@ -108,6 +109,9 @@ function Router() {
           </Route>
           <Route path="/font-list">
             <FontList />
+          </Route>
+          <Route path="/already">
+            <AlreadyApplied />
           </Route>
         </Switch>
       </Container>

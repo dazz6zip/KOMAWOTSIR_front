@@ -32,3 +32,14 @@ export const AUserState = atom<IUserInfoType>({
     isSmsAllowed: true,
   },
 });
+
+export const ASenderState = atom<IUserInfoType>({
+  key: "senderState",
+  default: {
+    id: 0,
+    kakaoId: "",
+    name: "",
+    tel: "",
+    isSmsAllowed: true,
+  },
+});

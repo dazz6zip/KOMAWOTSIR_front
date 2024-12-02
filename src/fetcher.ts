@@ -2,7 +2,7 @@ import axios from "axios";
 
 export interface IUserInfoType {
   id: number;
-  kakaoId: string;
+  kakaoId?: string;
   name: string;
   tel: string;
   isSmsAllowed: boolean;
@@ -109,20 +109,6 @@ export interface IPresent {
   year: number;
 }
 
-export const PresentLoad = async (receiverId: number): Promise<IPresent[]> => {
-  try {
-    const response = await axios.get<IPresent[]>(
-      `/api/receivers/${receiverId}/posts`
-    );
-    return response.data.map((item) => ({
-      ...item,
-    }));
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-};
-
 export const loadUserInfo = async (userId: number): Promise<IUserInfoType> => {
   try {
     const response = await axios.get<IUserInfoType>(`/api/users/${userId}`);
@@ -138,6 +124,24 @@ export const createQuestion = async (
 ): Promise<IQuestionItem[]> => {
   try {
     const response = await axios.get<IQuestionItem[]>(`/api/inquiry/${userId}`);
+    return response.data.map((item) => ({
+      ...item,
+      description: item.description || "",
+    }));
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const getQuestion = async (
+  // 신청 폼에 작성자가 등록해둔 질문목록 불러오기
+  senderId: number
+): Promise<IQuestionItem[]> => {
+  try {
+    const response = await axios.get<IQuestionItem[]>(
+      `/api/inquiry/${senderId}`
+    );
     return response.data.map((item) => ({
       ...item,
       description: item.description || "",
@@ -249,6 +253,20 @@ export const DesignPostLoad = async (userId: number): Promise<IDesignPost> => {
 export const FontLoad = async (): Promise<IFont[]> => {
   try {
     const response = await axios.get<IFont[]>(`/api/fonts`);
+    return response.data.map((item) => ({
+      ...item,
+    }));
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const PresentLoad = async (receiverId: number): Promise<IPresent[]> => {
+  try {
+    const response = await axios.get<IPresent[]>(
+      `/api/receivers/${receiverId}/posts`
+    );
     return response.data.map((item) => ({
       ...item,
     }));

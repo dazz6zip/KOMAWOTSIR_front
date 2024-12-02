@@ -1,6 +1,11 @@
-import { useEffect, useState } from "react";
+// 카카오 로그인: 해당 유저 receiver 등록 여부 체크
+// 비회원 신청: ApplyWithoutLogin
+
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { ASenderState } from "../atoms";
 import ButtonL from "../components/common/ButtonL";
 import Description from "../components/common/Description";
 import Img from "../components/common/Img";
@@ -14,7 +19,8 @@ const LogoSection = styled.div`
 `;
 
 function ApplicantHome() {
-  const [sender, setSender] = useState("");
+  const setSender = useSetRecoilState(ASenderState);
+  const sender = useRecoilValue(ASenderState);
   const history = useHistory();
 
   useEffect(() => {
@@ -24,9 +30,9 @@ function ApplicantHome() {
 
     if (senderId) {
       axios
-        .get<IUserInfoType>(`/api/users/{senderId}`)
+        .get<IUserInfoType>(`/api/users/${senderId}`)
         .then((response) => {
-          setSender(response.data.name);
+          setSender(response.data);
         })
         .catch((error) => {
           console.error("수신자 정보 확인 불가능", error);
@@ -52,7 +58,7 @@ function ApplicantHome() {
   };
 
   const applyWithoutLogin = () => {
-    history.push("/apply", { sender, userType: "guest" });
+    history.push("/apply/guest", { userType: "guest" }); // userType은 페이지 다르게 처리할거면 필요없을듯
   };
 
   return (
@@ -61,7 +67,7 @@ function ApplicantHome() {
         <Img src={main} width="70%" alt="Main" className="logo-image" />
       </LogoSection>
       <Title>
-        {sender}님에게
+        {sender.name}님에게
         <br />
         연하장 신청하기
       </Title>

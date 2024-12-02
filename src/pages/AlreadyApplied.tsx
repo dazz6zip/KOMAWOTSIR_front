@@ -1,23 +1,29 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { ASenderState } from "../atoms";
+import ButtonL from "../components/common/ButtonL";
 import Description from "../components/common/Description";
-import DescriptionS from "../components/common/DescriptionS";
 import Img from "../components/common/Img";
 import Title from "../components/common/Title";
-import kakao from "../images/kakao.png";
 import main from "../images/main.png";
 
 const LogoSection = styled.div`
   text-align: center;
 `;
 
-function ApplicantDone() {
-  const username = "하하호호";
+function AlreadyApplied() {
+  const sender = useRecoilValue(ASenderState);
+
   return (
     <>
       <LogoSection>
         <Img src={main} width="70%" alt="Main" className="logo-image" />
       </LogoSection>
-      <Title>연하장 신청 완료</Title>
+      <Title>
+        {sender.name}님에게
+        <br />
+        이미 연하장을 신청하셨습니다.
+      </Title>
       <Description>
         신년에 연하장이 도착하면,
         <br />
@@ -27,13 +33,9 @@ function ApplicantDone() {
         <br />
         내년에 만나요!
       </Description>
-      <Img src={kakao} width="50%" />
-      <DescriptionS>
-        카카오로 간편하게 로그인/회원가입하고
-        <br /> 연하장을 신청받아 보세요!
-      </DescriptionS>
+      <ButtonL category="pink">홈으로 이동</ButtonL>
     </>
   );
 }
 
-export default ApplicantDone;
+export default AlreadyApplied;
