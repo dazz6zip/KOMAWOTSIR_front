@@ -38,7 +38,17 @@ export const ASenderState = atom<IUserInfoType>({
   default: {
     id: 0,
     kakaoId: "",
-    name: "",
+    name: "김보냄",
+    tel: "",
+    isSmsAllowed: true,
+  },
+});
+
+export const AReceiverState = atom<IUserInfoType>({
+  key: "receiverState",
+  default: {
+    id: 0,
+    name: "최받음",
     tel: "",
     isSmsAllowed: true,
   },

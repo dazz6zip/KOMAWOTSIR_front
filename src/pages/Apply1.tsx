@@ -1,6 +1,8 @@
 // 회원이 수신자 신청
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
+import { useRecoilValue } from "recoil";
+import { ASenderState } from "../atoms";
 import ButtonL from "../components/common/ButtonL";
 import DescriptionS from "../components/common/DescriptionS";
 import Form from "../components/common/Form";
@@ -13,15 +15,14 @@ function Apply1() {
   // watch: form의 입력값 추적
   // handleSubmit: validation, preventDefault 담당
 
-  const senderId = 5;
   const receiverId = parseInt(sessionStorage.getItem("userId") || "0");
-  const sender = "하하하호호";
+  const sender = useRecoilValue(ASenderState);
 
   const onValid = (data: any) => {};
 
   const { isLoading, data } = useQuery<IQuestionItem[]>(
-    ["questionLoad", senderId],
-    () => getQuestion(senderId)
+    ["questionLoad", sender.id],
+    () => getQuestion(sender.id)
   );
 
   const checkReceiver = () => {};
