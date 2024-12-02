@@ -1,15 +1,15 @@
-import { useForm } from "react-hook-form";
-import ButtonL from "../components/common/ButtonL";
-import Title from "../components/common/Title";
-import Form from "../components/common/Form";
-import { useQuery } from "react-query";
-import { IUserInfoType, loadUserInfo } from "../fetcher";
-import styled from "styled-components";
 import axios from "axios";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Modal from "react-modal";
-import ButtonS from "../components/common/ButtonS";
+import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import ButtonL from "../components/common/ButtonL";
+import ButtonS from "../components/common/ButtonS";
+import Form from "../components/common/Form";
+import Title from "../components/common/Title";
+import { IUserInfoType, loadUserInfo } from "../fetcher";
 
 const SmsOption = styled.div`
   padding-top: 120px;
@@ -133,10 +133,12 @@ function UpdateMyInfo() {
   };
 
   const handleWithdrawl = async () => {
+    const accessToken = Cookies.get("JSESSIONID");
+    alert(accessToken);
     try {
-      await axios.delete(`/api/users/${userId}`); // userId를 동적으로 변경 가능
+      await axios.delete(`/api/users/${userId}`);
       closeConfirmModal();
-      setIsSuccessModalOpen(true); // 성공 모달 열기
+      setIsSuccessModalOpen(true);
     } catch (error) {
       console.error("탈퇴 실패:", error);
       alert("탈퇴 중 오류가 발생했습니다.");
