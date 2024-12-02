@@ -133,8 +133,6 @@ function UpdateMyInfo() {
   };
 
   const handleWithdrawl = async () => {
-    const accessToken = Cookies.get("JSESSIONID");
-    alert(accessToken);
     try {
       await axios.delete(`/api/users/${userId}`);
       closeConfirmModal();

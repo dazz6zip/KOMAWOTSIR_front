@@ -3,10 +3,10 @@ import ButtonL from "../components/common/ButtonL";
 import ButtonRow from "../components/common/ButtonRow";
 import ButtonS from "../components/common/ButtonS";
 import Title from "../components/common/Title";
-import { DesignLoad, IDesign } from "../fetcher";
+import { DesignLoad, IDesignPost } from "../fetcher";
 
 function DesignList() {
-  const { isLoading, data } = useQuery<IDesign[]>(["designLoad"], () =>
+  const { isLoading, data } = useQuery<IDesignPost[]>(["designLoad"], () =>
     DesignLoad()
   );
   return (
@@ -19,7 +19,7 @@ function DesignList() {
         <ButtonS category="gray">시즌</ButtonS>
       </ButtonRow>
       {data?.map((design) => (
-        <div key={design.id}>
+        <div>
           <img />
         </div>
       ))}

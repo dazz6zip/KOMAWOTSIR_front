@@ -277,9 +277,9 @@ export const FontLoad = async (): Promise<IFont[]> => {
   }
 };
 
-export const DesignLoad = async (): Promise<IDesign[]> => {
+export const DesignLoad = async (): Promise<IDesignPost[]> => {
   try {
-    const response = await axios.get<IDesign[]>(`/api/design`);
+    const response = await axios.get<IDesignPost[]>(`/api/design`);
     return response.data.map((item) => ({
       ...item,
     }));
