@@ -4,7 +4,7 @@ import ButtonS from "../components/common/ButtonS";
 import ButtonL from "../components/common/ButtonL";
 import ButtonRow from "../components/common/ButtonRow";
 import { useQuery } from "react-query";
-import { Iimage, imageLoad } from "../fetcher";
+import { EImageCategory, Iimage, imageLoad } from "../fetcher";
 import { useHistory, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ADesignState } from "../atoms";
@@ -33,6 +33,28 @@ const ColorGrid = styled.div`
   gap: 10px;
   width: 100%;
   margin-bottom: 20px;
+`;
+
+const Tabs = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+`;
+
+const Tab = styled.button<{ isActive: boolean }>`
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: ${(props) => (props.isActive ? "#d9d9d9" : "#f5f5f5")};
+  color: ${(props) => (props.isActive ? "#000" : "#888")};
+
+  &:hover {
+    background-color: ${(props) => (props.isActive ? "#c0c0c0" : "#e0e0e0")};
+  }
 `;
 
 const ColorBox = styled.div<{ color: string; isSelected: boolean }>`
@@ -74,12 +96,16 @@ function BackgroundList() {
   const [selectImageUrl, setSelectImageUrl] = useState<string>();
   const [colors, setColors] = useState<Iimage[]>([]);
   const [file, setFile] = useState<File | null>(null); // 파일 업로드 상태 추가
+  const [finalCategory, setFinalCategory] = useState<string>("단색");
+
+  const category = ["단색", "그라데이션", "직접 업로드", "시즌"];
 
   const userId = 5;
+  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const { isLoading, data } = useQuery<Iimage[]>(
-    ["LoadDesign"],
-    () => imageLoad(location.state.isFront),
+    ["LoadDesign", finalCategory],
+    () => imageLoad(finalCategory, userId, location.state.isFront),
     {
       onSuccess: (data) => {
         setColors(data);
@@ -135,7 +161,6 @@ function BackgroundList() {
 
       const fileUrl = response.data; // 서버에서 반환된 업로드된 파일 URL
 
-      // 파일 업로드 후 처리
       setSelectImageUrl(fileUrl as string);
     } catch (error) {
       console.error("파일 업로드 실패:", error);
@@ -148,6 +173,18 @@ function BackgroundList() {
         <Title>2025 연하장</Title>
         <SubTitle>디자인 {FrontOrBack} 변경하기</SubTitle>
       </Header>
+
+      <Tabs>
+        {category.map((tab) => (
+          <Tab
+            key={tab}
+            isActive={finalCategory === tab}
+            onClick={() => setFinalCategory(tab)}
+          >
+            {tab}
+          </Tab>
+        ))}
+      </Tabs>
 
       <ColorGrid>
         {colors.map((color) => (

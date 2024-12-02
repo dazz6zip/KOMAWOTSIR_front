@@ -11,7 +11,11 @@ import { useQuery } from "react-query";
 import Modal from "react-modal";
 import axios from "axios";
 import {
+  DesignPostLoad,
+  EFontColor,
+  EFontSize,
   GptLoad,
+  IDesignPost,
   IDraftLoad,
   IPostContentsLoad,
   PostContentsCheck,
@@ -58,7 +62,8 @@ export const PreviewArea = styled.div<{
 `;
 
 function CardWriter() {
-  const userId = parseInt(sessionStorage.getItem("userId") || "0");
+  const userId = 5;
+  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const [postId, setPostId] = useState<number>(0);
   const [saveTitle, setSaveTitle] = useState<boolean>(false);
@@ -181,6 +186,11 @@ function CardWriter() {
     setGptRequestKey((prev) => prev + 1);
   };
 
+  const { isLoading, data: designPostData } = useQuery<IDesignPost>(
+    ["LoadDesign"],
+    () => DesignPostLoad(userId)
+  );
+
   return (
     <>
       <Title>
@@ -188,7 +198,16 @@ function CardWriter() {
         <br />
         연하장 작성하기
       </Title>
-
+      <PreviewArea
+        bimage={`/image/${designPostData?.backgroundPic}`}
+        fFamily={designPostData?.fontName}
+        fsize={designPostData?.fontSize === EFontSize.defaultSize ? 16 : 24}
+        fColor={
+          designPostData?.fontColor === EFontColor.white ? "white" : "black"
+        }
+      >
+        <span>{contents}</span>
+      </PreviewArea>
       <ButtonRow>
         <ButtonS
           category="gray"

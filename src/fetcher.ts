@@ -134,6 +134,13 @@ export enum ESoureceType {
   USER = "USER",
 }
 
+export enum EImageCategory {
+  solid = "solid",
+  gradient = "gradient",
+  season = "season",
+  custom = "custom",
+}
+
 export const loadUserInfo = async (userId: number): Promise<IUserInfoType> => {
   try {
     const response = await axios.get<IUserInfoType>(`/api/users/${userId}`);
@@ -313,9 +320,23 @@ export const PresentLoad = async (receiverId: number): Promise<IPresent[]> => {
   }
 };
 
-export const imageLoad = async (isFront: boolean): Promise<Iimage[]> => {
+export const imageLoad = async (
+  type: string,
+  userId: number,
+  isFront: boolean
+): Promise<Iimage[]> => {
+  const category =
+    type === "단색"
+      ? EImageCategory.solid
+      : type === "그라데이션"
+      ? EImageCategory.gradient
+      : type === "직접 업로드"
+      ? EImageCategory.custom
+      : EImageCategory.season;
   try {
-    const response = await axios.get<Iimage[]>(`/api/images`);
+    const response = await axios.get<Iimage[]>(
+      `/api/images/${category}/${userId}/${isFront}`
+    );
     return response.data.map((item) => ({
       ...item,
     }));

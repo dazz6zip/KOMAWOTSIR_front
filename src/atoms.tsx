@@ -2,7 +2,7 @@ import { atom } from "recoil";
 import { EFontColor, EFontSize, IDesignPost, IUserInfoType } from "./fetcher";
 
 export const ADesignState = atom<IDesignPost>({
-  key: "ADesign",
+  key: "ADesignState",
   default: {
     designId: 0,
     thumbnailPic: "",
@@ -45,7 +45,7 @@ export const ASenderState = atom<IUserInfoType>({
 });
 
 export const AReceiverState = atom<IUserInfoType>({
-  key: "receiverState",
+  key: "AreceiverState",
   default: {
     id: 0,
     name: "최받음",
