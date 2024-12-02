@@ -24,7 +24,7 @@ function ApplicantHome() {
   const history = useHistory();
 
   useEffect(() => {
-    // url에 userId가 있다고 가정 (암호화 필요성 고민 ..)
+    // validate/url에서 가져옴
     const urlParams = new URLSearchParams(window.location.search);
     const senderId = urlParams.get("sender");
 

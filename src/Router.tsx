@@ -6,7 +6,7 @@ import AllPresents from "./pages/AllPresents";
 import AlreadyApplied from "./pages/AlreadyApplied";
 import ApplicantDone from "./pages/ApplicantDone";
 import ApplicantHome from "./pages/ApplicantHome";
-import Apply1 from "./pages/Apply1";
+import Apply from "./pages/Apply";
 import ApplyWithoutLogin from "./pages/ApplyWithoutLogin";
 import BackgroundList from "./pages/BackgroundList";
 import CardDesigner from "./pages/CardDesigner";
@@ -72,7 +72,7 @@ function Router() {
             <ApplicantHome />
           </Route>
           <Route path="/apply1" exact>
-            <Apply1 />
+            <Apply />
           </Route>
           <Route path="/apply/guest" exact>
             <ApplyWithoutLogin />

@@ -1,12 +1,14 @@
-import styled from "styled-components";
-import imsi2 from "../images/imsi2.jpg";
+import { useQuery } from "react-query";
+import ButtonL from "../components/common/ButtonL";
 import ButtonRow from "../components/common/ButtonRow";
 import ButtonS from "../components/common/ButtonS";
-import ButtonL from "../components/common/ButtonL";
 import Title from "../components/common/Title";
-import Img from "../components/common/Img";
+import { DesignLoad, IDesign } from "../fetcher";
 
 function DesignList() {
+  const { isLoading, data } = useQuery<IDesign[]>(["designLoad"], () =>
+    DesignLoad()
+  );
   return (
     <>
       <Title>연하장 배경 변경하기</Title>
@@ -16,7 +18,11 @@ function DesignList() {
         <ButtonS category="gray">일러스트</ButtonS>
         <ButtonS category="gray">시즌</ButtonS>
       </ButtonRow>
-      <Img src={imsi2} width="90%" alt="Main" className="logo-image" />
+      {data?.map((design) => (
+        <div key={design.id}>
+          <img />
+        </div>
+      ))}
       <ButtonL category="blue">+ 직접 등록하기</ButtonL>
       <ButtonL category="pink">저장하기</ButtonL>
     </>

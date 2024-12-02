@@ -109,6 +109,17 @@ export interface IPresent {
   year: number;
 }
 
+export interface IDesign {
+  id: number;
+  userId: number;
+  backgroundId?: number;
+  thumbnailId?: number;
+  fontId?: number;
+  year: string;
+  fontColor: EFontColor;
+  fontSize: EFontSize;
+}
+
 export const loadUserInfo = async (userId: number): Promise<IUserInfoType> => {
   try {
     const response = await axios.get<IUserInfoType>(`/api/users/${userId}`);
@@ -253,6 +264,18 @@ export const DesignPostLoad = async (userId: number): Promise<IDesignPost> => {
 export const FontLoad = async (): Promise<IFont[]> => {
   try {
     const response = await axios.get<IFont[]>(`/api/fonts`);
+    return response.data.map((item) => ({
+      ...item,
+    }));
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const DesignLoad = async (): Promise<IDesign[]> => {
+  try {
+    const response = await axios.get<IDesign[]>(`/api/design`);
     return response.data.map((item) => ({
       ...item,
     }));

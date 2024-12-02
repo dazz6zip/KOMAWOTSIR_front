@@ -1,4 +1,4 @@
-// 회원이 수신자 신청
+// 회원이 수신사 신청
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";
@@ -9,7 +9,7 @@ import Form from "../components/common/Form";
 import Title from "../components/common/Title";
 import { getQuestion, IQuestionItem } from "../fetcher";
 
-function Apply1() {
+function Apply() {
   const { register, watch, handleSubmit } = useForm();
   // register: onChange, value, useState를 모두 대체하는 함수!
   // watch: form의 입력값 추적
@@ -61,4 +61,4 @@ function Apply1() {
   );
 }
 
-export default Apply1;
+export default Apply;
