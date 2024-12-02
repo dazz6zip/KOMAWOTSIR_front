@@ -1,5 +1,8 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { CiSquareChevDown, CiSquareChevUp } from "react-icons/ci";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { AReceiverState } from "../atoms";
 import {
   CardContainer,
   CardStyled,
@@ -8,6 +11,7 @@ import {
 } from "../components/common/CarouselStyle";
 import DescriptionS from "../components/common/DescriptionS";
 import Title from "../components/common/Title";
+import { IPresent } from "../fetcher";
 import thumbnail from "../images/thumbnail.png";
 
 interface ImageDto {
@@ -76,6 +80,21 @@ const images: ImageDto[] = [
 
 function YearlyPresents() {
   const [active, setActive] = useState(0);
+  const setReceiver = useSetRecoilState(AReceiverState);
+  const receiver = useRecoilValue(AReceiverState);
+
+  const [cards, setCards] = useState<IPresent[]>();
+
+  useEffect(() => {
+    axios
+      .get<IPresent[]>(`/api/receivers/${receiver.id}/posts`)
+      .then((response) => {
+        setCards(response.data);
+      })
+      .catch((error) => {
+        console.error("연하장 목록 불러오기 실패:", error);
+      });
+  }, []);
 
   const count = images.length;
 

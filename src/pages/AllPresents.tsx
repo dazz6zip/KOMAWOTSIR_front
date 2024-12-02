@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
 import { useQuery } from "react-query";
+import { useRecoilValue } from "recoil";
+import { AReceiverState } from "../atoms";
 import {
   CardContainer,
   CardStyled,
@@ -80,9 +83,27 @@ const images: ImageDto[] = [
 const AllPresents: React.FC = () => {
   const [active, setActive] = useState(0);
   const receiverId = 2;
-  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
+  const receiver = useRecoilValue(AReceiverState);
+
+  const [cards, setCards] = useState<IPresent[]>();
+  const [yearList, setYearList] = useState<number[]>([]);
 
   const count = images.length;
+
+  useEffect(() => {
+    axios
+      .get<IPresent[]>(`/api/receivers/${receiver.id}/posts`)
+      .then((response) => {
+        setCards(response.data);
+        const years = Array.from(
+          new Set(response.data.map((card) => card.year))
+        ).sort((a, b) => a - b); // Set 객체로 중복 자동 제거, sort로 오름차순 정렬(둘을 빼서 음수면 a앞에 ..)
+        setYearList(years);
+      })
+      .catch((error) => {
+        console.error("연하장 목록 불러오기 실패:", error);
+      });
+  }, []);
 
   const { isLoading, data } = useQuery<IPresent[]>(
     ["presentLoad", receiverId],
@@ -106,12 +127,11 @@ const AllPresents: React.FC = () => {
           <i>▼</i>
         </div>
         <div className="options">
-          <div className="option" onClick={() => handleOptionClick(2024)}>
-            2024
-          </div>
-          <div className="option" onClick={() => handleOptionClick(2025)}>
-            2025
-          </div>
+          {yearList.map((year) => {
+            <div className="option" onClick={() => handleOptionClick(year)}>
+              {year}
+            </div>;
+          })}
         </div>
       </Select>
       <CarouselWrapper>
