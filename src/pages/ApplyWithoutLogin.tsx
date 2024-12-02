@@ -34,10 +34,14 @@ function ApplyWithoutLogin() {
   const sender = useRecoilValue(ASenderState);
   const [questions, setQuestions] = useState<IQuestionItem[]>();
 
-  const checkUser = async (data: any) => {
+  const checkUser = async () => {
     const response = await axios.get<boolean>(
-      `/api/users/${sender.id}/receiverscheck`,
-      data.tel
+      `/api/users/${sender.id}/receivers/check/tel`,
+      {
+        params: {
+          tel: getValues("tel"),
+        },
+      }
     );
     if (response.data) {
       history.push(`/already`);
@@ -48,7 +52,7 @@ function ApplyWithoutLogin() {
   const getInquiry = async () => {
     try {
       const response = await axios.get<IQuestionItem[]>(
-        `/api/inquiry/{sender.id}` // 질문목록 불러오기
+        `/api/inquiry/${sender.id}` // 질문목록 불러오기
       );
       if (response.data.length > 0) {
         setQuestions(response.data);
