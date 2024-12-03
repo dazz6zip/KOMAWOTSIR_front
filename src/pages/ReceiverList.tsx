@@ -1,23 +1,23 @@
+import axios from "axios";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Modal from "react-modal";
+import { useQuery, useQueryClient } from "react-query";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ButtonRow from "../components/common/ButtonRow";
 import ButtonS from "../components/common/ButtonS";
-import Title from "../components/common/Title";
-import { customStyles, ModalContent } from "./UpdateMyInfo";
-import { useState } from "react";
 import Description from "../components/common/Description";
-import { useQuery, useQueryClient } from "react-query";
-import Modal from "react-modal";
-import axios from "axios";
+import Title from "../components/common/Title";
 import {
-  IReceiverList,
+  IReceiver,
   IReceiverQuestionList,
   PostList,
   PostStatus,
   PostStatusMap,
   ReceiverInquiryList,
 } from "../fetcher";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { customStyles, ModalContent } from "./UpdateMyInfo";
 
 const CardContainer = styled.div`
   width: 90%;
@@ -152,7 +152,7 @@ function ReceiverList() {
 
   const queryClient = useQueryClient();
 
-  const { isLoading: rlIsLoading, data: rlData } = useQuery<IReceiverList[]>(
+  const { isLoading: rlIsLoading, data: rlData } = useQuery<IReceiver[]>(
     ["receiver", userId],
     () => PostList(userId),
     {

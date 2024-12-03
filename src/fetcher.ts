@@ -20,7 +20,7 @@ export interface IQuestionItem {
   description: string;
 }
 
-export interface IReceiverList {
+export interface IReceiver {
   id: number;
   senderId: number;
   nickname: string;
@@ -184,9 +184,9 @@ export const getQuestion = async (
   }
 };
 
-export const PostList = async (userId: number): Promise<IReceiverList[]> => {
+export const PostList = async (userId: number): Promise<IReceiver[]> => {
   try {
-    const response = await axios.get<IReceiverList[]>(
+    const response = await axios.get<IReceiver[]>(
       `/api/users/${userId}/receivers`
     );
     return response.data.map((item) => ({

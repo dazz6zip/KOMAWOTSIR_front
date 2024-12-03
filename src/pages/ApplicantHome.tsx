@@ -80,6 +80,8 @@ function ApplicantHome() {
         <br />
         회원가입 후 이용해주세요.
       </Description>
+      <br />
+      <br />
       <Img src={kakao} width="50%" alt="Kakao Login" onClick={kakaoLogin} />
       <ButtonL category="white" onClick={applyWithoutLogin}>
         비회원으로 신청하기
