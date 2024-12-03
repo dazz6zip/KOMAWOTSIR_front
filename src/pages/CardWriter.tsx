@@ -49,6 +49,7 @@ export const PreviewArea = styled.div<{
   fFamily?: string;
 }>`
   background-image: url(${(props) => props.bimage});
+  background-size: contain;
   font-size: ${(props) => props.fsize}px;
   color: ${(props) => props.fColor};
   font-family: ${(props) => props.fFamily};
@@ -198,7 +199,7 @@ function CardWriter() {
         연하장 작성하기
       </Title>
       <PreviewArea
-        bimage={`/image/${designPostData?.backgroundPic}`}
+        bimage={`/${designPostData?.backgroundPic}`}
         fFamily={designPostData?.fontName}
         fsize={designPostData?.fontSize === EFontSize.defaultSize ? 16 : 24}
         fColor={

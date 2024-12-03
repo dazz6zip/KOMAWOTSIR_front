@@ -47,20 +47,41 @@ const Options = styled.div`
   }
 `;
 
-const White = styled.button`
-  background-color: black;
-  color: white;
-  border: none;
-  padding: 3px;
+const SizeButton = styled.button<{ isSelected: boolean }>`
+  background-color: ${(props) => (props.isSelected ? "#EEB0B2" : "#fff")};
+  color: ${(props) => (props.isSelected ? "#fff" : "#333")};
+  border: ${(props) =>
+    props.isSelected ? "2px solid #ED798D" : "1px solid #ccc"};
+  padding: 8px 16px;
   border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: ${(props) => (props.isSelected ? "#EEB0B2" : "#f5f5f5")};
+    color: ${(props) => (props.isSelected ? "#fff" : "#000")};
+  }
 `;
 
-const Black = styled.button`
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-  padding: 3px;
+const ColorButton = styled.button<{ isSelected: boolean }>`
+  background-color: ${(props) =>
+    props.isSelected ? (props.children === "흰색" ? "#000" : "#fff") : "#fff"};
+  color: ${(props) =>
+    props.isSelected ? (props.children === "흰색" ? "#fff" : "#000") : "#000"};
+  border: ${(props) =>
+    props.isSelected ? "2px solid #ED798D" : "1px solid #ccc"};
+  padding: 8px 16px;
   border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: ${(props) =>
+      props.children === "흰색" ? "#333" : "#e0e0e0"};
+    color: ${(props) => (props.children === "흰색" ? "#fff" : "#000")};
+  }
 `;
 
 const FontPreview = styled.p<{ fontFamily: string }>`
@@ -169,7 +190,7 @@ function CardDesigner() {
       </Description>
 
       <PreviewArea
-        bimage={`/image/${design.backgroundPic}`}
+        bimage={design.backgroundPic}
         fFamily={design.fontName}
         fsize={design.fontSize === EFontSize.defaultSize ? 16 : 24}
         fColor={design.fontColor === EFontColor.white ? "white" : "black"}
@@ -189,7 +210,7 @@ function CardDesigner() {
           >
             변경하기
           </ButtonS>
-          <Img src={`/image/${design.backgroundPic}`} width="20%" />
+          <Img src={`${design.backgroundPic}`} width="20%" />
         </div>
 
         <div>
@@ -200,7 +221,7 @@ function CardDesigner() {
           >
             변경하기
           </ButtonS>
-          <Img src={`/image/${design.thumbnailPic}`} width="20%" />
+          <Img src={`${design.thumbnailPic}`} width="20%" />
         </div>
 
         <div>
@@ -218,14 +239,34 @@ function CardDesigner() {
 
         <div>
           <label>글꼴 크기</label>
-          <button onClick={() => editFontSize("default")}>보통</button>
-          <button onClick={() => editFontSize("big")}>크게</button>
+          <SizeButton
+            isSelected={design.fontSize === EFontSize.defaultSize}
+            onClick={() => editFontSize("default")}
+          >
+            보통
+          </SizeButton>
+          <SizeButton
+            isSelected={design.fontSize === EFontSize.bigSize}
+            onClick={() => editFontSize("big")}
+          >
+            크게
+          </SizeButton>
         </div>
 
         <div>
           <label>글씨 색상</label>
-          <White onClick={() => editFontColor("white")}>흰색</White>
-          <Black onClick={() => editFontColor("black")}>검은색</Black>
+          <ColorButton
+            isSelected={design.fontColor === EFontColor.white}
+            onClick={() => editFontColor("white")}
+          >
+            흰색
+          </ColorButton>
+          <ColorButton
+            isSelected={design.fontColor === EFontColor.black}
+            onClick={() => editFontColor("black")}
+          >
+            검은색
+          </ColorButton>
         </div>
       </Options>
 

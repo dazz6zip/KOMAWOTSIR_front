@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ButtonS from "../components/common/ButtonS";
 import ButtonL from "../components/common/ButtonL";
 import ButtonRow from "../components/common/ButtonRow";
 import { useQuery } from "react-query";
-import { EImageCategory, Iimage, imageLoad } from "../fetcher";
+import { Iimage, imageLoad } from "../fetcher";
 import { useHistory, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ADesignState } from "../atoms";
@@ -42,12 +41,13 @@ const Tabs = styled.div`
 `;
 
 const Tab = styled.button<{ isActive: boolean }>`
-  padding: 10px 20px;
+  padding: 5px 10px;
   margin: 0 5px;
   border: none;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: bold;
+
   cursor: pointer;
   background-color: ${(props) => (props.isActive ? "#d9d9d9" : "#f5f5f5")};
   color: ${(props) => (props.isActive ? "#000" : "#888")};
@@ -61,7 +61,7 @@ const ColorBox = styled.div<{ color: string; isSelected: boolean }>`
   width: 100%;
   padding-top: 75%; /* 4:3 Aspect Ratio */
   position: relative;
-  background-image: url(${(props) => `image/${props.color}`});
+  background-image: url(${(props) => `${props.color}`});
   background-size: contain;
   border: ${(props) => (props.isSelected ? "4px solid #000" : "none")};
   border-radius: 10px;
@@ -83,6 +83,26 @@ const ColorBox = styled.div<{ color: string; isSelected: boolean }>`
   }
 `;
 
+const InputFile = styled.div`
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+`;
+
+const PreviewContainer = styled.div`
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+`;
+
 function BackgroundList() {
   const location = useLocation() as {
     state: { isFront: boolean };
@@ -95,13 +115,13 @@ function BackgroundList() {
   const [selectImageId, setSelectImageId] = useState<number>();
   const [selectImageUrl, setSelectImageUrl] = useState<string>();
   const [colors, setColors] = useState<Iimage[]>([]);
-  const [file, setFile] = useState<File | null>(null); // 파일 업로드 상태 추가
+  const [file, setFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null); // 미리보기 URL 추가
   const [finalCategory, setFinalCategory] = useState<string>("단색");
 
   const category = ["단색", "그라데이션", "직접 업로드", "시즌"];
 
   const userId = 5;
-  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const { isLoading, data } = useQuery<Iimage[]>(
     ["LoadDesign", finalCategory],
@@ -138,7 +158,14 @@ function BackgroundList() {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setFile(event.target.files[0]);
+      const selectedFile = event.target.files[0];
+      setFile(selectedFile);
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreviewUrl(reader.result as string);
+      };
+      reader.readAsDataURL(selectedFile);
     }
   };
 
@@ -159,7 +186,7 @@ function BackgroundList() {
         },
       });
 
-      const fileUrl = response.data; // 서버에서 반환된 업로드된 파일 URL
+      const fileUrl = response.data;
 
       setSelectImageUrl(fileUrl as string);
     } catch (error) {
@@ -196,12 +223,22 @@ function BackgroundList() {
           ></ColorBox>
         ))}
       </ColorGrid>
-
-      <input type="file" accept="image/*" onChange={handleFileChange} />
+      {finalCategory === "직접 업로드" && (
+        <InputFile>
+          {previewUrl && (
+            <PreviewContainer>
+              <img src={previewUrl} alt="미리보기" />
+            </PreviewContainer>
+          )}
+          <input type="file" accept="*" onChange={handleFileChange} />
+        </InputFile>
+      )}
       <ButtonRow>
-        <ButtonL category="blue" onClick={() => customImageUpload()}>
-          + 직접 등록하기
-        </ButtonL>
+        {finalCategory === "직접 업로드" && (
+          <ButtonL category="blue" onClick={() => customImageUpload()}>
+            사진등록
+          </ButtonL>
+        )}
         <ButtonL category="pink" onClick={() => saveImage()}>
           저장하기
         </ButtonL>

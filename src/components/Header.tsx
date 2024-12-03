@@ -2,7 +2,7 @@ import { useState } from "react";
 import { slide as Menu } from "react-burger-menu";
 import { FaArrowLeft } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../images/logo.png";
 
@@ -67,13 +67,51 @@ const StyledMenuItem = styled(Link)<{ $isSubMenu?: boolean }>`
   }
 `;
 
+const OverlayButton = styled.button`
+  position: fixed; /* 화면에 고정 */
+  top: 70px; /* 하단에서 30px 위로 배치 */
+  left: 20px; /* 좌측에서 20px 떨어짐 */
+  z-index: 1000; /* 다른 요소 위에 배치 */
+  background: none; /* 투명 배경 */
+  border: none; /* 테두리 제거 */
+  color: #333; /* 텍스트 색상 */
+  font-size: 16px; /* 텍스트 크기 */
+  cursor: pointer;
+
+  display: flex; /* 아이콘과 텍스트 정렬 */
+  align-items: center;
+
+  &:hover {
+    color: #000; /* 호버 시 텍스트 색상 변경 */
+  }
+
+  svg {
+    margin-right: 8px; /* 아이콘과 텍스트 간격 */
+  }
+`;
+
 function Header() {
+  const nav = useHistory();
+  const location = useLocation(); // 현재 경로 가져오기
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <>
+      {location.pathname !== "/" && (
+        <OverlayButton
+          onClick={() => {
+            nav.goBack();
+          }}
+        >
+          <FaArrowLeft
+            color="#EEB0B2"
+            size="20"
+            style={{ marginRight: "10px" }}
+          />
+        </OverlayButton>
+      )}
       <Menu
         customBurgerIcon={<GiHamburgerMenu size={"30"} />}
         customCrossIcon={<FaArrowLeft size={"30"} />}
