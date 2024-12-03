@@ -14,7 +14,19 @@ import Form from "../components/common/Form";
 import { ModalContent, ModalStyle } from "../components/common/ModalStyle";
 import Title from "../components/common/Title";
 import TitleS from "../components/common/TitleS";
-import { IQuestionItem } from "../fetcher";
+import {
+  IQuestionItem,
+  IReceiverQuestionToAdd,
+  IReceiverSet,
+  IReceiverToAdd,
+} from "../fetcher";
+
+interface FormValues {
+  tel: string;
+  nickname: string;
+  info: string;
+  [key: `question_${number}`]: string; // 질문 입력값을 동적으로 매핑
+}
 
 function ApplyWithoutLogin() {
   const [isContinueModalOpen, setIsContinueModalOpen] = useState(false);
@@ -71,7 +83,43 @@ function ApplyWithoutLogin() {
     }
   };
 
-  const onValid = (data: any) => {};
+  const onValid = () => {
+    const formData = getValues(); // 모든 폼 데이터 가져오기
+
+    const receiver: IReceiverToAdd = {
+      senderId: sender.id,
+      tel: formData.tel,
+      nickname: formData.nickname,
+      memo: formData.info,
+    };
+
+    const receiverQuestions: IReceiverQuestionToAdd[] = (questions || []).map(
+      (q) => ({
+        inquiryItemId: q.id ?? 0, // id가 없을 경우 기본값 0
+        answer: formData[`question_${q.id}`] ?? "", // 입력값 없으면 빈 문자열
+      })
+    );
+
+    const receiverAdder: IReceiverSet = {
+      receiver: receiver,
+      answers: receiverQuestions,
+    };
+
+    addReceiverSet(receiverAdder);
+  };
+
+  const addReceiverSet = async (receiverAdder: IReceiverSet) => {
+    try {
+      const response = await axios.post(
+        `/api/users/${sender.id}/receivers`,
+        receiverAdder
+      );
+      alert("신청이 완료되었습니다!");
+    } catch (error) {
+      console.error("신청 중 오류 발생:", error);
+      alert("신청 처리 중 문제가 발생했습니다. 다시 시도해 주세요.");
+    }
+  };
 
   return (
     <>
@@ -94,7 +142,7 @@ function ApplyWithoutLogin() {
         <DescriptionS>
           {sender.name}님에게 이미 신청하셨는지 확인할게요!
         </DescriptionS>
-        <ButtonS category="hotpink" onClick={checkUser}>
+        <ButtonS category="hotpink" type="button" onClick={checkUser}>
           등록 확인
         </ButtonS>
         {canContinue && (
@@ -126,11 +174,15 @@ function ApplyWithoutLogin() {
 
             <TitleS>질문 목록</TitleS>
             {questions?.map((q) => (
-              <>
+              <div key={q.id}>
                 <h2>{q.question}</h2>
                 <DescriptionS>{q.description}</DescriptionS>
-                <input type="text" />
-              </>
+                <input
+                  {...register(`question_${q.id}`, {
+                    required: "답변을 입력해 주세요.",
+                  })}
+                />
+              </div>
             ))}
 
             <ButtonL category="pink" type="submit">

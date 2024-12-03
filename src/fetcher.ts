@@ -14,6 +14,7 @@ export interface KakaoLoginResponse {
 }
 
 export interface IQuestionItem {
+  // inquiry_item
   id?: number;
   inquiryId?: number;
   question: string;
@@ -27,12 +28,24 @@ export interface IReceiver {
   tel: string;
   memo: string;
   year?: string;
-  receiverUserId: number;
-  isDeleted: boolean;
-  userId: number;
-  userKakaoId: string;
+  receiverUserId?: number;
+  isDeleted?: boolean;
+  userId?: number;
+  userKakaoId?: string;
   postStatus: PostStatus;
   postContents: string;
+}
+
+export interface IReceiverToAdd {
+  senderId: number;
+  nickname: string;
+  tel: string;
+  memo: string;
+}
+
+export interface IReceiverQuestionToAdd {
+  inquiryItemId: number;
+  answer: string;
 }
 
 export enum PostStatus {
@@ -48,11 +61,16 @@ export const PostStatusMap: Record<PostStatus, string> = {
 };
 
 export interface IReceiverQuestion {
-  id: number;
+  id?: number;
   inquiryItemId: number;
-  receiverId: number;
+  receiverId?: number;
   answer: string;
-  question: string;
+  question?: string;
+}
+
+export interface IReceiverSet {
+  receiver: IReceiverToAdd;
+  answers: IReceiverQuestionToAdd[];
 }
 
 export interface IPostContents {
