@@ -31,6 +31,8 @@ const CardContainer = styled.div`
 
 const CheckForm = styled.div`
   display: flex;
+  margin-top: 15px;
+  margin-bottom: 15px;
 `;
 
 const CardHeader = styled.div<{ statusForHeader: PostStatus }>`
@@ -94,7 +96,7 @@ const WriteButton = styled.div`
 const StateCheckBox = styled.div`
   display: flex;
   gap: 20px;
-  flex-direction: column;
+  flex-direction: row;
 `;
 
 const Label = styled.label`
