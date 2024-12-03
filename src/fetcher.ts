@@ -185,7 +185,6 @@ export const createQuestion = async (
 };
 
 export const getQuestion = async (
-  // 신청 폼에 작성자가 등록해둔 질문목록 불러오기
   senderId: number
 ): Promise<IQuestionItem[]> => {
   try {

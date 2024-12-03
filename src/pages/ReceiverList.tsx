@@ -106,7 +106,26 @@ const Label = styled.label`
 `;
 
 const StyledCheckbox = styled.input`
-  margin-right: 10px;
+  appearance: none; /* 기본 체크박스 스타일 제거 */
+  width: 20px;
+  height: 20px;
+  border: 2px solid #eeb0b2;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:checked {
+    background-color: #eeb0b2; /* 체크 상태 배경색 */
+    border-color: #eeb0b2; /* 체크 상태 테두리색 */
+  }
+
+  &:checked::after {
+    content: "✔"; /* 체크 표시 */
+    color: white;
+    font-size: 14px;
+    display: block;
+    text-align: center;
+  }
 `;
 
 const MemoArea = styled.div`
