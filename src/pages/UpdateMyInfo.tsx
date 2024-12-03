@@ -9,7 +9,7 @@ import ButtonL from "../components/common/ButtonL";
 import ButtonS from "../components/common/ButtonS";
 import Form from "../components/common/Form";
 import Title from "../components/common/Title";
-import { IUserInfoType, loadUserInfo } from "../fetcher";
+import { IUser, loadUserInfo } from "../fetcher";
 
 const SmsOption = styled.div`
   padding-top: 120px;
@@ -102,12 +102,12 @@ function UpdateMyInfo() {
 
   const nav = useHistory();
 
-  const { register, watch, handleSubmit, setValue } = useForm<IUserInfoType>();
+  const { register, watch, handleSubmit, setValue } = useForm<IUser>();
   // register: onChange, value, useState를 모두 대체하는 함수!
   // watch: form의 입력값 추적
   // handleSubmit: validation, preventDefault 담당
 
-  const onValid = async (formData: IUserInfoType) => {
+  const onValid = async (formData: IUser) => {
     try {
       const response = await axios.put(`/api/users/${userId}`, formData);
       console.log("저장 성공:", response.data);
@@ -143,7 +143,7 @@ function UpdateMyInfo() {
     }
   };
 
-  const { isLoading, data, error } = useQuery<IUserInfoType>(
+  const { isLoading, data, error } = useQuery<IUser>(
     ["loadUserInfo", userId],
     () => loadUserInfo(userId),
     {

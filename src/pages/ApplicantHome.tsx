@@ -11,7 +11,7 @@ import ButtonL from "../components/common/ButtonL";
 import Description from "../components/common/Description";
 import Img from "../components/common/Img";
 import Title from "../components/common/Title";
-import { IUserInfoType, KakaoLoginResponse } from "../fetcher";
+import { IUser, KakaoLoginResponse } from "../fetcher";
 import kakao from "../images/kakao.png";
 import main from "../images/main.png";
 
@@ -32,7 +32,7 @@ function ApplicantHome() {
 
     if (senderId) {
       axios
-        .get<IUserInfoType>(`/api/users/${senderId}`)
+        .get<IUser>(`/api/users/${senderId}`)
         .then((response) => {
           setSender(response.data);
         })

@@ -9,7 +9,7 @@ import Form from "../components/common/Form";
 import Img from "../components/common/Img";
 import { ModalStyle } from "../components/common/ModalStyle";
 import Title from "../components/common/Title";
-import { IUserInfoType } from "../fetcher";
+import { IUser } from "../fetcher";
 import main from "../images/main.png";
 import { ModalContent } from "./UpdateMyInfo";
 
@@ -25,7 +25,7 @@ function ReceiverAdder() {
   const onValid = async (data: any) => {
     const tel = data.tel;
     try {
-      const response = await axios.get<IUserInfoType>( // 이미 신청한 사람인지 체크
+      const response = await axios.get<IUser>( // 이미 신청한 사람인지 체크
         `/api/users/check/${sender.id}/${tel}`
       );
       if (response.data.id) {
@@ -38,7 +38,7 @@ function ReceiverAdder() {
     }
   };
 
-  const addReceiver = async (receiver: IUserInfoType) => {
+  const addReceiver = async (receiver: IUser) => {
     try {
       const response = await axios.post<boolean>(
         `/api/users/${sender.id}/receivers`,

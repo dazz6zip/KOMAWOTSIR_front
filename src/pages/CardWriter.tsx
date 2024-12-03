@@ -1,15 +1,14 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Modal from "react-modal";
+import { useQuery } from "react-query";
+import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import imsi1 from "../images/imsi1.png";
+import ButtonL from "../components/common/ButtonL";
 import ButtonRow from "../components/common/ButtonRow";
 import ButtonS from "../components/common/ButtonS";
-import ButtonL from "../components/common/ButtonL";
-import Title from "../components/common/Title";
 import DescriptionS from "../components/common/DescriptionS";
-import { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import { useQuery } from "react-query";
-import Modal from "react-modal";
-import axios from "axios";
+import Title from "../components/common/Title";
 import {
   DesignPostLoad,
   EFontColor,
@@ -17,7 +16,7 @@ import {
   GptLoad,
   IDesignPost,
   IDraftLoad,
-  IPostContentsLoad,
+  IPostContents,
   PostContentsCheck,
   PostContentsLoad,
 } from "../fetcher";
@@ -114,7 +113,7 @@ function CardWriter() {
   );
 
   const { isLoading: contentsLoading, data: contentsData } =
-    useQuery<IPostContentsLoad>(
+    useQuery<IPostContents>(
       ["postContents", postId],
       () => PostContentsLoad(postId),
       {

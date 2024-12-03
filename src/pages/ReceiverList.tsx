@@ -11,7 +11,7 @@ import Description from "../components/common/Description";
 import Title from "../components/common/Title";
 import {
   IReceiver,
-  IReceiverQuestionList,
+  IReceiverQuestion,
   PostList,
   PostStatus,
   PostStatusMap,
@@ -167,7 +167,7 @@ function ReceiverList() {
   );
 
   const { data: questionData, isLoading: questionLoading } = useQuery<
-    IReceiverQuestionList[]
+    IReceiverQuestion[]
   >(
     ["receiverQuestion", selectedReceiverId],
     () =>

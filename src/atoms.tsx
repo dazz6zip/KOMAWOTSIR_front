@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { EFontColor, EFontSize, IDesignPost, IUserInfoType } from "./fetcher";
+import { EFontColor, EFontSize, IDesignPost, IUser } from "./fetcher";
 
 export const ADesignState = atom<IDesignPost>({
   key: "ADesignState",
@@ -22,7 +22,7 @@ export const ADesignLoadState = atom<boolean>({
   default: true,
 });
 
-export const AUserState = atom<IUserInfoType>({
+export const AUserState = atom<IUser>({
   key: "userState",
   default: {
     id: 0,
@@ -33,7 +33,7 @@ export const AUserState = atom<IUserInfoType>({
   },
 });
 
-export const ASenderState = atom<IUserInfoType>({
+export const ASenderState = atom<IUser>({
   key: "senderState",
   default: {
     id: 0,
@@ -44,7 +44,7 @@ export const ASenderState = atom<IUserInfoType>({
   },
 });
 
-export const AReceiverState = atom<IUserInfoType>({
+export const AReceiverState = atom<IUser>({
   key: "AreceiverState",
   default: {
     id: 0,

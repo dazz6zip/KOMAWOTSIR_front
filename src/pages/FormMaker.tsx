@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Modal from "react-modal";
-import ButtonS from "../components/common/ButtonS";
-import ButtonL from "../components/common/ButtonL";
-import Title from "../components/common/Title";
-import Description from "../components/common/Description";
-import { useFieldArray, useForm } from "react-hook-form";
-import { useQuery } from "react-query";
-import { createQuestion, IQuestionItem, IUserInfoType } from "../fetcher";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
+import Modal from "react-modal";
+import { useQuery } from "react-query";
+import styled from "styled-components";
+import ButtonL from "../components/common/ButtonL";
+import ButtonS from "../components/common/ButtonS";
+import Description from "../components/common/Description";
+import Title from "../components/common/Title";
+import { createQuestion, IQuestionItem, IUser } from "../fetcher";
 import { customStyles, ModalContent } from "./UpdateMyInfo";
 
 const QuestionBox = styled.div`
@@ -78,7 +78,7 @@ function FormMaker() {
         if (!inquiryRes.data) {
           setIsNicknameModalOpen(true);
           axios
-            .get<IUserInfoType>(`/api/users/${userId}`)
+            .get<IUser>(`/api/users/${userId}`)
             .then((res) => {
               setNickname(res.data.name);
             })

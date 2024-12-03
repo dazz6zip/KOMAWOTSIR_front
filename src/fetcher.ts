@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export interface IUserInfoType {
+export interface IUser {
   id: number;
   kakaoId?: string;
   name: string;
@@ -47,7 +47,7 @@ export const PostStatusMap: Record<PostStatus, string> = {
   [PostStatus.PROGRESSING]: "작성 중",
 };
 
-export interface IReceiverQuestionList {
+export interface IReceiverQuestion {
   id: number;
   inquiryItemId: number;
   receiverId: number;
@@ -55,7 +55,7 @@ export interface IReceiverQuestionList {
   question: string;
 }
 
-export interface IPostContentsLoad {
+export interface IPostContents {
   id: number;
   senderId: number;
   senderNickname: string;
@@ -141,9 +141,9 @@ export enum EImageCategory {
   custom = "custom",
 }
 
-export const loadUserInfo = async (userId: number): Promise<IUserInfoType> => {
+export const loadUserInfo = async (userId: number): Promise<IUser> => {
   try {
-    const response = await axios.get<IUserInfoType>(`/api/users/${userId}`);
+    const response = await axios.get<IUser>(`/api/users/${userId}`);
     return response.data;
   } catch (err) {
     console.error(err);
@@ -201,9 +201,9 @@ export const PostList = async (userId: number): Promise<IReceiver[]> => {
 export const ReceiverInquiryList = async (
   userId: number,
   receiverId: number
-): Promise<IReceiverQuestionList[]> => {
+): Promise<IReceiverQuestion[]> => {
   try {
-    const response = await axios.get<IReceiverQuestionList[]>(
+    const response = await axios.get<IReceiverQuestion[]>(
       `/api/users/${userId}/receivers/${receiverId}`
     );
     return response.data.map((item) => ({
@@ -232,9 +232,9 @@ export const PostContentsCheck = async (
 
 export const PostContentsLoad = async (
   postId: number
-): Promise<IPostContentsLoad> => {
+): Promise<IPostContents> => {
   try {
-    const response = await axios.get<IPostContentsLoad>(`/api/posts/${postId}`);
+    const response = await axios.get<IPostContents>(`/api/posts/${postId}`);
     return response.data;
   } catch (err) {
     console.error(err);

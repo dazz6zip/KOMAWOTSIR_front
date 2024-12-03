@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import main from "../images/main.png";
-import kakao from "../images/kakao.png";
-import Description from "../components/common/Description";
-import Img from "../components/common/Img";
 import axios from "axios";
 import { useEffect } from "react";
-import { IUserInfoType } from "../fetcher";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import Description from "../components/common/Description";
+import Img from "../components/common/Img";
+import { IUser } from "../fetcher";
+import kakao from "../images/kakao.png";
+import main from "../images/main.png";
 
 const LogoSection = styled.div`
   text-align: center;
@@ -53,7 +53,7 @@ function Home() {
     if (code) {
       // code가 존재하면 서버로 전달
       axios
-        .get<IUserInfoType>(`/api/users/kakao/login-test?code=${code}`)
+        .get<IUser>(`/api/users/kakao/login-test?code=${code}`)
         .then((response) => {
           console.log("로그인 성공", response);
           sessionStorage.setItem("userId", response.data.id.toString());
