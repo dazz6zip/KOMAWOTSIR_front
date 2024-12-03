@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import Modal from "react-modal";
 import { useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
@@ -27,6 +27,10 @@ const CardContainer = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   margin-top: 5px;
+`;
+
+const CheckForm = styled.div`
+  display: flex;
 `;
 
 const CardHeader = styled.div<{ statusForHeader: PostStatus }>`
@@ -85,6 +89,22 @@ const WriteButton = styled.div`
   &:hover {
     color: #555;
   }
+`;
+
+const StateCheckBox = styled.div`
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+`;
+
+const Label = styled.label`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const StyledCheckbox = styled.input`
+  margin-right: 10px;
 `;
 
 const MemoArea = styled.div`
@@ -151,10 +171,11 @@ function ReceiverList() {
   const [memoContent, setMemoContent] = useState<{ [key: number]: string }>({});
 
   const queryClient = useQueryClient();
+  const [statusState, setStatusState] = useState({});
 
   const { isLoading: rlIsLoading, data: rlData } = useQuery<IReceiver[]>(
-    ["receiver", userId],
-    () => PostList(userId),
+    ["receiver", userId, statusState],
+    () => PostList(userId, checkboxValues),
     {
       onSuccess: (data) => {
         const updatedMemoContent = { ...memoContent };
@@ -175,7 +196,7 @@ function ReceiverList() {
         ? ReceiverInquiryList(userId, selectedReceiverId)
         : Promise.resolve([]),
     {
-      enabled: isOpen && selectedReceiverId !== null, // Modal이 열릴 때만 실행
+      enabled: isOpen && selectedReceiverId !== null,
     }
   );
 
@@ -191,6 +212,25 @@ function ReceiverList() {
     }));
   };
 
+  const {
+    control: checkControl,
+    handleSubmit: checkHandleSubmit,
+    watch: checkWatch,
+  } = useForm({
+    defaultValues: {
+      checkboxes: [true, true, true], // 초기값 설정
+    },
+  });
+
+  const onSubmit = (data: { checkboxes: boolean[] }) => {};
+
+  const handleCheckboxChange = checkHandleSubmit((data) => {
+    console.log("폼 데이터:", data);
+    setStatusState(checkboxValues);
+  });
+
+  const checkboxValues = checkWatch("checkboxes");
+
   const saveMemo = (receiverId: number) => {
     axios
       .put(`/api/users/${userId}/receivers/${receiverId}`, {
@@ -205,17 +245,6 @@ function ReceiverList() {
         console.error(error);
       });
   };
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-  } = useForm({
-    defaultValues: {
-      email: "@naver.com",
-    },
-  });
 
   return (
     <>
@@ -234,8 +263,32 @@ function ReceiverList() {
           <ButtonS category="pink">디자인 수정하기</ButtonS>{" "}
         </Link>
       </ButtonRow>
-
-      <b>체크박스 **별 보기</b>
+      <CheckForm>
+        <form onSubmit={checkHandleSubmit(onSubmit)}>
+          <StateCheckBox>
+            {["작성전", "작성중", "작성완료"].map((label, index) => (
+              <Controller
+                key={index}
+                name={`checkboxes.${index}`}
+                control={checkControl}
+                render={({ field }) => (
+                  <Label>
+                    <StyledCheckbox
+                      type="checkbox"
+                      onChange={(e) => {
+                        field.onChange(e.target.checked);
+                        handleCheckboxChange();
+                      }}
+                      checked={field.value}
+                    />
+                    {label}
+                  </Label>
+                )}
+              />
+            ))}
+          </StateCheckBox>
+        </form>
+      </CheckForm>
       {rlData?.map((sdata) => (
         <CardContainer key={sdata.id}>
           <CardHeader statusForHeader={sdata.postStatus}>
@@ -265,7 +318,7 @@ function ReceiverList() {
                 <WriteButton>+ 연하장 작성하기</WriteButton>
               ) : (
                 <ContentsBox>
-                  {sdata.postContents.length > 35
+                  {sdata?.postContents?.length > 35
                     ? sdata.postContents.slice(0, 34) + "..."
                     : sdata.postContents}
                   <WriteButton>+ 편집하기</WriteButton>

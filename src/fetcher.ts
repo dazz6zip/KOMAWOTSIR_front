@@ -202,10 +202,20 @@ export const getQuestion = async (
   }
 };
 
-export const PostList = async (userId: number): Promise<IReceiver[]> => {
+export const PostList = async (
+  userId: number,
+  checkboxValues: boolean[]
+): Promise<IReceiver[]> => {
   try {
     const response = await axios.get<IReceiver[]>(
-      `/api/users/${userId}/receivers`
+      `/api/users/${userId}/receivers`,
+      {
+        params: {
+          pending: checkboxValues[0],
+          progressing: checkboxValues[1],
+          completed: checkboxValues[2],
+        },
+      }
     );
     return response.data.map((item) => ({
       ...item,
