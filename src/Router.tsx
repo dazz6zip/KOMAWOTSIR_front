@@ -29,7 +29,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 85vh;
+  height: 90%;
   font-family: "Apple SD Gothic Neo", sans-serif;
   padding: 15px 10px 25px 10px;
   box-sizing: border-box;

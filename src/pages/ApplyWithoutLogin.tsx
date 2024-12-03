@@ -7,8 +7,8 @@ import { useHistory } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { ASenderState } from "../atoms";
 import ButtonL from "../components/common/ButtonL";
+import ButtonRow from "../components/common/ButtonRow";
 import ButtonS from "../components/common/ButtonS";
-import Description from "../components/common/Description";
 import DescriptionS from "../components/common/DescriptionS";
 import Form from "../components/common/Form";
 import { ModalContent, ModalStyle } from "../components/common/ModalStyle";
@@ -17,11 +17,11 @@ import TitleS from "../components/common/TitleS";
 import { IQuestionItem } from "../fetcher";
 
 function ApplyWithoutLogin() {
-  const [isMemberModalOpen, setIsMemberModalOpen] = useState(false); // 회원이거나 이미 신청했을 때
+  const [isContinueModalOpen, setIsContinueModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [continueApply, setContinueApply] = useState(false);
-  const closeMemberModal = () => setIsMemberModalOpen(false);
+  const [canContinue, setCanContinue] = useState(false);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
+  const closeContinueModal = () => setIsContinueModalOpen(false);
   const history = useHistory();
   const {
     register,
@@ -46,7 +46,13 @@ function ApplyWithoutLogin() {
     if (response.data) {
       history.push(`/already`);
     } else {
+      setIsContinueModalOpen(true);
     }
+  };
+
+  const continueApply = () => {
+    closeContinueModal();
+    getInquiry();
   };
 
   const getInquiry = async () => {
@@ -56,7 +62,7 @@ function ApplyWithoutLogin() {
       );
       if (response.data.length > 0) {
         setQuestions(response.data);
-        setContinueApply(true);
+        setCanContinue(true);
       } else {
         getInquiry();
       }
@@ -75,9 +81,6 @@ function ApplyWithoutLogin() {
       </Title>
       <Form onSubmit={handleSubmit(onValid)}>
         <label htmlFor="tel">전화번호</label>
-        <DescriptionS>
-          1월 1일, 연하장 확인 안내 메시지 전송을 위해서만 사용됩니다.
-        </DescriptionS>
         {errors.tel && <p style={{ color: "red" }}>{errors.tel.message}</p>}
         <input
           {...register("tel", {
@@ -88,56 +91,54 @@ function ApplyWithoutLogin() {
             },
           })}
         />
+        <DescriptionS>
+          {sender.name}님에게 이미 신청하셨는지 확인할게요!
+        </DescriptionS>
         <ButtonS category="hotpink" onClick={checkUser}>
           등록 확인
         </ButtonS>
-        <br />
-        <br />
-        <br />
-        <label htmlFor="nickname">닉네임</label>
-        <DescriptionS>
-          {sender.name}님이 알아볼 수 있는 이름으로 입력해 주세요.
-        </DescriptionS>
-        {errors.nickname && (
-          <p style={{ color: "red" }}>{errors.nickname.message}</p>
-        )}
-        <input
-          {...register("nickname", { required: "닉네임을 입력해 주세요." })}
-        />
-
-        <label htmlFor="info">소속 / 기타</label>
-        <DescriptionS>확실한 구분을 위한 정보를 입력해 주세요.</DescriptionS>
-        {errors.info && <p style={{ color: "red" }}>{errors.info.message}</p>}
-        <input
-          {...register("info", { required: "소속 정보를 입력해 주세요." })}
-        />
-
-        <TitleS>질문 목록</TitleS>
-        {questions?.map((q) => (
+        {canContinue && (
           <>
-            <h2>{q.question}</h2>
-            <DescriptionS>{q.description}</DescriptionS>
-            <input type="text" />
+            <br />
+            <br />
+            <br />
+            <label htmlFor="nickname">닉네임</label>
+            <DescriptionS>
+              {sender.name}님이 알아볼 수 있는 이름으로 입력해 주세요.
+            </DescriptionS>
+            {errors.nickname && (
+              <p style={{ color: "red" }}>{errors.nickname.message}</p>
+            )}
+            <input
+              {...register("nickname", { required: "닉네임을 입력해 주세요." })}
+            />
+
+            <label htmlFor="info">소속 / 기타</label>
+            <DescriptionS>
+              확실한 구분을 위한 정보를 입력해 주세요.
+            </DescriptionS>
+            {errors.info && (
+              <p style={{ color: "red" }}>{errors.info.message}</p>
+            )}
+            <input
+              {...register("info", { required: "소속 정보를 입력해 주세요." })}
+            />
+
+            <TitleS>질문 목록</TitleS>
+            {questions?.map((q) => (
+              <>
+                <h2>{q.question}</h2>
+                <DescriptionS>{q.description}</DescriptionS>
+                <input type="text" />
+              </>
+            ))}
+
+            <ButtonL category="pink" type="submit">
+              신청하기
+            </ButtonL>
           </>
-        ))}
-
-        <ButtonL category="pink" type="submit">
-          신청하기
-        </ButtonL>
+        )}
       </Form>
-
-      <Modal
-        isOpen={isMemberModalOpen}
-        onRequestClose={closeMemberModal}
-        style={ModalStyle}
-      >
-        <ModalContent>
-          <Description>너!! 회원이잖아!!</Description>
-          <ButtonS category="white" onClick={() => history.push("/apply")}>
-            로그인하여 신청하기
-          </ButtonS>
-        </ModalContent>
-      </Modal>
 
       <Modal
         isOpen={isConfirmModalOpen}
@@ -156,6 +157,30 @@ function ApplyWithoutLogin() {
             다시 확인하기
           </ButtonS>
           <ButtonS category="pink">이대로 신청하기</ButtonS>
+          &emsp;
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isOpen={isContinueModalOpen}
+        onRequestClose={closeContinueModal}
+        style={ModalStyle}
+      >
+        <ModalContent>
+          <h3>신청 가능!</h3>
+          <p>
+            연하장 알림을 받으실 <br />
+            전화번호 ({getValues("tel")})를
+            <br /> 다시 한 번 확인해주세요.
+          </p>
+          <ButtonRow>
+            <ButtonS category="gray" onClick={closeContinueModal}>
+              전화번호 다시 입력하기
+            </ButtonS>
+            <ButtonS category="pink" onClick={continueApply}>
+              제 전화번호 맞아요
+            </ButtonS>
+          </ButtonRow>
           &emsp;
         </ModalContent>
       </Modal>
