@@ -18,7 +18,6 @@ import {
   ReceiverInquiryList,
 } from "../fetcher";
 import { customStyles, ModalContent } from "./UpdateMyInfo";
-import Cookies from "js-cookie";
 
 const ReceiverListArea = styled.div`
   margin-top: 200px;
