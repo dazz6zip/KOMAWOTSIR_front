@@ -23,6 +23,7 @@ import ReceiverList from "./pages/ReceiverList";
 import UpdateMyInfo from "./pages/UpdateMyInfo";
 import YearlyPresents from "./pages/YearlyPresents";
 import PrivateRouter from "./PrivateRouter";
+import ApplyWithoutLoginTest from "./pages/ApplyWithoutLogin-test";
 
 const Container = styled.div`
   display: flex;
@@ -57,12 +58,13 @@ function Router() {
           <PrivateRouter path="/update-info" component={UpdateMyInfo} />
           <PrivateRouter path="/apply" exact component={ApplicantHome} />
           <PrivateRouter path="/apply1" exact component={Apply} />
-          <PrivateRouter
-            path="/apply/guest"
+          <Route path="/apply/guest" exact component={ApplyWithoutLogin} />
+          <Route
+            path="/apply/guest/:link"
             exact
-            component={ApplyWithoutLogin}
+            component={ApplyWithoutLoginTest}
           />
-          <PrivateRouter path="/apply/done" exact component={ApplicantDone} />
+          <Route path="/apply/done" exact component={ApplicantDone} />
           <PrivateRouter path="/background" exact component={BackgroundList} />
           <PrivateRouter path="/add-receiver" exact component={ReceiverAdder} />
           <PrivateRouter path="/receiver-list" exact component={ReceiverList} />

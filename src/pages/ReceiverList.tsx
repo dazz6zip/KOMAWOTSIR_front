@@ -250,7 +250,7 @@ function ReceiverList() {
   const onSubmit = (data: { checkboxes: boolean[] }) => {};
 
   const handleCheckboxChange = checkHandleSubmit((data) => {
-    console.log("폼 데이터:", data);
+    // console.log("폼 데이터:", data);
     setStatusState(checkboxValues);
   });
 
@@ -288,7 +288,7 @@ function ReceiverList() {
           <ButtonS category="pink">디자인 수정하기</ButtonS>{" "}
         </Link>
       </ButtonRow>
-      {questionData ? (
+      {rlData ? (
         <>
           <CheckForm>
             <form onSubmit={checkHandleSubmit(onSubmit)}>

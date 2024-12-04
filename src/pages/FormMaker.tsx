@@ -10,10 +10,16 @@ import Description from "../components/common/Description";
 import Title from "../components/common/Title";
 import { createQuestion, IQuestionItem, IUser } from "../fetcher";
 import { customStyles, ModalContent } from "./UpdateMyInfo";
+import { useHistory } from "react-router-dom";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 const QuestionBox = styled.div`
   padding-top: 3px;
   margin-top: 10px;
+`;
+
+const FormDiv = styled.div`
+  width: 100%;
 `;
 
 const QuestionRow = styled.div`
@@ -63,10 +69,23 @@ const NicknameInput = styled.input`
 
 function FormMaker() {
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
+  const nav = useHistory();
 
   const [initialData, setInitialData] = useState<IQuestionItem[]>([]);
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState(false);
   const [nickname, setNickname] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [linkToCopy, setLinkToCopy] = useState("");
+
+  const [completeModal, setCompleteModal] = useState(false);
+  const closeCompleteModal = () => {
+    setCompleteModal(false);
+  };
+
+  const [errorModal, setErrorModal] = useState(false); // 에러 모달 상태
+  const closeErrorModal = () => {
+    setErrorModal(false);
+  }; // 에러 모달 닫기
 
   // 페이지가 로딩되면 이미 설문 데이터가 생성되어 있는지 확인하기
   // 생성되어 있을 경우 -> 바로 질문 목록 띄움
@@ -86,6 +105,19 @@ function FormMaker() {
               console.error(err);
             });
         }
+      });
+  }, [userId]);
+
+  useEffect(() => {
+    axios
+      .get<string>(`/api/inquiry/${userId}/get/url`)
+      .then((res) => {
+        let hmacRes = res.data;
+        setLinkToCopy(`localhost:3000/apply/guest/${hmacRes}`);
+        console.log(hmacRes);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [userId]);
 
@@ -168,6 +200,7 @@ function FormMaker() {
           axios.delete(`/api/inquiry/${userId}/${question.id}`)
         );
       }
+      setCompleteModal(true);
     } catch (err) {
       console.error(err);
     }
@@ -204,9 +237,6 @@ function FormMaker() {
     }
   );
 
-  if (isLoading) return <div>로딩 중...</div>;
-  if (error) return <div>오류 발생: {String(error)}</div>;
-
   return (
     <>
       <Title>연하장 신청받기</Title>
@@ -242,48 +272,70 @@ function FormMaker() {
           </ButtonL>
         </ModalContent>
       </Modal>
+      <FormDiv>
+        <QuestionForm onSubmit={handleSubmit(onSubmit)}>
+          {fields.map((field, index) => (
+            <QuestionBox key={field.id}>
+              <QuestionRow>
+                <Label>{index + 1}번 질문</Label>
+                <ButtonS category="white" onClick={() => remove(index)}>
+                  삭제
+                </ButtonS>
+              </QuestionRow>
 
-      <QuestionForm onSubmit={handleSubmit(onSubmit)}>
-        {fields.map((field, index) => (
-          <QuestionBox key={field.id}>
-            <QuestionRow>
-              <Label>{index + 1}번 질문</Label>
-              <ButtonS category="white" onClick={() => remove(index)}>
-                삭제
-              </ButtonS>
-            </QuestionRow>
+              <InputGroup>
+                <Input
+                  type="text"
+                  placeholder="추가하고 싶은 질문을 입력해 주세요."
+                  isError={!!errors.questions?.[index]?.question}
+                  {...register(`questions.${index}.question`, {
+                    required: "질문을 입력해 주세요.",
+                  })}
+                />
 
-            <InputGroup>
-              <Input
-                type="text"
-                placeholder="추가하고 싶은 질문을 입력해 주세요."
-                isError={!!errors.questions?.[index]?.question}
-                {...register(`questions.${index}.question`, {
-                  required: "질문을 입력해 주세요.",
-                })}
-              />
+                <Input
+                  type="text"
+                  placeholder="질문에 대한 설명을 추가해 주세요."
+                  {...register(`questions.${index}.description`)}
+                />
+              </InputGroup>
+            </QuestionBox>
+          ))}
 
-              <Input
-                type="text"
-                placeholder="질문에 대한 설명을 추가해 주세요."
-                {...register(`questions.${index}.description`)}
-              />
-            </InputGroup>
-          </QuestionBox>
-        ))}
+          <ButtonS
+            category="pink"
+            type="button"
+            onClick={() => append({ question: "", description: "" })}
+          >
+            + 질문 추가하기
+          </ButtonS>
+          <ButtonL category="pink" type="submit">
+            저장하기
+          </ButtonL>
+        </QuestionForm>
+        <CopyToClipboard text={linkToCopy} onCopy={() => setCopied(true)}>
+          <ButtonL category="hotpink">링크 공유하기</ButtonL>
+        </CopyToClipboard>
+      </FormDiv>
 
-        <ButtonS
-          category="pink"
-          type="button"
-          onClick={() => append({ question: "", description: "" })}
-        >
-          + 질문 추가하기
-        </ButtonS>
-        <ButtonL category="pink" type="submit">
-          저장하기
-        </ButtonL>
-        <ButtonL category="hotpink">링크 공유하기</ButtonL>
-      </QuestionForm>
+      <Modal
+        isOpen={completeModal}
+        onRequestClose={closeCompleteModal}
+        style={customStyles}
+        ariaHideApp={false}
+      >
+        <ModalContent>
+          <h3>저장</h3>
+          <p>저장이 완료되었습니다.</p>
+          <ButtonS category="pink" onClick={closeCompleteModal}>
+            닫기
+          </ButtonS>
+          &emsp;
+          <ButtonS category="pink" onClick={() => nav.push(`/design`)}>
+            연하장 디자인하기
+          </ButtonS>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

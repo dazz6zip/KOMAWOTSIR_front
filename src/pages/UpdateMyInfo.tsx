@@ -100,6 +100,11 @@ function UpdateMyInfo() {
   // userId 임의로 가정하기
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
+  const [saveSuc, setSaveSuc] = useState(false);
+  const closeSaveSuc = () => {
+    setSaveSuc(false);
+  };
+
   const nav = useHistory();
 
   const { register, watch, handleSubmit, setValue } = useForm<IUser>();
@@ -109,8 +114,8 @@ function UpdateMyInfo() {
 
   const onValid = async (formData: IUser) => {
     try {
-      const response = await axios.put(`/api/users/${userId}`, formData);
-      console.log("저장 성공:", response.data);
+      await axios.put(`/api/users/${userId}`, formData);
+      setSaveSuc(true);
     } catch (error) {
       console.error("저장 실패:", error);
     }
@@ -123,6 +128,7 @@ function UpdateMyInfo() {
 
   const openConfirmModal = () => setIsConfirmModalOpen(true);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
+
   const closeSuccessModal = () => {
     setIsSuccessModalOpen(false);
     nav.push("/");
@@ -205,6 +211,25 @@ function UpdateMyInfo() {
           &emsp;
           <ButtonS category="pink" onClick={closeConfirmModal}>
             취소
+          </ButtonS>
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isOpen={saveSuc}
+        onRequestClose={closeSaveSuc}
+        style={customStyles}
+        ariaHideApp={false}
+      >
+        <ModalContent>
+          <h3>저장</h3>
+          <p>회원정보 수정이 완료되었습니다.</p>
+          <ButtonS category="pink" onClick={closeSaveSuc}>
+            닫기
+          </ButtonS>
+          &emsp;
+          <ButtonS category="pink" onClick={() => nav.push(`/`)}>
+            홈으로
           </ButtonS>
         </ModalContent>
       </Modal>

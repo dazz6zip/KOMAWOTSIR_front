@@ -62,6 +62,8 @@ function Home() {
           sessionStorage.setItem("userId", response.data.id.toString());
           if (response.data.tel === null) {
             nav.push(`/update-info`);
+          } else {
+            nav.push(`/`);
           }
         })
         .catch((error) => {
