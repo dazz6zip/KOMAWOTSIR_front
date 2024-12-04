@@ -92,12 +92,16 @@ const OverlayButton = styled.button`
 
 function Header() {
   const nav = useHistory();
-  const location = useLocation(); // 현재 경로 가져오기
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  const logoutProc = () => {
+    closeMenu();
+  };
 
   return (
     <>
@@ -145,7 +149,7 @@ function Header() {
           <StyledMenuItem to="/design" onClick={closeMenu} $isSubMenu>
             <CustomIcon>✸</CustomIcon>디자인하기
           </StyledMenuItem>
-          <StyledMenuItem to="" onClick={closeMenu}>
+          <StyledMenuItem to="" onClick={logoutProc}>
             로그아웃
           </StyledMenuItem>
         </Menu>
