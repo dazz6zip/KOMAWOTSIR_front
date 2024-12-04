@@ -90,8 +90,7 @@ const FontPreview = styled.p<{ fontFamily: string }>`
 `;
 
 function CardDesigner() {
-  const userId = 5;
-  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const [design, setDesign] = useRecoilState(ADesignState);
   const [designLoad, setDesignLoad] = useRecoilState(ADesignLoadState);

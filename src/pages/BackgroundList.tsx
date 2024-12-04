@@ -104,6 +104,7 @@ const PreviewContainer = styled.div`
 `;
 
 function BackgroundList() {
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
   const location = useLocation() as {
     state: { isFront: boolean };
   };
@@ -120,8 +121,6 @@ function BackgroundList() {
   const [finalCategory, setFinalCategory] = useState<string>("단색");
 
   const category = ["단색", "그라데이션", "직접 업로드", "시즌"];
-
-  const userId = 5;
 
   const { isLoading, data } = useQuery<Iimage[]>(
     ["LoadDesign", finalCategory],

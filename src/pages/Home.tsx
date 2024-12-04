@@ -7,6 +7,7 @@ import Img from "../components/common/Img";
 import { IUser } from "../fetcher";
 import kakao from "../images/kakao.png";
 import main from "../images/main.png";
+import ButtonS from "../components/common/ButtonS";
 
 const LogoSection = styled.div`
   text-align: center;
@@ -27,6 +28,8 @@ interface KakaoLoginResponse {
 
 function Home() {
   const nav = useHistory();
+
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const kakaoLogin = async () => {
     try {
@@ -77,10 +80,19 @@ function Home() {
         따뜻한 마음을 담아
         <br /> AI와 함께 연하장을 제작해 보세요.
       </Description>
-
-      <ImgWrapper onClick={kakaoLogin}>
-        <Img src={kakao} width="50%" alt="Kakao Login" />
-      </ImgWrapper>
+      {userId ? (
+        <>
+          <br />
+          <br />
+          <ButtonS category="pink" onClick={() => nav.push(`/create-form`)}>
+            연하장 신청받기
+          </ButtonS>
+        </>
+      ) : (
+        <ImgWrapper onClick={kakaoLogin}>
+          <Img src={kakao} width="50%" alt="Kakao Login" />
+        </ImgWrapper>
+      )}
     </>
   );
 }

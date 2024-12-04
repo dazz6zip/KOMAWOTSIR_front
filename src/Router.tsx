@@ -18,11 +18,11 @@ import CarouselEx from "./pages/ExCarousel";
 import FontList from "./pages/FontList";
 import FormMaker from "./pages/FormMaker";
 import Home from "./pages/Home";
-import Home1 from "./pages/Home1";
 import ReceiverAdder from "./pages/ReceiverAdder";
 import ReceiverList from "./pages/ReceiverList";
 import UpdateMyInfo from "./pages/UpdateMyInfo";
 import YearlyPresents from "./pages/YearlyPresents";
+import PrivateRouter from "./PrivateRouter";
 
 const Container = styled.div`
   display: flex;
@@ -50,69 +50,30 @@ function Router() {
       <hr />
       <Container>
         <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/1" exact>
-            <Home1 />
-          </Route>
-          <Route path="/create-form">
-            <FormMaker />
-          </Route>
-          <Route path="/write">
-            <CardWriter />
-          </Route>
-          <Route path="/design" exact>
-            <CardDesigner />
-          </Route>
-          <Route path="/update-info">
-            <UpdateMyInfo />
-          </Route>
-          <Route path="/apply" exact>
-            <ApplicantHome />
-          </Route>
-          <Route path="/apply1" exact>
-            <Apply />
-          </Route>
-          <Route path="/apply/guest" exact>
-            <ApplyWithoutLogin />
-          </Route>
-          <Route path="/apply/done" exact>
-            <ApplicantDone />
-          </Route>
-          <Route path="/background" exact>
-            <BackgroundList />
-          </Route>
-          <Route path="/add-receiver" exact>
-            <ReceiverAdder />
-          </Route>
-          <Route path="/receiver-list" exact>
-            <ReceiverList />
-          </Route>
-          <Route path="/design-list" exact>
-            <DesignList />
-          </Route>
-          <Route path="/yearly-presents">
-            <YearlyPresents />
-          </Route>
-          <Route path="/all-presents">
-            <AllPresents />
-          </Route>
-          <Route path="/carousel-test">
-            <CarouselEx />
-          </Route>
-          <Route path="/carousel-test1">
-            <Carousel1 />
-          </Route>
-          <Route path="/draft">
-            <DraftList />
-          </Route>
-          <Route path="/font-list">
-            <FontList />
-          </Route>
-          <Route path="/already">
-            <AlreadyApplied />
-          </Route>
+          <Route path="/" exact component={Home} />
+          <PrivateRouter path="/create-form" component={FormMaker} />
+          <PrivateRouter path="/write" component={CardWriter} />
+          <PrivateRouter path="/design" exact component={CardDesigner} />
+          <PrivateRouter path="/update-info" component={UpdateMyInfo} />
+          <PrivateRouter path="/apply" exact component={ApplicantHome} />
+          <PrivateRouter path="/apply1" exact component={Apply} />
+          <PrivateRouter
+            path="/apply/guest"
+            exact
+            component={ApplyWithoutLogin}
+          />
+          <PrivateRouter path="/apply/done" exact component={ApplicantDone} />
+          <PrivateRouter path="/background" exact component={BackgroundList} />
+          <PrivateRouter path="/add-receiver" exact component={ReceiverAdder} />
+          <PrivateRouter path="/receiver-list" exact component={ReceiverList} />
+          <PrivateRouter path="/design-list" exact component={DesignList} />
+          <PrivateRouter path="/yearly-presents" component={YearlyPresents} />
+          <PrivateRouter path="/all-presents" component={AllPresents} />
+          <PrivateRouter path="/carousel-test" component={CarouselEx} />
+          <PrivateRouter path="/carousel-test1" component={Carousel1} />
+          <PrivateRouter path="/draft" component={DraftList} />
+          <PrivateRouter path="/font-list" component={FontList} />
+          <PrivateRouter path="/already" component={AlreadyApplied} />
         </Switch>
       </Container>
       <Footer />

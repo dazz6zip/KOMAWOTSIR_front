@@ -95,6 +95,8 @@ function Header() {
   const location = useLocation(); // 현재 경로 가져오기
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
+
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
@@ -112,40 +114,42 @@ function Header() {
           />
         </OverlayButton>
       )}
-      <Menu
-        customBurgerIcon={<GiHamburgerMenu size={"30"} />}
-        customCrossIcon={<FaArrowLeft size={"30"} />}
-        width={"250px"}
-        isOpen={isMenuOpen}
-        onStateChange={({ isOpen }) => setIsMenuOpen(isOpen)}
-        styles={MenuStyles}
-      >
-        <StyledMenuItem to="/update-info" onClick={closeMenu}>
-          회원정보 수정
-        </StyledMenuItem>
-        <StyledMenuItem to="" onClick={closeMenu}>
-          나의 편지함
-        </StyledMenuItem>
-        <StyledMenuItem to="/yearly-presents" onClick={closeMenu} $isSubMenu>
-          <CustomIcon>✶</CustomIcon>올해 받은 연하장
-        </StyledMenuItem>
-        <StyledMenuItem to="/all-presents" onClick={closeMenu} $isSubMenu>
-          <CustomIcon>✷</CustomIcon>전체 수신 목록
-        </StyledMenuItem>
-        <StyledMenuItem to="">편지 보내기</StyledMenuItem>
-        <StyledMenuItem to="/create-form" onClick={closeMenu} $isSubMenu>
-          <CustomIcon>✶</CustomIcon>신청받기
-        </StyledMenuItem>
-        <StyledMenuItem to="/receiver-list" onClick={closeMenu} $isSubMenu>
-          <CustomIcon>✷</CustomIcon>작성하기
-        </StyledMenuItem>
-        <StyledMenuItem to="/design" onClick={closeMenu} $isSubMenu>
-          <CustomIcon>✸</CustomIcon>디자인하기
-        </StyledMenuItem>
-        <StyledMenuItem to="" onClick={closeMenu}>
-          로그아웃
-        </StyledMenuItem>
-      </Menu>
+      {userId && (
+        <Menu
+          customBurgerIcon={<GiHamburgerMenu size={"30"} />}
+          customCrossIcon={<FaArrowLeft size={"30"} />}
+          width={"250px"}
+          isOpen={isMenuOpen}
+          onStateChange={({ isOpen }) => setIsMenuOpen(isOpen)}
+          styles={MenuStyles}
+        >
+          <StyledMenuItem to="/update-info" onClick={closeMenu}>
+            회원정보 수정
+          </StyledMenuItem>
+          <StyledMenuItem to="" onClick={closeMenu}>
+            나의 편지함
+          </StyledMenuItem>
+          <StyledMenuItem to="/yearly-presents" onClick={closeMenu} $isSubMenu>
+            <CustomIcon>✶</CustomIcon>올해 받은 연하장
+          </StyledMenuItem>
+          <StyledMenuItem to="/all-presents" onClick={closeMenu} $isSubMenu>
+            <CustomIcon>✷</CustomIcon>전체 수신 목록
+          </StyledMenuItem>
+          <StyledMenuItem to="">편지 보내기</StyledMenuItem>
+          <StyledMenuItem to="/create-form" onClick={closeMenu} $isSubMenu>
+            <CustomIcon>✶</CustomIcon>신청받기
+          </StyledMenuItem>
+          <StyledMenuItem to="/receiver-list" onClick={closeMenu} $isSubMenu>
+            <CustomIcon>✷</CustomIcon>작성하기
+          </StyledMenuItem>
+          <StyledMenuItem to="/design" onClick={closeMenu} $isSubMenu>
+            <CustomIcon>✸</CustomIcon>디자인하기
+          </StyledMenuItem>
+          <StyledMenuItem to="" onClick={closeMenu}>
+            로그아웃
+          </StyledMenuItem>
+        </Menu>
+      )}
       <HeaderContainer>
         <Link to="/">
           <LogoImg src={logo} alt="Logo" />

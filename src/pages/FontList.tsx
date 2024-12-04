@@ -41,8 +41,7 @@ const FontTitle = styled.div<{ fName: string }>`
 `;
 
 function FontList() {
-  const userId = 5;
-  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const nav = useHistory();
 

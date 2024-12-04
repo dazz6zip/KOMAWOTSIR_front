@@ -62,8 +62,7 @@ const NicknameInput = styled.input`
 `;
 
 function FormMaker() {
-  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
-  const userId = 5;
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const [initialData, setInitialData] = useState<IQuestionItem[]>([]);
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState(false);

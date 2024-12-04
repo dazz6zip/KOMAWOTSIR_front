@@ -62,8 +62,7 @@ export const PreviewArea = styled.div<{
 `;
 
 function CardWriter() {
-  const userId = 5;
-  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const [postId, setPostId] = useState<number>(0);
   const [saveTitle, setSaveTitle] = useState<boolean>(false);

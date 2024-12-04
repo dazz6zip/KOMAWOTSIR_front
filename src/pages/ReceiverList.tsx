@@ -18,6 +18,12 @@ import {
   ReceiverInquiryList,
 } from "../fetcher";
 import { customStyles, ModalContent } from "./UpdateMyInfo";
+import Cookies from "js-cookie";
+
+const ReceiverListArea = styled.div`
+  margin-top: 200px;
+  margin-bottom: 250px;
+`;
 
 const CardContainer = styled.div`
   width: 90%;
@@ -181,8 +187,7 @@ const ContentsBox = styled.div`
 `;
 
 function ReceiverList() {
-  // const userId = parseInt(sessionStorage.getItem("userId") || "0");
-  const userId = 5;
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedReceiverId, setSelectedReceiverId] = useState<number | null>(
@@ -284,104 +289,114 @@ function ReceiverList() {
           <ButtonS category="pink">디자인 수정하기</ButtonS>{" "}
         </Link>
       </ButtonRow>
-      <CheckForm>
-        <form onSubmit={checkHandleSubmit(onSubmit)}>
-          <StateCheckBox>
-            {["작성전", "작성중", "작성완료"].map((label, index) => (
-              <Controller
-                key={index}
-                name={`checkboxes.${index}`}
-                control={checkControl}
-                render={({ field }) => (
-                  <Label>
-                    <StyledCheckbox
-                      type="checkbox"
-                      onChange={(e) => {
-                        field.onChange(e.target.checked);
-                        handleCheckboxChange();
-                      }}
-                      checked={field.value}
-                    />
-                    {label}
-                  </Label>
-                )}
-              />
-            ))}
-          </StateCheckBox>
-        </form>
-      </CheckForm>
-      {rlData?.map((sdata) => (
-        <CardContainer key={sdata.id}>
-          <CardHeader statusForHeader={sdata.postStatus}>
-            <HeaderItem>
-              <StarIcon>✶</StarIcon> {sdata.nickname}
-            </HeaderItem>
-            <Dropdown onClick={() => openModal(sdata.id)}>
-              {isOpen && selectedReceiverId === sdata.id
-                ? "응답 닫기"
-                : "응답 보기"}
-            </Dropdown>
-            <div>
-              {sdata.postStatus
-                ? PostStatusMap[sdata.postStatus]
-                : PostStatusMap["PENDING"]}
-            </div>
-          </CardHeader>
+      {questionData ? (
+        <>
+          <CheckForm>
+            <form onSubmit={checkHandleSubmit(onSubmit)}>
+              <StateCheckBox>
+                {["작성전", "작성중", "작성완료"].map((label, index) => (
+                  <Controller
+                    key={index}
+                    name={`checkboxes.${index}`}
+                    control={checkControl}
+                    render={({ field }) => (
+                      <Label>
+                        <StyledCheckbox
+                          type="checkbox"
+                          onChange={(e) => {
+                            field.onChange(e.target.checked);
+                            handleCheckboxChange();
+                          }}
+                          checked={field.value}
+                        />
+                        {label}
+                      </Label>
+                    )}
+                  />
+                ))}
+              </StateCheckBox>
+            </form>
+          </CheckForm>
+          {rlData?.map((sdata) => (
+            <CardContainer key={sdata.id}>
+              <CardHeader statusForHeader={sdata.postStatus}>
+                <HeaderItem>
+                  <StarIcon>✶</StarIcon> {sdata.nickname}
+                </HeaderItem>
+                <Dropdown onClick={() => openModal(sdata.id)}>
+                  {isOpen && selectedReceiverId === sdata.id
+                    ? "응답 닫기"
+                    : "응답 보기"}
+                </Dropdown>
+                <div>
+                  {sdata.postStatus
+                    ? PostStatusMap[sdata.postStatus]
+                    : PostStatusMap["PENDING"]}
+                </div>
+              </CardHeader>
 
-          <CardBody>
-            <Link
-              to={{
-                pathname: "/write",
-                state: { id: sdata.id, nickname: sdata.nickname },
-              }}
-            >
-              {sdata.postStatus === "PENDING" ? (
-                <WriteButton>+ 연하장 작성하기</WriteButton>
-              ) : (
-                <ContentsBox>
-                  {sdata?.postContents?.length > 35
-                    ? sdata.postContents.slice(0, 34) + "..."
-                    : sdata.postContents}
-                  <WriteButton>+ 편집하기</WriteButton>
-                </ContentsBox>
-              )}
-            </Link>
+              <CardBody>
+                <Link
+                  to={{
+                    pathname: "/write",
+                    state: { id: sdata.id, nickname: sdata.nickname },
+                  }}
+                >
+                  {sdata.postStatus === "PENDING" ? (
+                    <WriteButton>+ 연하장 작성하기</WriteButton>
+                  ) : (
+                    <ContentsBox>
+                      {sdata?.postContents?.length > 35
+                        ? sdata.postContents.slice(0, 34) + "..."
+                        : sdata.postContents}
+                      <WriteButton>+ 편집하기</WriteButton>
+                    </ContentsBox>
+                  )}
+                </Link>
 
-            <div key={sdata.id}>
-              <MemoArea>
-                <div>메모</div>
-                {memoEdits[sdata.id] ? (
-                  <div>
-                    <input
-                      value={memoContent[sdata.id] || ""}
-                      onChange={(e) =>
-                        setMemoContent((prev) => ({
-                          ...prev,
-                          [sdata.id]: e.target.value,
-                        }))
-                      }
-                    />
-                    <i onClick={() => saveMemo(sdata.id)}>저장</i>
-                  </div>
-                ) : sdata.memo === null ? (
-                  <p onClick={() => handleMemoEditToggle(sdata.id)}>
-                    <i>여기</i> 를 눌러서 메모를 등록해 보세요.
-                  </p>
-                ) : (
-                  <div>
-                    <p onClick={() => handleMemoEditToggle(sdata.id)}>
-                      {sdata.memo.length > 25
-                        ? sdata.memo.slice(0, 24) + "..."
-                        : sdata.memo}{" "}
-                    </p>
-                    <i onClick={() => handleMemoEditToggle(sdata.id)}>수정</i>
-                  </div>
-                )}
-              </MemoArea>
-            </div>
-          </CardBody>
-        </CardContainer>
-      ))}
+                <div key={sdata.id}>
+                  <MemoArea>
+                    <div>메모</div>
+                    {memoEdits[sdata.id] ? (
+                      <div>
+                        <input
+                          value={memoContent[sdata.id] || ""}
+                          onChange={(e) =>
+                            setMemoContent((prev) => ({
+                              ...prev,
+                              [sdata.id]: e.target.value,
+                            }))
+                          }
+                        />
+                        <i onClick={() => saveMemo(sdata.id)}>저장</i>
+                      </div>
+                    ) : sdata.memo === null ? (
+                      <p onClick={() => handleMemoEditToggle(sdata.id)}>
+                        <i>여기</i> 를 눌러서 메모를 등록해 보세요.
+                      </p>
+                    ) : (
+                      <div>
+                        <p onClick={() => handleMemoEditToggle(sdata.id)}>
+                          {sdata.memo.length > 25
+                            ? sdata.memo.slice(0, 24) + "..."
+                            : sdata.memo}{" "}
+                        </p>
+                        <i onClick={() => handleMemoEditToggle(sdata.id)}>
+                          수정
+                        </i>
+                      </div>
+                    )}
+                  </MemoArea>
+                </div>
+              </CardBody>
+            </CardContainer>
+          ))}
+        </>
+      ) : (
+        <ReceiverListArea>
+          <Description>아직 신청이 오지 않았어요.</Description>
+        </ReceiverListArea>
+      )}
 
       <Modal
         isOpen={isOpen}
