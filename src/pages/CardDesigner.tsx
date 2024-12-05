@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ADesignLoadState, ADesignState } from "../atoms";
+import { toast } from "react-toastify";
 
 const Options = styled.div`
   width: 100%;
@@ -149,8 +150,6 @@ function CardDesigner() {
   };
 
   const SaveDesign = () => {
-    console.log(design);
-
     // 배경화면
     axios
       .put(
@@ -171,9 +170,11 @@ function CardDesigner() {
         axios.put(
           `/api/users/${userId}/designs/font/${design.fontId}/${design.fontSize}/${design.fontColor}`
         );
+        toast.success("저장이 완료되었습니다.");
       })
       .catch((err) => {
         console.error(err);
+        toast.error("저장에 실패했습니다. 다시 시도해 보세요.");
       });
   };
 

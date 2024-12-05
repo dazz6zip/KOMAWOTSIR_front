@@ -10,6 +10,7 @@ import ButtonS from "../components/common/ButtonS";
 import Form from "../components/common/Form";
 import Title from "../components/common/Title";
 import { IUser, loadUserInfo } from "../fetcher";
+import { toast } from "react-toastify";
 
 const SmsOption = styled.div`
   padding-top: 120px;
@@ -100,11 +101,6 @@ function UpdateMyInfo() {
   // userId 임의로 가정하기
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
-  const [saveSuc, setSaveSuc] = useState(false);
-  const closeSaveSuc = () => {
-    setSaveSuc(false);
-  };
-
   const nav = useHistory();
 
   const { register, watch, handleSubmit, setValue } = useForm<IUser>();
@@ -115,9 +111,9 @@ function UpdateMyInfo() {
   const onValid = async (formData: IUser) => {
     try {
       await axios.put(`/api/users/${userId}`, formData);
-      setSaveSuc(true);
+      toast.success("저장이 완료되었습니다.");
     } catch (error) {
-      console.error("저장 실패:", error);
+      toast.error("저장에 실패했습니다. 다시 시도해 보세요.");
     }
   };
 
@@ -211,25 +207,6 @@ function UpdateMyInfo() {
           &emsp;
           <ButtonS category="pink" onClick={closeConfirmModal}>
             취소
-          </ButtonS>
-        </ModalContent>
-      </Modal>
-
-      <Modal
-        isOpen={saveSuc}
-        onRequestClose={closeSaveSuc}
-        style={customStyles}
-        ariaHideApp={false}
-      >
-        <ModalContent>
-          <h3>저장</h3>
-          <p>회원정보 수정이 완료되었습니다.</p>
-          <ButtonS category="pink" onClick={closeSaveSuc}>
-            닫기
-          </ButtonS>
-          &emsp;
-          <ButtonS category="pink" onClick={() => nav.push(`/`)}>
-            홈으로
           </ButtonS>
         </ModalContent>
       </Modal>

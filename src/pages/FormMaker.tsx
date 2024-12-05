@@ -12,6 +12,7 @@ import { createQuestion, IQuestionItem, IUser } from "../fetcher";
 import { customStyles, ModalContent } from "./UpdateMyInfo";
 import { useHistory } from "react-router-dom";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { toast } from "react-toastify";
 
 const QuestionBox = styled.div`
   padding-top: 3px;
@@ -114,7 +115,7 @@ function FormMaker() {
       .then((res) => {
         let hmacRes = res.data;
         setLinkToCopy(`localhost:3000/apply/guest/${hmacRes}`);
-        console.log(hmacRes);
+        // console.log(hmacRes);
       })
       .catch((err) => {
         console.log(err);
@@ -237,6 +238,11 @@ function FormMaker() {
     }
   );
 
+  const CopyEtc = (b: boolean) => {
+    toast.success("링크를 복사했습니다.");
+    setCopied(b);
+  };
+
   return (
     <>
       <Title>연하장 신청받기</Title>
@@ -313,7 +319,7 @@ function FormMaker() {
             저장하기
           </ButtonL>
         </QuestionForm>
-        <CopyToClipboard text={linkToCopy} onCopy={() => setCopied(true)}>
+        <CopyToClipboard text={linkToCopy} onCopy={() => CopyEtc(true)}>
           <ButtonL category="hotpink">링크 공유하기</ButtonL>
         </CopyToClipboard>
       </FormDiv>
