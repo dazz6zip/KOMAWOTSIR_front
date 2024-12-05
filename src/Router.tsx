@@ -8,15 +8,14 @@ import ApplicantHome from "./pages/ApplicantHome";
 import Apply from "./pages/Apply";
 import ApplyCompletedGuest from "./pages/ApplyCompletedGuest";
 import ApplyGuest from "./pages/ApplyGuest";
-import BackgroundList from "./pages/BackgroundList";
+import ImageList from "./pages/ImageList";
 import CardDesigner from "./pages/CardDesigner";
 import CardWriter from "./pages/CardWriter";
 import Carousel1 from "./pages/Carousel1";
-import DesignList from "./pages/DesignList";
 import DraftList from "./pages/DraftList";
 import CarouselEx from "./pages/ExCarousel";
 import FontList from "./pages/FontList";
-import FormMaker from "./pages/FormMaker";
+import Inquiry from "./pages/Inquiry";
 import Home from "./pages/Home";
 import ReceiverAdder from "./pages/ReceiverAdder";
 import ReceiverList from "./pages/ReceiverList";
@@ -30,7 +29,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 90%;
-  font-family: "Apple SD Gothic Neo", sans-serif;
   padding: 15px 10px 25px 10px;
   box-sizing: border-box;
 
@@ -51,7 +49,7 @@ function Router() {
       <Container>
         <Switch>
           <Route path="/" exact component={Home} />
-          <PrivateRouter path="/create-form" component={FormMaker} />
+          <PrivateRouter path="/create-form" component={Inquiry} />
           <PrivateRouter path="/write" component={CardWriter} />
           <PrivateRouter path="/design" exact component={CardDesigner} />
           <PrivateRouter path="/update-info" component={UpdateMyInfo} />
@@ -59,10 +57,10 @@ function Router() {
           <PrivateRouter path="/apply1" exact component={Apply} />
           <Route path="/apply/guest" exact component={ApplyGuest} />
           <Route path="/apply/done" exact component={ApplyCompletedGuest} />
-          <PrivateRouter path="/background" exact component={BackgroundList} />
+          <PrivateRouter path="/background" exact component={ImageList} />
           <PrivateRouter path="/add-receiver" exact component={ReceiverAdder} />
           <PrivateRouter path="/receiver-list" exact component={ReceiverList} />
-          <PrivateRouter path="/design-list" exact component={DesignList} />
+
           <PrivateRouter path="/yearly-presents" component={YearlyPresents} />
           <PrivateRouter path="/all-presents" component={AllPresents} />
           <PrivateRouter path="/carousel-test" component={CarouselEx} />
@@ -72,7 +70,6 @@ function Router() {
           <PrivateRouter path="/already" component={AlreadyApplied} />
         </Switch>
       </Container>
-      <Footer />
     </>
   );
 }

@@ -301,6 +301,7 @@ function FormMaker() {
 
                 <Input
                   type="text"
+                  style={{ opacity: "60%", fontSize: "80%" }}
                   placeholder="질문에 대한 설명을 추가해 주세요."
                   {...register(`questions.${index}.description`)}
                 />

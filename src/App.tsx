@@ -5,6 +5,7 @@ import { RecoilRoot } from "recoil";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
+import Footer from "./components/Footer";
 
 const StyledToastContainer = styled(ToastContainer)`
   margin-bottom: 30px;
@@ -48,18 +49,33 @@ const StyledToastContainer = styled(ToastContainer)`
   }
 `;
 
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
+
+const Content = styled.div`
+  flex-grow: 1;
+`;
+
 function App() {
   return (
     <BrowserRouter>
       <RecoilRoot>
         <GlobalStyle />
-        <StyledToastContainer
-          position="bottom-center"
-          autoClose={2000}
-          closeOnClick
-          pauseOnHover
-        />
-        <Router />
+        <AppContainer>
+          <Content>
+            <StyledToastContainer
+              position="bottom-center"
+              autoClose={2000}
+              closeOnClick
+              pauseOnHover
+            />
+            <Router />
+          </Content>
+          <Footer />
+        </AppContainer>
       </RecoilRoot>
     </BrowserRouter>
   );
