@@ -21,18 +21,9 @@ import {
   IReceiverToAdd,
 } from "../fetcher";
 
-interface FormValues {
-  tel: string;
-  nickname: string;
-  info: string;
-  [key: `question_${number}`]: string; // 질문 입력값을 동적으로 매핑
-}
-
-function ApplyWithoutLogin() {
+function ApplyGuest() {
   const [isContinueModalOpen, setIsContinueModalOpen] = useState(false);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [canContinue, setCanContinue] = useState(false);
-  const closeConfirmModal = () => setIsConfirmModalOpen(false);
   const closeContinueModal = () => setIsContinueModalOpen(false);
   const history = useHistory();
   const {
@@ -104,7 +95,6 @@ function ApplyWithoutLogin() {
       receiver: receiver,
       answers: receiverQuestions,
     };
-
     addReceiverSet(receiverAdder);
   };
 
@@ -114,7 +104,7 @@ function ApplyWithoutLogin() {
         `/api/users/${sender.id}/receivers`,
         receiverAdder
       );
-      alert("신청이 완료되었습니다!");
+      history.push("/apply/done");
     } catch (error) {
       console.error("신청 중 오류 발생:", error);
       alert("신청 처리 중 문제가 발생했습니다. 다시 시도해 주세요.");
@@ -193,27 +183,6 @@ function ApplyWithoutLogin() {
       </Form>
 
       <Modal
-        isOpen={isConfirmModalOpen}
-        onRequestClose={closeConfirmModal}
-        style={ModalStyle}
-      >
-        <ModalContent>
-          <h3>신청하시겠습니까?</h3>
-          <p>
-            정보를 제대로 입력했는지 확인해 주세요.
-            <br />
-            신청한 이후에는 수정하거나, <br />
-            취소할 수 없어요.
-          </p>
-          <ButtonS category="white" onClick={closeConfirmModal}>
-            다시 확인하기
-          </ButtonS>
-          <ButtonS category="pink">이대로 신청하기</ButtonS>
-          &emsp;
-        </ModalContent>
-      </Modal>
-
-      <Modal
         isOpen={isContinueModalOpen}
         onRequestClose={closeContinueModal}
         style={ModalStyle}
@@ -240,4 +209,4 @@ function ApplyWithoutLogin() {
   );
 }
 
-export default ApplyWithoutLogin;
+export default ApplyGuest;

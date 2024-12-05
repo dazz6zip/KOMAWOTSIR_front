@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { slide as Menu } from "react-burger-menu";
 import { FaArrowLeft } from "react-icons/fa";
@@ -5,7 +6,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../images/logo.png";
-import axios from "axios";
 
 const HeaderContainer = styled.div`
   height: 40px;
@@ -156,6 +156,9 @@ function Header() {
         </StyledMenuItem>
         <StyledMenuItem to="/receiver-list" onClick={closeMenu} $isSubMenu>
           <CustomIcon>✷</CustomIcon>작성하기
+        </StyledMenuItem>
+        <StyledMenuItem to="/add-receiver" onClick={closeMenu} $isSubMenu>
+          <CustomIcon>✷</CustomIcon>수신인 추가하기
         </StyledMenuItem>
         <StyledMenuItem to="/design" onClick={closeMenu} $isSubMenu>
           <CustomIcon>✸</CustomIcon>디자인하기

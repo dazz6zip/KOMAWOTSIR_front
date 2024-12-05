@@ -4,10 +4,11 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import AllPresents from "./pages/AllPresents";
 import AlreadyApplied from "./pages/AlreadyApplied";
-import Apply from "./pages/Apply";
-import ApplicantDone from "./pages/ApplicantDone";
 import ApplicantHome from "./pages/ApplicantHome";
-import ApplyWithoutLogin from "./pages/ApplyWithoutLogin";
+import Apply from "./pages/Apply";
+import ApplyCompletedGuest from "./pages/ApplyCompletedGuest";
+import ApplyGuest from "./pages/ApplyGuest";
+import ApplyWithoutLoginTest from "./pages/ApplyWithoutLogin-test";
 import BackgroundList from "./pages/BackgroundList";
 import CardDesigner from "./pages/CardDesigner";
 import CardWriter from "./pages/CardWriter";
@@ -23,7 +24,6 @@ import ReceiverList from "./pages/ReceiverList";
 import UpdateMyInfo from "./pages/UpdateMyInfo";
 import YearlyPresents from "./pages/YearlyPresents";
 import PrivateRouter from "./PrivateRouter";
-import ApplyWithoutLoginTest from "./pages/ApplyWithoutLogin-test";
 
 const Container = styled.div`
   display: flex;
@@ -58,13 +58,13 @@ function Router() {
           <PrivateRouter path="/update-info" component={UpdateMyInfo} />
           <PrivateRouter path="/apply" exact component={ApplicantHome} />
           <PrivateRouter path="/apply1" exact component={Apply} />
-          <Route path="/apply/guest" exact component={ApplyWithoutLogin} />
+          <Route path="/apply/guest" exact component={ApplyGuest} />
           <Route
             path="/apply/guest/:link"
             exact
             component={ApplyWithoutLoginTest}
           />
-          <Route path="/apply/done" exact component={ApplicantDone} />
+          <Route path="/apply/done" exact component={ApplyCompletedGuest} />
           <PrivateRouter path="/background" exact component={BackgroundList} />
           <PrivateRouter path="/add-receiver" exact component={ReceiverAdder} />
           <PrivateRouter path="/receiver-list" exact component={ReceiverList} />

@@ -70,7 +70,7 @@ export interface IReceiverQuestion {
 
 export interface IReceiverSet {
   receiver: IReceiverToAdd;
-  answers: IReceiverQuestionToAdd[];
+  answers?: IReceiverQuestionToAdd[];
 }
 
 export interface IPostContents {

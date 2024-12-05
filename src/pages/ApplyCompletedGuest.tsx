@@ -1,4 +1,6 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { ASenderState } from "../atoms";
 import Description from "../components/common/Description";
 import DescriptionS from "../components/common/DescriptionS";
 import Img from "../components/common/Img";
@@ -10,8 +12,8 @@ const LogoSection = styled.div`
   text-align: center;
 `;
 
-function ApplicantDone() {
-  const username = "하하호호";
+function ApplyCompletedGuest() {
+  const sender = useRecoilValue(ASenderState);
   return (
     <>
       <LogoSection>
@@ -36,4 +38,4 @@ function ApplicantDone() {
   );
 }
 
-export default ApplicantDone;
+export default ApplyCompletedGuest;
