@@ -51,6 +51,7 @@ export const CardContainer = styled.div<{
   active: boolean;
 }>`
   position: absolute;
+  text-align: center;
   width: 100%;
   height: 100%;
   transform: rotateY(${(props) => props.offset * 50}deg)
@@ -75,6 +76,7 @@ export const CardStyled = styled.div<{ absOffset: number }>`
   width: 100%;
   height: 100%;
   padding: 2rem;
+  display: inline-block;
   background-color: hsl(
     340deg,
     60%,

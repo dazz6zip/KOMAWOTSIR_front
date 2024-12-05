@@ -107,15 +107,20 @@ const AllPresents: React.FC = () => {
               <br />
               <br />
               <div
-                ref={(el) => (captureRefs.current[i] = el)} // 각 카드별 ref 할당
+                ref={(el) => (captureRefs.current[i] = el)}
+                // 각 카드별 ref 할당
+                style={{ textAlign: "center", alignItems: "center" }}
               >
                 <div
                   style={{
-                    width: "100%",
-                    height: "100%",
+                    width: "12rem",
+                    height: "12rem",
                     backgroundImage: `url(${card?.backgroundPic})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
+                    display: "flex", // Flexbox 적용
+                    alignItems: "center", // 수직 가운데 정렬
+                    justifyContent: "center", // 수평 가운데 정렬
                     textAlign: "center",
                     color: `${
                       card?.fontColor === EFontColor.white ? "white" : "black"
