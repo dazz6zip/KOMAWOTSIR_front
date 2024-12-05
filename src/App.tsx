@@ -41,7 +41,11 @@ const StyledToastContainer = styled(ToastContainer)`
   }
 
   .Toastify__progress-bar {
-    display: none;
+    background-color: #87b9ce;
+  }
+
+  .Toastify__progress-bar--error {
+    background-color: #ed798d;
   }
 `;
 
