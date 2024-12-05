@@ -8,7 +8,6 @@ import styled from "styled-components";
 
 const StyledToastContainer = styled(ToastContainer)`
   margin-bottom: 30px;
-  margin-top: 10px;
 
   .Toastify__toast-icon {
     display: none;

@@ -1,10 +1,10 @@
 // 비회원 신청: 전화번호로 회원 & receiver 등록 여부 체크
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "react-modal";
-import { useHistory } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useHistory, useParams } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { ASenderState } from "../atoms";
 import ButtonL from "../components/common/ButtonL";
 import ButtonRow from "../components/common/ButtonRow";
@@ -19,9 +19,33 @@ import {
   IReceiverQuestionToAdd,
   IReceiverSet,
   IReceiverToAdd,
+  IUser,
 } from "../fetcher";
 
+interface Ilink {
+  link: string;
+}
+
 function ApplyGuest() {
+  const { link } = useParams<Ilink>();
+
+  useEffect(() => {
+    const validateUrl = async () => {
+      try {
+        const response = await axios.get<IUser>(`/api/inquiry/validate/url`, {
+          params: {
+            link: link,
+          },
+        });
+        setSender(response.data);
+      } catch (error) {
+        console.error("URL 검증 실패:", error);
+      }
+    };
+
+    validateUrl();
+  }, [link]);
+
   const [isContinueModalOpen, setIsContinueModalOpen] = useState(false);
   const [canContinue, setCanContinue] = useState(false);
   const closeContinueModal = () => setIsContinueModalOpen(false);
@@ -34,7 +58,7 @@ function ApplyGuest() {
   } = useForm();
   // watch: 실시간 변화 관찰, getValues: 특정 시점 값 읽기
 
-  const sender = useRecoilValue(ASenderState);
+  const [sender, setSender] = useRecoilState(ASenderState);
   const [questions, setQuestions] = useState<IQuestionItem[]>();
 
   const checkUser = async () => {

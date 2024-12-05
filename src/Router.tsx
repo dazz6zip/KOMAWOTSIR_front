@@ -8,7 +8,6 @@ import ApplicantHome from "./pages/ApplicantHome";
 import Apply from "./pages/Apply";
 import ApplyCompletedGuest from "./pages/ApplyCompletedGuest";
 import ApplyGuest from "./pages/ApplyGuest";
-import ApplyWithoutLoginTest from "./pages/ApplyWithoutLogin-test";
 import BackgroundList from "./pages/BackgroundList";
 import CardDesigner from "./pages/CardDesigner";
 import CardWriter from "./pages/CardWriter";
@@ -58,12 +57,7 @@ function Router() {
           <PrivateRouter path="/update-info" component={UpdateMyInfo} />
           <PrivateRouter path="/apply" exact component={ApplicantHome} />
           <PrivateRouter path="/apply1" exact component={Apply} />
-          <Route path="/apply/guest" exact component={ApplyGuest} />
-          <Route
-            path="/apply/guest/:link"
-            exact
-            component={ApplyWithoutLoginTest}
-          />
+          <Route path="/apply/guest/:link" exact component={ApplyGuest} />
           <Route path="/apply/done" exact component={ApplyCompletedGuest} />
           <PrivateRouter path="/background" exact component={BackgroundList} />
           <PrivateRouter path="/add-receiver" exact component={ReceiverAdder} />
