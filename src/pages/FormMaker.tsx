@@ -114,7 +114,7 @@ function FormMaker() {
       .get<string>(`/api/inquiry/${userId}/get/url`)
       .then((res) => {
         let hmacRes = res.data;
-        setLinkToCopy(`localhost:3000/apply/guest/${hmacRes}`);
+        setLinkToCopy(`localhost:3000/apply/to/${hmacRes}`);
         // console.log(hmacRes);
       })
       .catch((err) => {

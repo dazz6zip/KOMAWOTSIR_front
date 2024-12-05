@@ -1,6 +1,7 @@
 import { ComponentType, useEffect, useState } from "react";
 import { Redirect, Route, RouteProps } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface PrivateRouterProps extends RouteProps {
   component: ComponentType<any>;

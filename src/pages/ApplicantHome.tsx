@@ -3,7 +3,7 @@
 
 import axios from "axios";
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { ASenderState } from "../atoms";
@@ -19,28 +19,51 @@ const LogoSection = styled.div`
   text-align: center;
 `;
 
+interface Ilink {
+  link: string;
+}
+
 function ApplicantHome() {
+  const { link } = useParams<Ilink>();
+
+  useEffect(() => {
+    const validateUrl = async () => {
+      try {
+        const response = await axios.get<IUser>(`/api/inquiry/validate/url`, {
+          params: {
+            link: link,
+          },
+        });
+        setSender(response.data);
+      } catch (error) {
+        console.error("URL 검증 실패:", error);
+      }
+    };
+
+    validateUrl();
+  }, [link]);
+
   const setSender = useSetRecoilState(ASenderState);
   const sender = useRecoilValue(ASenderState);
   const history = useHistory();
 
-  useEffect(() => {
-    const senderId = 12;
-    // 나중에 밑에 두 줄로 바꾸기
-    // const urlParams = new URLSearchParams(window.location.search);
-    // const senderId = urlParams.get("sender");
+  // useEffect(() => {
+  //   const senderId = 12;
+  //   // 나중에 밑에 두 줄로 바꾸기
+  //   // const urlParams = new URLSearchParams(window.location.search);
+  //   // const senderId = urlParams.get("sender");
 
-    if (senderId) {
-      axios
-        .get<IUser>(`/api/users/${senderId}`)
-        .then((response) => {
-          setSender(response.data);
-        })
-        .catch((error) => {
-          console.error("수신자 정보 확인 불가능", error);
-        });
-    }
-  }, []);
+  //   if (senderId) {
+  //     axios
+  //       .get<IUser>(`/api/users/${senderId}`)
+  //       .then((response) => {
+  //         setSender(response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.error("수신자 정보 확인 불가능", error);
+  //       });
+  //   }
+  // }, []);
 
   const kakaoLogin = async () => {
     try {
@@ -50,6 +73,8 @@ function ApplicantHome() {
       const { clientId, redirectUri } = response.data;
 
       console.log(response.data);
+
+      sessionStorage.setItem("apply_kakao", link);
 
       // 카카오 인증 페이지로 리디렉션
       const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
