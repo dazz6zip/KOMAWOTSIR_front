@@ -19,10 +19,6 @@ const QuestionBox = styled.div`
   margin-top: 10px;
 `;
 
-const FormDiv = styled.div`
-  width: 100%;
-`;
-
 const QuestionRow = styled.div`
   display: flex;
   justify-content: space-between;
@@ -278,52 +274,60 @@ function FormMaker() {
           </ButtonL>
         </ModalContent>
       </Modal>
-      <FormDiv>
-        <QuestionForm onSubmit={handleSubmit(onSubmit)}>
-          {fields.map((field, index) => (
-            <QuestionBox key={field.id}>
-              <QuestionRow>
-                <Label>{index + 1}번 질문</Label>
-                <ButtonS category="white" onClick={() => remove(index)}>
-                  삭제
-                </ButtonS>
-              </QuestionRow>
 
-              <InputGroup>
-                <Input
-                  type="text"
-                  placeholder="추가하고 싶은 질문을 입력해 주세요."
-                  isError={!!errors.questions?.[index]?.question}
-                  {...register(`questions.${index}.question`, {
-                    required: "질문을 입력해 주세요.",
-                  })}
-                />
+      <QuestionForm onSubmit={handleSubmit(onSubmit)}>
+        {fields.map((field, index) => (
+          <QuestionBox key={field.id}>
+            <QuestionRow>
+              <Label>{index + 1}번 질문</Label>
+              <ButtonS category="white" onClick={() => remove(index)}>
+                삭제
+              </ButtonS>
+            </QuestionRow>
 
-                <Input
-                  type="text"
-                  style={{ opacity: "60%", fontSize: "80%" }}
-                  placeholder="질문에 대한 설명을 추가해 주세요."
-                  {...register(`questions.${index}.description`)}
-                />
-              </InputGroup>
-            </QuestionBox>
-          ))}
+            <InputGroup>
+              <Input
+                type="text"
+                placeholder="추가하고 싶은 질문을 입력해 주세요."
+                isError={!!errors.questions?.[index]?.question}
+                {...register(`questions.${index}.question`, {
+                  required: "질문을 입력해 주세요.",
+                })}
+              />
 
-          <ButtonS
-            category="pink"
-            type="button"
-            onClick={() => append({ question: "", description: "" })}
-          >
-            + 질문 추가하기
-          </ButtonS>
-          <ButtonL category="pink" type="submit">
-            저장하기
-          </ButtonL>
-        </QuestionForm>
+              <Input
+                type="text"
+                style={{ opacity: "60%", fontSize: "80%" }}
+                placeholder="질문에 대한 설명을 추가해 주세요."
+                {...register(`questions.${index}.description`)}
+              />
+            </InputGroup>
+          </QuestionBox>
+        ))}
+
+        <ButtonS
+          category="pink"
+          type="button"
+          onClick={() => append({ question: "", description: "" })}
+        >
+          + 질문 추가하기
+        </ButtonS>
+
+        <ButtonL category="pink" type="submit">
+          저장하기
+        </ButtonL>
+
         <CopyToClipboard text={linkToCopy} onCopy={() => CopyEtc(true)}>
-          <ButtonL category="hotpink">링크 공유하기</ButtonL>
+          <ButtonL
+            category="hotpink"
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            링크 공유하기
+          </ButtonL>
         </CopyToClipboard>
-      </FormDiv>
+      </QuestionForm>
 
       <Modal
         isOpen={completeModal}

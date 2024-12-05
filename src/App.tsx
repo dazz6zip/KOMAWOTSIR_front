@@ -16,9 +16,9 @@ const StyledToastContainer = styled(ToastContainer)`
 
   .Toastify__toast {
     max-height: 20px;
-    width: 300px; /* 알림의 최대 너비 설정 */
-    max-width: 90%; /* 화면 크기에 따라 유동적으로 조정 */
-    margin: 0 auto; /* 가로 중앙 정렬 */
+    width: 300px;
+    max-width: 90%;
+    margin: 0 auto;
     background-color: #1d1c1a;
     color: #2d2d2d;
     border-radius: 8px;

@@ -101,11 +101,12 @@ function Header() {
   const closeMenu = () => setIsMenuOpen(false);
 
   const logoutProc = () => {
+    sessionStorage.removeItem("userId");
     axios
       .post(`/api/users/logout`)
       .then((res) => {
         // console.log(res);
-        sessionStorage.removeItem("userId");
+
         closeMenu();
         nav.push("/");
       })

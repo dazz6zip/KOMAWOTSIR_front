@@ -8,6 +8,7 @@ import { IUser } from "../fetcher";
 import kakao from "../images/kakao.png";
 import main from "../images/main.png";
 import ButtonS from "../components/common/ButtonS";
+import Cookies from "js-cookie";
 
 const LogoSection = styled.div`
   text-align: center;
@@ -76,6 +77,7 @@ function Home() {
         });
     }
   }, []);
+
   return (
     <>
       <LogoSection>
