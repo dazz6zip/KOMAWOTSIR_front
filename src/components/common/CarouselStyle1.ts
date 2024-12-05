@@ -80,12 +80,12 @@ export const CardStyled = styled.div<{ absOffset: number }>`
     calc(100% - ${(props) => props.absOffset * 20}%)
   );
   border-radius: 1rem;
+  border: 4px solid lavender;
   color: ${COLORS.gray};
-  text-align: justify;
+  text-align: center;
   transition: all 0.3s ease-out;
 
   h2 {
-    text-align: center;
     font-size: 2rem;
     font-weight: bold;
     margin: 0 0 0.7em;

@@ -1,6 +1,5 @@
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-import Footer from "./components/Footer";
 import Header from "./components/Header";
 import AllPresents from "./pages/AllPresents";
 import AlreadyApplied from "./pages/AlreadyApplied";
@@ -8,15 +7,16 @@ import ApplicantHome from "./pages/ApplicantHome";
 import Apply from "./pages/Apply";
 import ApplyCompletedGuest from "./pages/ApplyCompletedGuest";
 import ApplyGuest from "./pages/ApplyGuest";
-import ImageList from "./pages/ImageList";
 import CardDesigner from "./pages/CardDesigner";
 import CardWriter from "./pages/CardWriter";
 import Carousel1 from "./pages/Carousel1";
 import DraftList from "./pages/DraftList";
 import CarouselEx from "./pages/ExCarousel";
 import FontList from "./pages/FontList";
-import Inquiry from "./pages/Inquiry";
 import Home from "./pages/Home";
+import Html2CanvasEx from "./pages/Html2CanvasEx";
+import ImageList from "./pages/ImageList";
+import Inquiry from "./pages/Inquiry";
 import ReceiverAdder from "./pages/ReceiverAdder";
 import ReceiverList from "./pages/ReceiverList";
 import UpdateMyInfo from "./pages/UpdateMyInfo";
@@ -68,6 +68,7 @@ function Router() {
           <PrivateRouter path="/draft" component={DraftList} />
           <PrivateRouter path="/font-list" component={FontList} />
           <PrivateRouter path="/already" component={AlreadyApplied} />
+          <Route path="/kk" exact component={Html2CanvasEx} />
         </Switch>
       </Container>
     </>

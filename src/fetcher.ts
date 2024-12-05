@@ -73,6 +73,11 @@ export interface IReceiverSet {
   answers?: IReceiverQuestionToAdd[];
 }
 
+export interface IPostImage {
+  userId: number;
+  file: Blob;
+}
+
 export interface IPostContents {
   id: number;
   senderId: number;
@@ -129,12 +134,16 @@ export interface IFont {
 
 export interface IPresent {
   // 내가 받은 연하장
-  id: number;
+  postId: number;
   senderId: string;
   senderNickname: string;
   receiverId: string;
   contents: string;
   year: number;
+  backgroundPic: string;
+  fontFamily: string;
+  fontSize?: string;
+  fontColor?: string;
 }
 
 export interface Iimage {
