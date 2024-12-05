@@ -21,8 +21,17 @@ const AllPresents: React.FC = () => {
   const receiver = useRecoilValue(AReceiverState);
 
   const [cards, setCards] = useState<IPresent[]>();
+  const [cardsByYear, setCardsByYear] = useState<IPresent[]>();
   const [yearList, setYearList] = useState<number[]>([]);
   const [count, setCount] = useState<number>(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(2024);
+  const openSelect = () => setIsOpen(!isOpen);
+  const handleOptionClick = (option: number) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+  };
+
   const captureRefs = useRef<(HTMLDivElement | null)[]>([]); // 각 카드별 ref 배열
 
   useEffect(() => {
@@ -42,13 +51,7 @@ const AllPresents: React.FC = () => {
       });
   }, []);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(2024);
-  const openSelect = () => setIsOpen(!isOpen);
-  const handleOptionClick = (option: number) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
+  useEffect(() => {}, [selectedOption]);
 
   const handleDownload = async (index: number) => {
     const targetRef = captureRefs.current[index];
@@ -74,11 +77,11 @@ const AllPresents: React.FC = () => {
           <i>▼</i>
         </div>
         <div className="options">
-          {yearList.map((year) => {
+          {yearList.map((year) => (
             <div className="option" onClick={() => handleOptionClick(year)}>
               {year}
-            </div>;
-          })}
+            </div>
+          ))}
         </div>
         <br />
       </Select>

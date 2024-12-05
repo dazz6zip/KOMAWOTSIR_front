@@ -1,11 +1,11 @@
-import Router from "./Router";
-import GlobalStyle from "./GlobalStyle";
-import { BrowserRouter, Link } from "react-router-dom";
-import { RecoilRoot } from "recoil";
+import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { RecoilRoot } from "recoil";
 import styled from "styled-components";
 import Footer from "./components/Footer";
+import GlobalStyle from "./GlobalStyle";
+import Router from "./Router";
 
 const StyledToastContainer = styled(ToastContainer)`
   margin-bottom: 30px;
@@ -53,6 +53,7 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow: hidden; /* 넘치는 부분 숨김 */
 `;
 
 const Content = styled.div`

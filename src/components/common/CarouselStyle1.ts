@@ -31,7 +31,8 @@ export const AppContainer = styled.div`
 
 export const CarouselWrapper = styled.div`
   position: relative;
-  width: ${CARD_SIZE_DESKTOP};
+  width: 50%;
+  max-width: ${CARD_SIZE_DESKTOP};
   height: ${CARD_SIZE_DESKTOP};
   perspective: 500px;
   transform-style: preserve-3d;

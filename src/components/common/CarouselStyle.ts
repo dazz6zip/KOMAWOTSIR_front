@@ -7,33 +7,12 @@ const COLORS = {
   black: "#3A3B42",
 };
 
-const CARD_SIZE_DESKTOP = "23rem";
-const CARD_SIZE_MOBILE = "16rem";
-
 export const CarouselWrapper = styled.div`
   position: relative;
-  width: ${CARD_SIZE_DESKTOP};
-  height: ${CARD_SIZE_DESKTOP};
-  perspective: 800px; /* 깊이를 위한 3D */
+  width: 80%;
+  height: 60%;
+  perspective: 70%;
   transform-style: preserve-3d;
-
-  @media (max-width: 1024px) {
-    width: 20rem;
-    height: 20rem;
-    perspective: 600px;
-  }
-
-  @media (max-width: 768px) {
-    width: ${CARD_SIZE_MOBILE};
-    height: ${CARD_SIZE_MOBILE};
-    perspective: 400px;
-  }
-
-  @media (max-width: 480px) {
-    width: 14rem;
-    height: 14rem;
-    perspective: 300px;
-  }
 `;
 
 export const CardContainer = styled.div<{
