@@ -205,7 +205,7 @@ function CardWriter() {
           designPostData?.fontColor === EFontColor.white ? "white" : "black"
         }
       >
-        <span>{contents}</span>
+        <span style={{ whiteSpace: "pre-wrap" }}>{contents}</span>
       </PreviewArea>
       <ButtonRow>
         <ButtonS
