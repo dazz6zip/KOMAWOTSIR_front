@@ -60,8 +60,13 @@ function Home() {
         .then((response) => {
           console.log("로그인 성공", response);
           sessionStorage.setItem("userId", response.data.id.toString());
+
+          const link = sessionStorage.getItem("apply_kakao");
           if (response.data.tel === null) {
             nav.push(`/update-info`);
+          } else if (link != null) {
+            sessionStorage.removeItem("apply_kakao");
+            nav.push(`/apply/to/${link}`);
           } else {
             nav.push(`/`);
           }

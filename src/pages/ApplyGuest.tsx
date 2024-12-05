@@ -19,33 +19,9 @@ import {
   IReceiverQuestionToAdd,
   IReceiverSet,
   IReceiverToAdd,
-  IUser,
 } from "../fetcher";
 
-interface Ilink {
-  link: string;
-}
-
 function ApplyGuest() {
-  const { link } = useParams<Ilink>();
-
-  useEffect(() => {
-    const validateUrl = async () => {
-      try {
-        const response = await axios.get<IUser>(`/api/inquiry/validate/url`, {
-          params: {
-            link: link,
-          },
-        });
-        setSender(response.data);
-      } catch (error) {
-        console.error("URL 검증 실패:", error);
-      }
-    };
-
-    validateUrl();
-  }, [link]);
-
   const [isContinueModalOpen, setIsContinueModalOpen] = useState(false);
   const [canContinue, setCanContinue] = useState(false);
   const closeContinueModal = () => setIsContinueModalOpen(false);
