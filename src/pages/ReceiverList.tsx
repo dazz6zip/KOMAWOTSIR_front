@@ -337,11 +337,7 @@ function ReceiverList() {
           </CheckForm>
 
           {rlData?.pages
-            .flatMap((page) => page.content) // 모든 페이지 데이터를 합침
-            .filter(
-              (receiver, index, self) =>
-                index === self.findIndex((r) => r.id === receiver.id) // 중복 제거
-            )
+            .flatMap((page) => page.content)
             .map((sdata) => (
               <CardContainer key={sdata.id}>
                 <CardHeader statusForHeader={sdata.postStatus}>

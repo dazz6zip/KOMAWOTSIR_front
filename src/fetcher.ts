@@ -212,30 +212,6 @@ export const getQuestion = async (
   }
 };
 
-// export const PostList = async (
-//   userId: number,
-//   checkboxValues: boolean[]
-// ): Promise<IReceiver[]> => {
-//   try {
-//     const response = await axios.get<IReceiver[]>(
-//       `/api/users/${userId}/receivers`,
-//       {
-//         params: {
-//           pending: checkboxValues[0],
-//           progressing: checkboxValues[1],
-//           completed: checkboxValues[2],
-//         },
-//       }
-//     );
-//     return response.data.map((item) => ({
-//       ...item,
-//     }));
-//   } catch (err) {
-//     console.error(err);
-//     throw err;
-//   }
-// };
-
 export const PostList = async (
   userId: number,
   checkboxValues: boolean[],
@@ -261,7 +237,7 @@ export const PostList = async (
 
     return {
       content: data.content,
-      last: data.number + 1 >= data.totalPages, // 마지막 페이지 여부 계산
+      last: data.number + 1 >= data.totalPages,
     };
   } catch (error) {
     console.error(error);
