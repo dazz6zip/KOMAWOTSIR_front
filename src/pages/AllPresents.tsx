@@ -2,8 +2,10 @@ import axios from "axios";
 import html2canvas from "html2canvas";
 import React, { useEffect, useRef, useState } from "react";
 import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
+import Modal from "react-modal";
 import { useRecoilValue } from "recoil";
 import { AReceiverState } from "../atoms";
+import ButtonRow from "../components/common/ButtonRow";
 import ButtonS from "../components/common/ButtonS";
 import {
   CardContainer,
@@ -12,6 +14,7 @@ import {
   NavigationButton,
 } from "../components/common/CarouselStyle1";
 import Description from "../components/common/Description";
+import { ModalContent, ModalStyle } from "../components/common/ModalStyle";
 import { Select } from "../components/common/Select";
 import Title from "../components/common/Title";
 import { EFontColor, EFontSize, IPresent } from "../fetcher";
@@ -19,8 +22,11 @@ import { EFontColor, EFontSize, IPresent } from "../fetcher";
 const AllPresents: React.FC = () => {
   const [active, setActive] = useState(0);
   const receiver = useRecoilValue(AReceiverState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = () => setIsModalOpen(false);
   const [filteredCards, setFilteredCards] = useState<IPresent[]>([]);
   const [cards, setCards] = useState<IPresent[]>([]);
+  const [cardSelected, setCardSelected] = useState<IPresent>();
   const [yearList, setYearList] = useState<number[]>([]);
   const [count, setCount] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +37,13 @@ const AllPresents: React.FC = () => {
     setIsOpen(false);
   };
 
+  const selectCard = (card: IPresent) => {
+    setCardSelected(card);
+    setIsModalOpen(true);
+  };
+
   const captureRefs = useRef<(HTMLDivElement | null)[]>([]); // 각 카드별 ref 배열
+  const modalCaptureRef = useRef<HTMLDivElement | null>(null); // Modal 내부 ref
 
   useEffect(() => {
     axios
@@ -82,7 +94,21 @@ const AllPresents: React.FC = () => {
       const dataURL = canvas.toDataURL("image/png"); // PNG 형식 이미지
       const link = document.createElement("a");
       link.href = dataURL;
-      link.download = `card-${index + 1}.png`;
+      link.download = `thumbnail-${index + 1}.png`;
+      link.click();
+    }
+  };
+
+  const handleDownloadModal = async () => {
+    if (modalCaptureRef.current) {
+      const canvas = await html2canvas(modalCaptureRef.current, {
+        useCORS: true,
+        allowTaint: false,
+      });
+      const dataURL = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = `${cardSelected?.senderNickname}로부터.png`;
       link.click();
     }
   };
@@ -138,7 +164,6 @@ const AllPresents: React.FC = () => {
                   style={{
                     width: "12rem",
                     height: "12rem",
-                    // backgroundImage: `url(${card?.backgroundPic})`,
                     backgroundImage: `url(${card?.thumbnailPic})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
@@ -163,7 +188,6 @@ const AllPresents: React.FC = () => {
                   >
                     <link href={card?.fontUrl} rel="stylesheet" />
                     <br />
-                    {card.contents}
                     <br />
                     <br />
                     <br />
@@ -171,10 +195,14 @@ const AllPresents: React.FC = () => {
                   </span>
                 </div>
               </div>
-              <br />
-              <ButtonS category="pink" onClick={() => handleDownload(i)}>
-                이미지 다운로드
-              </ButtonS>
+              <ButtonRow>
+                <ButtonS category="pink" onClick={() => handleDownload(i)}>
+                  이미지 다운로드
+                </ButtonS>
+                <ButtonS category="hotpink" onClick={() => selectCard(card)}>
+                  열어보기
+                </ButtonS>
+              </ButtonRow>
             </CardStyled>
           </CardContainer>
         ))}
@@ -196,6 +224,58 @@ const AllPresents: React.FC = () => {
       </Description>
       <br />
       <br />
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        style={ModalStyle}
+      >
+        <ModalContent>
+          <div
+            ref={modalCaptureRef}
+            // 각 카드별 ref 할당
+            style={{
+              width: "12rem",
+              height: "12rem",
+              backgroundImage: `url(${cardSelected?.backgroundPic})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              display: "flex", // Flexbox 적용
+              alignItems: "center", // 수직 가운데 정렬
+              justifyContent: "center", // 수평 가운데 정렬
+              textAlign: "center",
+              color: `${
+                cardSelected?.fontColor === EFontColor.white ? "white" : "black"
+              }`,
+            }}
+          >
+            <span
+              style={{
+                whiteSpace: "pre-wrap",
+                fontFamily: `${cardSelected?.fontName}`,
+                fontSize: `${
+                  cardSelected?.fontSize === EFontSize.defaultSize ? 16 : 24
+                }`,
+                color: `${cardSelected?.fontColor}`,
+              }}
+            >
+              <link href={cardSelected?.fontUrl} rel="stylesheet" />
+              <br />
+              {cardSelected?.contents}
+              <br />
+              <br />
+              <br />
+              <b>from. {cardSelected?.senderNickname}</b>
+            </span>
+          </div>
+          <br />
+          <ButtonS category="white" onClick={closeModal}>
+            닫기
+          </ButtonS>
+          <ButtonS category="pink" onClick={handleDownloadModal}>
+            이미지 다운로드
+          </ButtonS>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
