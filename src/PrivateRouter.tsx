@@ -1,5 +1,5 @@
 import { ComponentType, useEffect, useState } from "react";
-import { Redirect, Route, RouteProps } from "react-router-dom";
+import { Redirect, Route, RouteProps, useHistory } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -14,6 +14,8 @@ const PrivateRouter: React.FC<PrivateRouterProps> = ({
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
   const [validate, setValidate] = useState<boolean | null>(null);
 
+  const nav = useHistory();
+
   useEffect(() => {
     let isMounted = true;
 
@@ -24,6 +26,7 @@ const PrivateRouter: React.FC<PrivateRouterProps> = ({
           setValidate(res.data as boolean);
           if (!res.data) {
             toast.error("인증 만료. 다시 로그인해 주세요.");
+            nav.push("/");
           }
         }
       } catch (error) {
