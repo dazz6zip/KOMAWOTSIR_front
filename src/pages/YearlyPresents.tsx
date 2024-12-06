@@ -125,14 +125,15 @@ const YearlyPresents: React.FC = () => {
                   <span
                     style={{
                       whiteSpace: "pre-wrap",
-                      fontFamily: `${card?.fontFamily}`,
+                      fontFamily: `${card?.fontName}`,
                       fontSize: `${
                         card?.fontSize === EFontSize.defaultSize ? 16 : 24
                       }`,
                     }}
                   >
+                    <link href={card?.fontUrl} rel="stylesheet" />
                     <br />
-                    {card.contents}하하
+                    {card.contents}
                     <br />
                     <br />
                   </span>

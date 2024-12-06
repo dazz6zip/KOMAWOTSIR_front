@@ -71,6 +71,8 @@ const AllPresents: React.FC = () => {
   return (
     <>
       <Title>연하장 수신 목록</Title>
+      <br />
+      <br />
       <Select isOpen={isOpen}>
         <div className="select-btn" onClick={openSelect}>
           {selectedOption}
@@ -103,15 +105,17 @@ const AllPresents: React.FC = () => {
             active={i === active}
           >
             <CardStyled absOffset={Math.abs(active - i) / 3}>
-              <b>from. {card.senderNickname}</b>
-              <br />
-              <br />
               <div
-                ref={(el) => (captureRefs.current[i] = el)}
-                // 각 카드별 ref 할당
-                style={{ textAlign: "center", alignItems: "center" }}
+                style={{
+                  textAlign: "center",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  display: "flex",
+                }}
               >
                 <div
+                  ref={(el) => (captureRefs.current[i] = el)}
+                  // 각 카드별 ref 할당
                   style={{
                     width: "12rem",
                     height: "12rem",
@@ -130,16 +134,19 @@ const AllPresents: React.FC = () => {
                   <span
                     style={{
                       whiteSpace: "pre-wrap",
-                      fontFamily: `${card?.fontFamily}`,
+                      fontFamily: `${card?.fontName}`,
                       fontSize: `${
                         card?.fontSize === EFontSize.defaultSize ? 16 : 24
                       }`,
                     }}
                   >
+                    <link href={card?.fontUrl} rel="stylesheet" />
                     <br />
-                    {card.contents}하하
+                    {card.contents}
                     <br />
                     <br />
+                    <br />
+                    <b>from. {card.senderNickname}</b>
                   </span>
                 </div>
               </div>
@@ -159,6 +166,7 @@ const AllPresents: React.FC = () => {
           </NavigationButton>
         )}
       </CarouselWrapper>
+      <br />
       <br />
       <Description>
         연하장을 클릭하면 내용을 확인할 수 있어요!

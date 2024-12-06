@@ -141,9 +141,10 @@ export interface IPresent {
   contents: string;
   year: number;
   backgroundPic: string;
-  fontFamily: string;
+  fontName: string;
   fontSize?: string;
   fontColor?: string;
+  fontUrl?: string;
 }
 
 export interface Iimage {

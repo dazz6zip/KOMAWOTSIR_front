@@ -31,10 +31,6 @@ export const AppContainer = styled.div`
 
 export const CarouselWrapper = styled.div`
   position: relative;
-  width: 50%;
-  max-width: ${CARD_SIZE_DESKTOP};
-  height: ${CARD_SIZE_DESKTOP};
-  perspective: 500px;
   transform-style: preserve-3d;
 
   @media (max-width: 768px) {
@@ -73,8 +69,8 @@ export const CardContainer = styled.div<{
 `;
 
 export const CardStyled = styled.div<{ absOffset: number }>`
-  width: 100%;
-  height: 100%;
+  width: 15rem;
+  height: 17rem;
   padding: 2rem;
   display: inline-block;
   background-color: hsl(
