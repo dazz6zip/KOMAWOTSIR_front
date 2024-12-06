@@ -19,13 +19,12 @@ import { EFontColor, EFontSize, IPresent } from "../fetcher";
 const AllPresents: React.FC = () => {
   const [active, setActive] = useState(0);
   const receiver = useRecoilValue(AReceiverState);
-
-  const [cards, setCards] = useState<IPresent[]>();
-  const [cardsByYear, setCardsByYear] = useState<IPresent[]>();
+  const [filteredCards, setFilteredCards] = useState<IPresent[]>([]);
+  const [cards, setCards] = useState<IPresent[]>([]);
   const [yearList, setYearList] = useState<number[]>([]);
   const [count, setCount] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(2024);
+  const [selectedOption, setSelectedOption] = useState(0);
   const openSelect = () => setIsOpen(!isOpen);
   const handleOptionClick = (option: number) => {
     setSelectedOption(option);
@@ -43,7 +42,9 @@ const AllPresents: React.FC = () => {
         const years = Array.from(
           new Set(response.data.map((card) => card.year))
         ).sort((a, b) => a - b); // Set 객체로 중복 자동 제거, sort로 오름차순 정렬(둘을 빼서 음수면 a앞에 ..)
-        setYearList(years);
+        setYearList([0, ...years]);
+        updateFilterdCards();
+        setFilteredCards(response.data);
         setCount(response.data.length);
       })
       .catch((error) => {
@@ -51,7 +52,25 @@ const AllPresents: React.FC = () => {
       });
   }, []);
 
-  useEffect(() => {}, [selectedOption]);
+  const updateFilterdCards = () => {
+    let filtered; // 필터링된 결과를 저장할 변수
+
+    if (selectedOption === 0) {
+      // "전체보기" 선택 시 모든 카드 표시
+      filtered = cards;
+    } else {
+      // 선택된 연도에 따라 필터링
+      filtered = cards.filter((card) => card.year === selectedOption);
+    }
+
+    setFilteredCards(filtered); // 상태 업데이트
+    setCount(filtered.length); // 필터링된 길이를 바로 설정
+    setActive(0); // 필터링 변경 시 active 카드 초기화
+  };
+
+  useEffect(() => {
+    updateFilterdCards();
+  }, [selectedOption, cards]);
 
   const handleDownload = async (index: number) => {
     const targetRef = captureRefs.current[index];
@@ -75,13 +94,13 @@ const AllPresents: React.FC = () => {
       <br />
       <Select isOpen={isOpen}>
         <div className="select-btn" onClick={openSelect}>
-          {selectedOption}
+          {selectedOption === 0 ? "전체" : `${selectedOption}년`}
           <i>▼</i>
         </div>
         <div className="options">
           {yearList.map((year) => (
             <div className="option" onClick={() => handleOptionClick(year)}>
-              {year}
+              {year == 0 ? "전체" : `${year}년`}
             </div>
           ))}
         </div>
@@ -96,7 +115,7 @@ const AllPresents: React.FC = () => {
             <TiChevronLeftOutline />
           </NavigationButton>
         )}
-        {cards?.map((card, i) => (
+        {filteredCards?.map((card, i) => (
           <CardContainer
             key={card.postId}
             offset={(active - i) / 3}
@@ -119,7 +138,8 @@ const AllPresents: React.FC = () => {
                   style={{
                     width: "12rem",
                     height: "12rem",
-                    backgroundImage: `url(${card?.backgroundPic})`,
+                    // backgroundImage: `url(${card?.backgroundPic})`,
+                    backgroundImage: `url(${card?.thumbnailPic})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     display: "flex", // Flexbox 적용
@@ -138,6 +158,7 @@ const AllPresents: React.FC = () => {
                       fontSize: `${
                         card?.fontSize === EFontSize.defaultSize ? 16 : 24
                       }`,
+                      color: `${card?.fontColor}`,
                     }}
                   >
                     <link href={card?.fontUrl} rel="stylesheet" />

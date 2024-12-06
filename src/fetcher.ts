@@ -141,6 +141,7 @@ export interface IPresent {
   contents: string;
   year: number;
   backgroundPic: string;
+  thumbnailPic: string;
   fontName: string;
   fontSize?: string;
   fontColor?: string;
