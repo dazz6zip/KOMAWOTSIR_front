@@ -1,11 +1,11 @@
 import axios from "axios";
 import html2canvas from "html2canvas";
 import React, { useEffect, useRef, useState } from "react";
+import ReactCardFlip from "react-card-flip";
 import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
-import Modal from "react-modal";
 import { useRecoilValue } from "recoil";
+import styled from "styled-components";
 import { AReceiverState } from "../atoms";
-import ButtonRow from "../components/common/ButtonRow";
 import ButtonS from "../components/common/ButtonS";
 import {
   CardContainer,
@@ -14,10 +14,11 @@ import {
   NavigationButton,
 } from "../components/common/CarouselStyle1";
 import Description from "../components/common/Description";
-import { ModalContent, ModalStyle } from "../components/common/ModalStyle";
 import { Select } from "../components/common/Select";
 import Title from "../components/common/Title";
 import { EFontColor, EFontSize, IPresent } from "../fetcher";
+
+const Card = styled.div``;
 
 const AllPresents: React.FC = () => {
   const [active, setActive] = useState(0);
@@ -26,24 +27,31 @@ const AllPresents: React.FC = () => {
   const closeModal = () => setIsModalOpen(false);
   const [filteredCards, setFilteredCards] = useState<IPresent[]>([]);
   const [cards, setCards] = useState<IPresent[]>([]);
-  const [cardSelected, setCardSelected] = useState<IPresent>();
+  // const [cardSelected, setCardSelected] = useState<IPresent>();
   const [yearList, setYearList] = useState<number[]>([]);
   const [count, setCount] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(0);
+  const [isFlipped, setIsFlipped] = useState<boolean[]>([]);
+
+  const flipCard = (index: number) => {
+    setIsFlipped((prev) =>
+      prev.map((flipped, i) => (i === index ? !flipped : flipped))
+    );
+  };
   const openSelect = () => setIsOpen(!isOpen);
   const handleOptionClick = (option: number) => {
     setSelectedOption(option);
     setIsOpen(false);
   };
 
-  const selectCard = (card: IPresent) => {
-    setCardSelected(card);
-    setIsModalOpen(true);
-  };
+  // const selectCard = (card: IPresent) => {
+  //   setCardSelected(card);
+  //   setIsModalOpen(true);
+  // };
 
   const captureRefs = useRef<(HTMLDivElement | null)[]>([]); // 각 카드별 ref 배열
-  const modalCaptureRef = useRef<HTMLDivElement | null>(null); // Modal 내부 ref
+  // const modalCaptureRef = useRef<HTMLDivElement | null>(null); // Modal 내부 ref
 
   useEffect(() => {
     axios
@@ -58,6 +66,9 @@ const AllPresents: React.FC = () => {
         updateFilterdCards();
         setFilteredCards(response.data);
         setCount(response.data.length);
+
+        // 초기 isFlipped 배열 설정
+        setIsFlipped(new Array(response.data.length).fill(false));
       })
       .catch((error) => {
         console.error("연하장 목록 불러오기 실패:", error);
@@ -99,19 +110,19 @@ const AllPresents: React.FC = () => {
     }
   };
 
-  const handleDownloadModal = async () => {
-    if (modalCaptureRef.current) {
-      const canvas = await html2canvas(modalCaptureRef.current, {
-        useCORS: true,
-        allowTaint: false,
-      });
-      const dataURL = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = dataURL;
-      link.download = `${cardSelected?.senderNickname}로부터.png`;
-      link.click();
-    }
-  };
+  // const handleDownloadModal = async () => {
+  //   if (modalCaptureRef.current) {
+  //     const canvas = await html2canvas(modalCaptureRef.current, {
+  //       useCORS: true,
+  //       allowTaint: false,
+  //     });
+  //     const dataURL = canvas.toDataURL("image/png");
+  //     const link = document.createElement("a");
+  //     link.href = dataURL;
+  //     link.download = `${cardSelected?.senderNickname}로부터.png`;
+  //     link.click();
+  //   }
+  // };
 
   return (
     <>
@@ -158,51 +169,104 @@ const AllPresents: React.FC = () => {
                   display: "flex",
                 }}
               >
-                <div
-                  ref={(el) => (captureRefs.current[i] = el)}
-                  // 각 카드별 ref 할당
-                  style={{
-                    width: "12rem",
-                    height: "12rem",
-                    backgroundImage: `url(${card?.thumbnailPic})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    display: "flex", // Flexbox 적용
-                    alignItems: "center", // 수직 가운데 정렬
-                    justifyContent: "center", // 수평 가운데 정렬
-                    textAlign: "center",
-                    color: `${
-                      card?.fontColor === EFontColor.white ? "white" : "black"
-                    }`,
-                  }}
+                <ReactCardFlip
+                  isFlipped={isFlipped[i]}
+                  flipDirection="horizontal"
                 >
-                  <span
-                    style={{
-                      whiteSpace: "pre-wrap",
-                      fontFamily: `${card?.fontName}`,
-                      fontSize: `${
-                        card?.fontSize === EFontSize.defaultSize ? 16 : 24
-                      }`,
-                      color: `${card?.fontColor}`,
-                    }}
-                  >
-                    <link href={card?.fontUrl} rel="stylesheet" />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <b>from. {card.senderNickname}</b>
-                  </span>
-                </div>
-              </div>
-              <ButtonRow>
+                  <Card onClick={() => flipCard(i)}>
+                    <div
+                      // 각 카드별 ref 할당
+                      style={{
+                        width: "12rem",
+                        height: "12rem",
+                        backgroundImage: `url(${card?.thumbnailPic})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        display: "flex", // Flexbox 적용
+                        alignItems: "center", // 수직 가운데 정렬
+                        justifyContent: "center", // 수평 가운데 정렬
+                        textAlign: "center",
+                        color: `${
+                          card?.fontColor === EFontColor.white
+                            ? "white"
+                            : "black"
+                        }`,
+                      }}
+                    >
+                      <span
+                        style={{
+                          whiteSpace: "pre-wrap",
+                          fontFamily: `${card?.fontName}`,
+                          fontSize: `${
+                            card?.fontSize === EFontSize.defaultSize ? 16 : 24
+                          }`,
+                          color: `${card?.fontColor}`,
+                        }}
+                      >
+                        <link href={card?.fontUrl} rel="stylesheet" />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <b>from. {card.senderNickname}</b>
+                      </span>
+                    </div>
+                    {/* <ButtonRow>
                 <ButtonS category="pink" onClick={() => handleDownload(i)}>
                   이미지 다운로드
                 </ButtonS>
                 <ButtonS category="hotpink" onClick={() => selectCard(card)}>
                   열어보기
                 </ButtonS>
-              </ButtonRow>
+              </ButtonRow> */}
+                  </Card>
+                  <Card onClick={() => flipCard(i)}>
+                    <div
+                      ref={(el) => (captureRefs.current[i] = el)}
+                      // 각 카드별 ref 할당
+                      style={{
+                        width: "12rem",
+                        height: "12rem",
+                        backgroundImage: `url(${card?.backgroundPic})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        display: "flex", // Flexbox 적용
+                        alignItems: "center", // 수직 가운데 정렬
+                        justifyContent: "center", // 수평 가운데 정렬
+                        textAlign: "center",
+                        color: `${
+                          card?.fontColor === EFontColor.white
+                            ? "white"
+                            : "black"
+                        }`,
+                      }}
+                    >
+                      <span
+                        style={{
+                          whiteSpace: "pre-wrap",
+                          fontFamily: `${card?.fontName}`,
+                          fontSize: `${
+                            card?.fontSize === EFontSize.defaultSize ? 16 : 24
+                          }`,
+                          color: `${card?.fontColor}`,
+                        }}
+                      >
+                        <link href={card?.fontUrl} rel="stylesheet" />
+                        <br />
+                        {card?.contents}
+                        <br />
+                        <br />
+                        <br />
+                        <b>from. {card?.senderNickname}</b>
+                      </span>
+                    </div>
+                    <br />
+                    <ButtonS category="pink" onClick={() => handleDownload(i)}>
+                      이미지 다운로드
+                    </ButtonS>
+                  </Card>
+                </ReactCardFlip>
+              </div>
             </CardStyled>
           </CardContainer>
         ))}
@@ -224,58 +288,6 @@ const AllPresents: React.FC = () => {
       </Description>
       <br />
       <br />
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        style={ModalStyle}
-      >
-        <ModalContent>
-          <div
-            ref={modalCaptureRef}
-            // 각 카드별 ref 할당
-            style={{
-              width: "12rem",
-              height: "12rem",
-              backgroundImage: `url(${cardSelected?.backgroundPic})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              display: "flex", // Flexbox 적용
-              alignItems: "center", // 수직 가운데 정렬
-              justifyContent: "center", // 수평 가운데 정렬
-              textAlign: "center",
-              color: `${
-                cardSelected?.fontColor === EFontColor.white ? "white" : "black"
-              }`,
-            }}
-          >
-            <span
-              style={{
-                whiteSpace: "pre-wrap",
-                fontFamily: `${cardSelected?.fontName}`,
-                fontSize: `${
-                  cardSelected?.fontSize === EFontSize.defaultSize ? 16 : 24
-                }`,
-                color: `${cardSelected?.fontColor}`,
-              }}
-            >
-              <link href={cardSelected?.fontUrl} rel="stylesheet" />
-              <br />
-              {cardSelected?.contents}
-              <br />
-              <br />
-              <br />
-              <b>from. {cardSelected?.senderNickname}</b>
-            </span>
-          </div>
-          <br />
-          <ButtonS category="white" onClick={closeModal}>
-            닫기
-          </ButtonS>
-          <ButtonS category="pink" onClick={handleDownloadModal}>
-            이미지 다운로드
-          </ButtonS>
-        </ModalContent>
-      </Modal>
     </>
   );
 };

@@ -8,6 +8,7 @@ import Apply from "./pages/Apply";
 import ApplyCompletedGuest from "./pages/ApplyCompletedGuest";
 import ApplyGuest from "./pages/ApplyGuest";
 import CardDesigner from "./pages/CardDesigner";
+import CardFlipEx from "./pages/CardFlipEx";
 import CardWriter from "./pages/CardWriter";
 import Carousel1 from "./pages/Carousel1";
 import DraftList from "./pages/DraftList";
@@ -69,6 +70,7 @@ function Router() {
           <PrivateRouter path="/font-list" component={FontList} />
           <PrivateRouter path="/already" component={AlreadyApplied} />
           <Route path="/kk" exact component={Html2CanvasEx} />
+          <Route path="/hh" exact component={CardFlipEx} />
         </Switch>
       </Container>
     </>
