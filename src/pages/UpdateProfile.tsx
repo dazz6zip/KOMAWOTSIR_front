@@ -1,15 +1,16 @@
-import { useForm } from "react-hook-form";
-import ButtonL from "../components/common/ButtonL";
-import Title from "../components/common/Title";
-import Form from "../components/common/Form";
-import { useQuery } from "react-query";
-import { IUserInfoType, loadUserInfo } from "../fetcher";
-import styled from "styled-components";
 import axios from "axios";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Modal from "react-modal";
-import ButtonS from "../components/common/ButtonS";
+import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import ButtonL from "../components/common/ButtonL";
+import ButtonS from "../components/common/ButtonS";
+import Form from "../components/common/Form";
+import Title from "../components/common/Title";
+import { IUser, loadUserInfo } from "../fetcher";
+import { toast } from "react-toastify";
 
 const SmsOption = styled.div`
   padding-top: 120px;
@@ -47,6 +48,32 @@ export const ModalContent = styled.div`
     color: #666;
     margin-bottom: 20px;
   }
+
+  input {
+    width: 100%;
+    padding: 7px; /* 입력창 안쪽 여백 */
+    margin-bottom: 20px; /* 입력창 간 간격 */
+    border: 1px solid #ccc; /* 테두리 */
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:focus {
+      border-color: #007bff;
+      outline: none; /* 기본 포커스 테두리 제거 */
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 추가 효과 */
+    }
+
+    &::placeholder {
+      color: #aaa;
+    }
+
+    &:disabled {
+      background-color: #f5f5f5;
+      color: #999;
+    }
+  }
 `;
 
 export const customStyles = {
@@ -72,21 +99,21 @@ export const customStyles = {
 
 function UpdateProfile() {
   // userId 임의로 가정하기
-  const userId = 5;
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
   const nav = useHistory();
 
-  const { register, watch, handleSubmit, setValue } = useForm<IUserInfoType>();
+  const { register, watch, handleSubmit, setValue } = useForm<IUser>();
   // register: onChange, value, useState를 모두 대체하는 함수!
   // watch: form의 입력값 추적
   // handleSubmit: validation, preventDefault 담당
 
-  const onValid = async (formData: IUserInfoType) => {
+  const onValid = async (formData: IUser) => {
     try {
-      const response = await axios.put(`/api/users/${userId}`, formData);
-      console.log("저장 성공:", response.data);
+      await axios.put(`/api/users/${userId}`, formData);
+      toast.success("저장이 완료되었습니다.");
     } catch (error) {
-      console.error("저장 실패:", error);
+      toast.error("저장에 실패했습니다. 다시 시도해 보세요.");
     }
   };
 
@@ -97,6 +124,7 @@ function UpdateProfile() {
 
   const openConfirmModal = () => setIsConfirmModalOpen(true);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
+
   const closeSuccessModal = () => {
     setIsSuccessModalOpen(false);
     nav.push("/");
@@ -108,16 +136,16 @@ function UpdateProfile() {
 
   const handleWithdrawl = async () => {
     try {
-      await axios.delete(`/api/users/${userId}`); // userId를 동적으로 변경 가능
+      await axios.delete(`/api/users/${userId}`);
       closeConfirmModal();
-      setIsSuccessModalOpen(true); // 성공 모달 열기
+      setIsSuccessModalOpen(true);
     } catch (error) {
       console.error("탈퇴 실패:", error);
       alert("탈퇴 중 오류가 발생했습니다.");
     }
   };
 
-  const { isLoading, data, error } = useQuery<IUserInfoType>(
+  const { isLoading, data, error } = useQuery<IUser>(
     ["loadUserInfo", userId],
     () => loadUserInfo(userId),
     {

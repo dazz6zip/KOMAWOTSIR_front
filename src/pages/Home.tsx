@@ -1,10 +1,22 @@
 import axios from "axios";
 import { useEffect } from "react";
+<<<<<<< HEAD
 import styled from "styled-components";
 import Description from "../components/common/Description";
 import Img from "../components/common/Img";
 import kakao from "../images/kakao.png";
 import main from "../images/main.png";
+=======
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import Description from "../components/common/Description";
+import Img from "../components/common/Img";
+import { IUser } from "../fetcher";
+import kakao from "../images/kakao.png";
+import main from "../images/main.png";
+import ButtonS from "../components/common/ButtonS";
+import Cookies from "js-cookie";
+>>>>>>> develop
 
 const LogoSection = styled.div`
   text-align: center;
@@ -24,10 +36,21 @@ interface KakaoLoginResponse {
 }
 
 function Home() {
+<<<<<<< HEAD
   const kakaoLogin = async () => {
     try {
       const response = await axios.get<KakaoLoginResponse>(
         "http://localhost:8080/api/users/kakao/loginPage"
+=======
+  const nav = useHistory();
+
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
+
+  const kakaoLogin = async () => {
+    try {
+      const response = await axios.get<KakaoLoginResponse>(
+        "/api/users/kakao/loginPage"
+>>>>>>> develop
       );
       const { clientId, redirectUri } = response.data;
 
@@ -49,31 +72,67 @@ function Home() {
     if (code) {
       // code가 존재하면 서버로 전달
       axios
+<<<<<<< HEAD
         .get(`http://localhost:8080/api/users/kakao/login-test?code=${code}`)
         .then((response) => {
           console.log("로그인 성공", response);
+=======
+        .get<IUser>(`/api/users/kakao/login-test?code=${code}`)
+        .then((response) => {
+          console.log("로그인 성공", response);
+          sessionStorage.setItem("userId", response.data.id.toString());
+
+          const link = sessionStorage.getItem("apply_kakao");
+          if (response.data.tel === null) {
+            nav.push(`/update-info`);
+          } else if (link != null) {
+            sessionStorage.removeItem("apply_kakao");
+            nav.push(`/apply/to/${link}`);
+          } else {
+            nav.push(`/`);
+          }
+>>>>>>> develop
         })
         .catch((error) => {
           console.error("로그인 실패", error);
         });
     }
   }, []);
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
   return (
     <>
       <LogoSection>
         <Img src={main} width="100%" alt="Main" className="logo-image" />
       </LogoSection>
       <Description>
-        디지털 연하장 서비스 <b>고마워써</b>에
-        <br />
-        오신 것을 환영합니다!
-        <br /> 따뜻한 마음을 담아, <br />
-        AI와 함께 연하장을 제작해 보세요.
+        디지털 연하장 서비스에 <br />
+        오신 것을 환영합니다! <br />
+        따뜻한 마음을 담아
+        <br /> AI와 함께 연하장을 제작해 보세요.
       </Description>
+<<<<<<< HEAD
 
       <ImgWrapper onClick={kakaoLogin}>
         <Img src={kakao} width="50%" alt="Kakao Login" />
       </ImgWrapper>
+=======
+      {userId ? (
+        <>
+          <br />
+          <br />
+          <ButtonS category="pink" onClick={() => nav.push(`/create-form`)}>
+            연하장 신청받기
+          </ButtonS>
+        </>
+      ) : (
+        <ImgWrapper onClick={kakaoLogin}>
+          <Img src={kakao} width="50%" alt="Kakao Login" />
+        </ImgWrapper>
+      )}
+>>>>>>> develop
     </>
   );
 }

@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Modal from "react-modal";
-import ButtonS from "../components/common/ButtonS";
-import ButtonL from "../components/common/ButtonL";
-import Title from "../components/common/Title";
-import Description from "../components/common/Description";
-import { useFieldArray, useForm } from "react-hook-form";
-import { useQuery } from "react-query";
-import { createQuestion, IQuestionItem, IUserInfoType } from "../fetcher";
 import axios from "axios";
+<<<<<<< HEAD:src/pages/FormMaker.tsx
 import { customStyles, ModalContent } from "./UpdateProfile";
+=======
+import { useEffect, useState } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
+import Modal from "react-modal";
+import { useQuery } from "react-query";
+import styled from "styled-components";
+import ButtonL from "../components/common/ButtonL";
+import ButtonS from "../components/common/ButtonS";
+import Description from "../components/common/Description";
+import Title from "../components/common/Title";
+import { createQuestion, IQuestionItem, IUser } from "../fetcher";
+import { customStyles, ModalContent } from "./UpdateMyInfo";
+import { useHistory } from "react-router-dom";
+import CopyToClipboard from "react-copy-to-clipboard";
+import { toast } from "react-toastify";
+>>>>>>> develop:src/pages/Inquiry.tsx
 
 const QuestionBox = styled.div`
   padding-top: 3px;
@@ -62,11 +69,24 @@ const NicknameInput = styled.input`
 `;
 
 function FormMaker() {
-  const userId = 12;
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
+  const nav = useHistory();
 
   const [initialData, setInitialData] = useState<IQuestionItem[]>([]);
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState(false);
   const [nickname, setNickname] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [linkToCopy, setLinkToCopy] = useState("");
+
+  const [completeModal, setCompleteModal] = useState(false);
+  const closeCompleteModal = () => {
+    setCompleteModal(false);
+  };
+
+  const [errorModal, setErrorModal] = useState(false); // 에러 모달 상태
+  const closeErrorModal = () => {
+    setErrorModal(false);
+  }; // 에러 모달 닫기
 
   // 페이지가 로딩되면 이미 설문 데이터가 생성되어 있는지 확인하기
   // 생성되어 있을 경우 -> 바로 질문 목록 띄움
@@ -78,7 +98,7 @@ function FormMaker() {
         if (!inquiryRes.data) {
           setIsNicknameModalOpen(true);
           axios
-            .get<IUserInfoType>(`/api/users/${userId}`)
+            .get<IUser>(`/api/users/${userId}`)
             .then((res) => {
               setNickname(res.data.name);
             })
@@ -86,6 +106,19 @@ function FormMaker() {
               console.error(err);
             });
         }
+      });
+  }, [userId]);
+
+  useEffect(() => {
+    axios
+      .get<string>(`/api/inquiry/${userId}/get/url`)
+      .then((res) => {
+        let hmacRes = res.data;
+        setLinkToCopy(`localhost:3000/apply/to/${hmacRes}`);
+        // console.log(hmacRes);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [userId]);
 
@@ -168,6 +201,7 @@ function FormMaker() {
           axios.delete(`/api/inquiry/${userId}/${question.id}`)
         );
       }
+      setCompleteModal(true);
     } catch (err) {
       console.error(err);
     }
@@ -204,8 +238,10 @@ function FormMaker() {
     }
   );
 
-  if (isLoading) return <div>로딩 중...</div>;
-  if (error) return <div>오류 발생: {String(error)}</div>;
+  const CopyEtc = (b: boolean) => {
+    toast.success("링크를 복사했습니다.");
+    setCopied(b);
+  };
 
   return (
     <>
@@ -265,6 +301,7 @@ function FormMaker() {
 
               <Input
                 type="text"
+                style={{ opacity: "60%", fontSize: "80%" }}
                 placeholder="질문에 대한 설명을 추가해 주세요."
                 {...register(`questions.${index}.description`)}
               />
@@ -279,11 +316,41 @@ function FormMaker() {
         >
           + 질문 추가하기
         </ButtonS>
+
         <ButtonL category="pink" type="submit">
           저장하기
         </ButtonL>
-        <ButtonL category="hotpink">링크 공유하기</ButtonL>
+
+        <CopyToClipboard text={linkToCopy} onCopy={() => CopyEtc(true)}>
+          <ButtonL
+            category="hotpink"
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            링크 공유하기
+          </ButtonL>
+        </CopyToClipboard>
       </QuestionForm>
+
+      <Modal
+        isOpen={completeModal}
+        onRequestClose={closeCompleteModal}
+        style={customStyles}
+        ariaHideApp={false}
+      >
+        <ModalContent>
+          <h3>저장</h3>
+          <p>저장이 완료되었습니다.</p>
+          <ButtonS category="pink" onClick={closeCompleteModal}>
+            닫기
+          </ButtonS>
+          &emsp;
+          <ButtonS category="pink" onClick={() => nav.push(`/design`)}>
+            연하장 디자인하기
+          </ButtonS>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import main from "../images/main.png";
-import kakao from "../images/kakao.png";
-import DescriptionS from "../components/common/DescriptionS";
 import Description from "../components/common/Description";
-import Title from "../components/common/Title";
+import DescriptionS from "../components/common/DescriptionS";
 import Img from "../components/common/Img";
+import Title from "../components/common/Title";
+import kakao from "../images/kakao.png";
+import main from "../images/main.png";
 
 const LogoSection = styled.div`
   text-align: center;

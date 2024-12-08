@@ -1,18 +1,31 @@
+// 회원이 수신사 신청
 import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
+import { useRecoilValue } from "recoil";
+import { ASenderState } from "../atoms";
 import ButtonL from "../components/common/ButtonL";
-import Title from "../components/common/Title";
-import Form from "../components/common/Form";
 import DescriptionS from "../components/common/DescriptionS";
+import Form from "../components/common/Form";
+import Title from "../components/common/Title";
+import { getQuestion, IQuestionItem } from "../fetcher";
 
-function Apply1() {
+function Apply() {
   const { register, watch, handleSubmit } = useForm();
   // register: onChange, value, useState를 모두 대체하는 함수!
   // watch: form의 입력값 추적
   // handleSubmit: validation, preventDefault 담당
 
-  const sender = "하하하호호";
+  const receiverId = parseInt(sessionStorage.getItem("userId") || "0");
+  const sender = useRecoilValue(ASenderState);
 
   const onValid = (data: any) => {};
+
+  const { isLoading, data } = useQuery<IQuestionItem[]>(
+    ["questionLoad", sender.id],
+    () => getQuestion(sender.id)
+  );
+
+  const checkReceiver = () => {};
 
   return (
     <>
@@ -31,11 +44,21 @@ function Apply1() {
           <label htmlFor="info">소속 / 기타</label>
           <DescriptionS>확실한 구분을 위한 정보를 입력해 주세요</DescriptionS>
           <input {...register("info")} />
+
+          {data?.map((q) => (
+            <>
+              <label key={q.id}>{q.question}</label>
+              <DescriptionS>{q.description}</DescriptionS>
+              <input />
+            </>
+          ))}
         </Form>
-        <ButtonL category="pink">신청하기</ButtonL>
+        <ButtonL category="pink" onClick={checkReceiver}>
+          신청하기
+        </ButtonL>
       </>
     </>
   );
 }
 
-export default Apply1;
+export default Apply;

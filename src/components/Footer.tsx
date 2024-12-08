@@ -20,8 +20,8 @@ const FooterContainer = styled.footer`
 function Footer() {
   return (
     <FooterContainer>
-      💌앤드이어💌 <br />
-      team.cobbu@gmail.com
+      💌 앤드이어
+      <p>team.cobbu@gmail.com</p>
     </FooterContainer>
   );
 }
