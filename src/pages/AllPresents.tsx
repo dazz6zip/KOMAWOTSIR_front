@@ -22,6 +22,7 @@ const Card = styled.div``;
 
 const AllPresents: React.FC = () => {
   const [active, setActive] = useState(0);
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
   const receiver = useRecoilValue(AReceiverState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
@@ -55,8 +56,8 @@ const AllPresents: React.FC = () => {
 
   useEffect(() => {
     axios
-      // .get<IPresent[]>(`/api/receivers/${receiver.id}/posts`)
-      .get<IPresent[]>("api/posts/all")
+      .get<IPresent[]>(`/api/receivers/${userId}/posts/all`)
+      // .get<IPresent[]>("api/posts/all")
       .then((response) => {
         setCards(response.data);
         const years = Array.from(
@@ -174,6 +175,8 @@ const AllPresents: React.FC = () => {
                   flipDirection="horizontal"
                 >
                   <Card onClick={() => flipCard(i)}>
+                    <Description>클릭해서 내용을 확인해보세요!</Description>
+                    <br />
                     <div
                       // 각 카드별 ref 할당
                       style={{
