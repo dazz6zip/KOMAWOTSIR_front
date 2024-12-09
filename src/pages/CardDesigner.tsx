@@ -1,94 +1,23 @@
-import styled from "styled-components";
 import ButtonS from "../components/common/ButtonS";
 import ButtonL from "../components/common/ButtonL";
 import Title from "../components/common/Title";
 import Description from "../components/common/Description";
 import axios from "axios";
 import Img from "../components/common/Img";
-import { PreviewArea } from "./CardWriter";
 import { useQuery } from "react-query";
 import { DesignPostLoad, EFontColor, EFontSize, IDesignPost } from "../fetcher";
-import { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ADesignLoadState, ADesignState } from "../atoms";
 import { toast } from "react-toastify";
-
-const Options = styled.div`
-  width: 100%;
-  margin-left: 25px;
-  div {
-    display: grid;
-    justify-content: space-between;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 3px;
-    align-items: center;
-
-    margin: 10px 0;
-
-    img {
-      width: 80px;
-    }
-
-    button {
-      width: 80px;
-    }
-  }
-
-  .option-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    label {
-      font-size: 14px;
-      color: #333;
-    }
-  }
-`;
-
-const SizeButton = styled.button<{ isSelected: boolean }>`
-  background-color: ${(props) => (props.isSelected ? "#EEB0B2" : "#fff")};
-  color: ${(props) => (props.isSelected ? "#fff" : "#333")};
-  border: ${(props) =>
-    props.isSelected ? "2px solid #ED798D" : "1px solid #ccc"};
-  padding: 8px 16px;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background-color: ${(props) => (props.isSelected ? "#EEB0B2" : "#f5f5f5")};
-    color: ${(props) => (props.isSelected ? "#fff" : "#000")};
-  }
-`;
-
-const ColorButton = styled.button<{ isSelected: boolean }>`
-  background-color: ${(props) =>
-    props.isSelected ? (props.children === "흰색" ? "#000" : "#fff") : "#fff"};
-  color: ${(props) =>
-    props.isSelected ? (props.children === "흰색" ? "#fff" : "#000") : "#000"};
-  border: ${(props) =>
-    props.isSelected ? "2px solid #ED798D" : "1px solid #ccc"};
-  padding: 8px 16px;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background-color: ${(props) =>
-      props.children === "흰색" ? "#333" : "#e0e0e0"};
-    color: ${(props) => (props.children === "흰색" ? "#fff" : "#000")};
-  }
-`;
-
-const FontPreview = styled.p<{ fontFamily: string }>`
-  font-family: ${(props) => props.fontFamily};
-  font-size: 20px;
-`;
+import {
+  ColorButton,
+  FontPreview,
+  Options,
+  PreviewArea,
+  SizeButton,
+} from "../StyledComponents";
 
 function CardDesigner() {
   const userId = parseInt(sessionStorage.getItem("userId") || "0");

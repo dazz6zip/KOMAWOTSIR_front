@@ -4,7 +4,6 @@ import { Controller, useForm } from "react-hook-form";
 import Modal from "react-modal";
 import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import ButtonRow from "../components/common/ButtonRow";
 import ButtonS from "../components/common/ButtonS";
 import Description from "../components/common/Description";
@@ -13,177 +12,27 @@ import {
   IReceiver,
   IReceiverQuestion,
   PostList,
-  PostStatus,
   PostStatusMap,
   ReceiverInquiryList,
 } from "../fetcher";
-import { customStyles, ModalContent } from "./UpdateMyInfo";
-
-const ReceiverListArea = styled.div`
-  margin-top: 200px;
-  margin-bottom: 250px;
-`;
-
-const CardContainer = styled.div`
-  width: 90%;
-  max-width: 400px;
-  background-color: #d8e3ed;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  margin-top: 5px;
-`;
-
-const CheckForm = styled.div`
-  display: flex;
-  margin-top: 15px;
-  margin-bottom: 15px;
-`;
-
-const CardHeader = styled.div<{ statusForHeader: PostStatus }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: ${(props) => {
-    switch (props.statusForHeader) {
-      case PostStatus.PROGRESSING:
-        return "#87B9CE";
-      case PostStatus.COMPLETED:
-        return "#EEB0B2";
-      default:
-        return "#BCCBD2";
-    }
-  }};
-  padding: 10px;
-  font-size: 0.7rem;
-  font-weight: bold;
-  color: #333;
-`;
-
-const HeaderItem = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const StarIcon = styled.span`
-  color: #ffffff;
-  font-size: 1.2rem;
-  margin-right: 10px;
-`;
-
-const Dropdown = styled.div`
-  display: flex;
-  align-items: center;
-  color: #333;
-  font-size: 0.7rem;
-`;
-
-const CardBody = styled.div`
-  background-color: #ffffff;
-  padding: 15px;
-  font-size: 0.7rem;
-  color: #666;
-`;
-
-const WriteButton = styled.div`
-  text-align: center;
-  padding: 5px;
-  color: #888;
-  font-size: 0.7rem;
-  font-weight: bold;
-  cursor: pointer;
-
-  &:hover {
-    color: #555;
-  }
-`;
-
-const StateCheckBox = styled.div`
-  display: flex;
-  gap: 20px;
-  flex-direction: row;
-`;
-
-const Label = styled.label`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`;
-
-const StyledCheckbox = styled.input`
-  appearance: none; /* 기본 체크박스 스타일 제거 */
-  width: 20px;
-  height: 20px;
-  border: 2px solid #eeb0b2;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s;
-
-  &:checked {
-    background-color: #eeb0b2; /* 체크 상태 배경색 */
-    border-color: #eeb0b2; /* 체크 상태 테두리색 */
-  }
-
-  &:checked::after {
-    content: "✔"; /* 체크 표시 */
-    color: white;
-    font-size: 14px;
-    display: block;
-    text-align: center;
-  }
-`;
-
-const MemoArea = styled.div`
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
-  color: #aaa;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-
-  p {
-    margin-left: 10px;
-    margin-right: 10px;
-    color: #555;
-  }
-
-  i {
-    font-style: italic;
-    color: #ed798d;
-    margin-left: 5px;
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-  }
-
-  input {
-    margin-left: 10px;
-    width: 200px;
-    height: 30px;
-
-    padding: 7px;
-    margin-bottom: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 10px;
-    color: #333;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-    &:focus {
-      border-color: #007bff;
-      outline: none;
-      box-shadow: 0 0 1px rgba(0, 123, 255, 0.5);
-    }
-  }
-`;
-
-const ContentsBox = styled.div`
-  text-align: center;
-  padding-bottom: 10px;
-  color: #3a3b42;
-`;
+import {
+  CardBody,
+  CardContainer,
+  CardHeader,
+  CheckForm,
+  ContentsBox,
+  customStyles,
+  Dropdown,
+  HeaderItem,
+  MemoArea,
+  ModalContent,
+  ReceiverLabel,
+  ReceiverListArea,
+  StarIcon,
+  StateCheckBox,
+  StyledCheckbox,
+  WriteButton,
+} from "../StyledComponents";
 
 function ReceiverList() {
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
@@ -318,7 +167,7 @@ function ReceiverList() {
                     name={`checkboxes.${index}`}
                     control={checkControl}
                     render={({ field }) => (
-                      <Label>
+                      <ReceiverLabel>
                         <StyledCheckbox
                           type="checkbox"
                           onChange={(e) => {
@@ -328,7 +177,7 @@ function ReceiverList() {
                           checked={field.value}
                         />
                         {label}
-                      </Label>
+                      </ReceiverLabel>
                     )}
                   />
                 ))}

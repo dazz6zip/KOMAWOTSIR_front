@@ -8,100 +8,17 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ADesignState } from "../atoms";
 import axios from "axios";
-
-const Header = styled.div`
-  text-align: center;
-  margin-bottom: 20px;
-`;
-
-const Title = styled.h1`
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-`;
-
-const SubTitle = styled.h2`
-  font-size: 1.2rem;
-  font-weight: normal;
-  color: #333;
-`;
-
-const ColorGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  width: 100%;
-  margin-bottom: 20px;
-`;
-
-const Tabs = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-`;
-
-const Tab = styled.button<{ isActive: boolean }>`
-  padding: 5px 10px;
-  margin: 0 5px;
-  border: none;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: bold;
-
-  cursor: pointer;
-  background-color: ${(props) => (props.isActive ? "#d9d9d9" : "#f5f5f5")};
-  color: ${(props) => (props.isActive ? "#000" : "#888")};
-
-  &:hover {
-    background-color: ${(props) => (props.isActive ? "#c0c0c0" : "#e0e0e0")};
-  }
-`;
-
-const ColorBox = styled.div<{ color: string; isSelected: boolean }>`
-  width: 100%;
-  padding-top: 75%; /* 4:3 Aspect Ratio */
-  position: relative;
-  background-image: url(${(props) => `${props.color}`});
-  background-size: contain;
-  border: ${(props) => (props.isSelected ? "4px solid #000" : "none")};
-  border-radius: 10px;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.9;
-  }
-
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-  }
-`;
-
-const InputFile = styled.div`
-  margin-left: 20px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-`;
-
-const PreviewContainer = styled.div`
-  margin-top: 20px;
-  margin-bottom: 20px;
-  text-align: center;
-
-  img {
-    max-width: 100%;
-    height: auto;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-  }
-`;
+import {
+  ColorBox,
+  ColorGrid,
+  Header,
+  InputFile,
+  PreviewContainer,
+  SubTitle,
+  Tab,
+  Tabs,
+  Title,
+} from "../StyledComponents";
 
 function BackgroundList() {
   const userId = parseInt(sessionStorage.getItem("userId") || "0");

@@ -3,66 +3,25 @@ import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import Modal from "react-modal";
 import { useQuery } from "react-query";
-import styled from "styled-components";
 import ButtonL from "../components/common/ButtonL";
 import ButtonS from "../components/common/ButtonS";
 import Description from "../components/common/Description";
 import Title from "../components/common/Title";
 import { createQuestion, IQuestionItem, IUser } from "../fetcher";
-import { customStyles, ModalContent } from "./UpdateMyInfo";
 import { useHistory } from "react-router-dom";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
-
-const QuestionBox = styled.div`
-  padding-top: 3px;
-  margin-top: 10px;
-`;
-
-const QuestionRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const InputGroup = styled.div`
-  margin-bottom: 15px;
-`;
-
-const Label = styled.label`
-  font-size: 0.8rem;
-  font-weight: bold;
-  color: #f28b8b;
-  margin-bottom: 5px;
-  display: block;
-`;
-
-const QuestionForm = styled.form`
-  text-align: center;
-
-  button {
-    margin-bottom: 2px;
-  }
-`;
-
-const Input = styled.input<{ isError?: boolean }>`
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid ${(props) => (props.isError ? "#ED798D" : "#ddd")};
-  border-radius: 5px;
-  margin-bottom: 5px;
-`;
-
-const NicknameInput = styled.input`
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 5px;
-`;
+import {
+  customStyles,
+  Input,
+  InputGroup,
+  InquiryLabel,
+  ModalContent,
+  NicknameInput,
+  QuestionBox,
+  QuestionForm,
+  QuestionRow,
+} from "../StyledComponents";
 
 function FormMaker() {
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
@@ -78,11 +37,6 @@ function FormMaker() {
   const closeCompleteModal = () => {
     setCompleteModal(false);
   };
-
-  const [errorModal, setErrorModal] = useState(false); // 에러 모달 상태
-  const closeErrorModal = () => {
-    setErrorModal(false);
-  }; // 에러 모달 닫기
 
   // 페이지가 로딩되면 이미 설문 데이터가 생성되어 있는지 확인하기
   // 생성되어 있을 경우 -> 바로 질문 목록 띄움
@@ -279,7 +233,7 @@ function FormMaker() {
         {fields.map((field, index) => (
           <QuestionBox key={field.id}>
             <QuestionRow>
-              <Label>{index + 1}번 질문</Label>
+              <InquiryLabel>{index + 1}번 질문</InquiryLabel>
               <ButtonS category="white" onClick={() => remove(index)}>
                 삭제
               </ButtonS>

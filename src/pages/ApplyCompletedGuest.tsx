@@ -7,10 +7,7 @@ import Img from "../components/common/Img";
 import Title from "../components/common/Title";
 import kakao from "../images/kakao.png";
 import main from "../images/main.png";
-
-const LogoSection = styled.div`
-  text-align: center;
-`;
+import { LogoSection } from "../StyledComponents";
 
 function ApplyCompletedGuest() {
   const sender = useRecoilValue(ASenderState);

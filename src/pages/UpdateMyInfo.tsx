@@ -5,98 +5,17 @@ import Modal from "react-modal";
 import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import styled from "styled-components";
 import ButtonL from "../components/common/ButtonL";
 import ButtonS from "../components/common/ButtonS";
 import Form from "../components/common/Form";
 import Title from "../components/common/Title";
 import { IUser, loadUserInfo } from "../fetcher";
-
-const SmsOption = styled.div`
-  padding-top: 120px;
-  text-align: center;
-  font-size: 80%;
-
-  input[type="checkbox"] {
-    margin: 0;
-    width: auto;
-    height: auto;
-  }
-
-  div {
-    padding: 10px 0;
-    font-size: 80%;
-    color: #666;
-  }
-`;
-
-const Withdrawal = styled.span`
-  padding-top: 10px;
-  text-align: center;
-  font-size: 60%;
-  color: #666;
-`;
-
-export const ModalContent = styled.div`
-  text-align: center;
-  line-height: 1.5;
-  h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  p {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 20px;
-  }
-
-  input {
-    width: 100%;
-    padding: 7px; /* 입력창 안쪽 여백 */
-    margin-bottom: 20px; /* 입력창 간 간격 */
-    border: 1px solid #ccc; /* 테두리 */
-    border-radius: 5px;
-    font-size: 16px;
-    color: #333;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-    &:focus {
-      border-color: #007bff;
-      outline: none; /* 기본 포커스 테두리 제거 */
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 추가 효과 */
-    }
-
-    &::placeholder {
-      color: #aaa;
-    }
-
-    &:disabled {
-      background-color: #f5f5f5;
-      color: #999;
-    }
-  }
-`;
-
-export const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    width: "300px",
-    padding: "30px 20px",
-    textAlign: "center" as "center",
-    borderRadius: "10px",
-    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // 그림자 추가
-    border: "none", // 테두리 제거
-    backgroundColor: "#fff",
-  },
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // 더 어두운 오버레이
-  },
-};
+import {
+  customStyles,
+  ModalContent,
+  SmsOption,
+  Withdrawal,
+} from "../StyledComponents";
 
 function UpdateMyInfo() {
   // userId 임의로 가정하기
@@ -104,7 +23,7 @@ function UpdateMyInfo() {
 
   const nav = useHistory();
 
-  const { register, watch, handleSubmit, setValue } = useForm<IUser>();
+  const { register, handleSubmit, setValue } = useForm<IUser>();
   // register: onChange, value, useState를 모두 대체하는 함수!
   // watch: form의 입력값 추적
   // handleSubmit: validation, preventDefault 담당
@@ -146,7 +65,7 @@ function UpdateMyInfo() {
     }
   };
 
-  const { isLoading, data, error } = useQuery<IUser>(
+  const { data } = useQuery<IUser>(
     ["loadUserInfo", userId],
     () => loadUserInfo(userId),
     {

@@ -15,13 +15,12 @@ import Description from "../components/common/Description";
 import Title from "../components/common/Title";
 import { EFontColor, EFontSize, IPresent } from "../fetcher";
 
+// 틀 (효선 : 지우면 안 됨;;)
 const Card = styled.div``;
 
 const YearlyPresents: React.FC = () => {
   const [active, setActive] = useState(0);
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = () => setIsModalOpen(false);
   const [cards, setCards] = useState<IPresent[]>([]);
   const [count, setCount] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState<boolean[]>([]);

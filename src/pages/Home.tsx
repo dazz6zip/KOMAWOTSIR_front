@@ -1,26 +1,13 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
 import Description from "../components/common/Description";
 import Img from "../components/common/Img";
 import { IUser } from "../fetcher";
 import kakao from "../images/kakao.png";
 import main from "../images/main.png";
 import ButtonS from "../components/common/ButtonS";
-import Cookies from "js-cookie";
-
-const LogoSection = styled.div`
-  text-align: center;
-`;
-
-const ImgWrapper = styled.div`
-  position: relative;
-  text-align: center;
-  margin-top: 20px;
-  cursor: pointer;
-  display: inline-block;
-`;
+import { ImgWrapper, LogoSection } from "../StyledComponents";
 
 interface KakaoLoginResponse {
   redirectUri: string;

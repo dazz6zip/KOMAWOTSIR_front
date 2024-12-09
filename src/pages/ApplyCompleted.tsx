@@ -7,10 +7,7 @@ import Description from "../components/common/Description";
 import Img from "../components/common/Img";
 import Title from "../components/common/Title";
 import main from "../images/main.png";
-
-const LogoSection = styled.div`
-  text-align: center;
-`;
+import { LogoSection } from "../StyledComponents";
 
 function ApplyCompleted() {
   const sender = useRecoilValue(ASenderState);

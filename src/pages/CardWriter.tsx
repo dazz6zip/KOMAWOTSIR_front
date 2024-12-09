@@ -20,46 +20,13 @@ import {
   PostContentsCheck,
   PostContentsLoad,
 } from "../fetcher";
-import { customStyles, ModalContent } from "./UpdateMyInfo";
-
-const TextAreaContainer = styled.div`
-  margin-bottom: 20px;
-`;
-
-const Label = styled.div`
-  font-size: 0.9rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-`;
-
-const TextArea = styled.textarea`
-  width: 300px;
-  height: 100px;
-  padding: 10px;
-  font-size: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  resize: none;
-`;
-
-export const PreviewArea = styled.div<{
-  bimage?: string;
-  fsize?: number;
-  fColor?: string;
-  fFamily?: string;
-}>`
-  background-image: url(${(props) => props.bimage});
-  background-size: contain;
-  font-size: ${(props) => props.fsize}px;
-  color: ${(props) => props.fColor};
-  font-family: ${(props) => props.fFamily};
-  width: 300px;
-  min-height: 160px;
-  display: block;
-  text-align: center;
-  align-items: center;
-  padding: 30px;
-`;
+import {
+  customStyles,
+  ModalContent,
+  PreviewArea,
+  TextArea,
+  TextAreaContainer,
+} from "../StyledComponents";
 
 function CardWriter() {
   const userId = parseInt(sessionStorage.getItem("userId") || "0");

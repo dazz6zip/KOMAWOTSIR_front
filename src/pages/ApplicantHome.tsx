@@ -14,10 +14,7 @@ import Title from "../components/common/Title";
 import { IUser, KakaoLoginResponse } from "../fetcher";
 import kakao from "../images/kakao.png";
 import main from "../images/main.png";
-
-const LogoSection = styled.div`
-  text-align: center;
-`;
+import { LogoSection } from "../StyledComponents";
 
 interface Ilink {
   link: string;

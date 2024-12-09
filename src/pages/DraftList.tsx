@@ -7,48 +7,12 @@ import { DraftLoad, IDraftLoad } from "../fetcher";
 import { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Description from "../components/common/Description";
-
-const DraftCard = styled.div`
-  width: 90%;
-  max-width: 400px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  margin: 10px auto;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-
-  &:hover {
-    border-color: #007bff;
-    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
-  }
-
-  input {
-    margin-right: 15px;
-  }
-`;
-
-const DraftNullInfo = styled.div`
-  margin-top: 200px;
-  margin-bottom: 300px;
-`;
-
-const DraftTitle = styled.div`
-  margin-top: 10px;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-bottom: 3px;
-`;
-
-const DraftContents = styled.div`
-  color: #777;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  margin-bottom: 3px;
-`;
+import {
+  DraftCard,
+  DraftContents,
+  DraftNullInfo,
+  DraftTitle,
+} from "../StyledComponents";
 
 function DraftList() {
   const location = useLocation() as {
