@@ -150,7 +150,7 @@ const AllPresents: React.FC = () => {
             direction="left"
             onClick={() => setActive((i) => i - 1)}
           >
-            <TiChevronLeftOutline />
+            <TiChevronLeftOutline color="#eeb0b2" />
           </NavigationButton>
         )}
         {filteredCards?.map((card, i) => (
@@ -278,7 +278,7 @@ const AllPresents: React.FC = () => {
             direction="right"
             onClick={() => setActive((i) => i + 1)}
           >
-            <TiChevronRightOutline />
+            <TiChevronRightOutline color="#eeb0b2" />
           </NavigationButton>
         )}
       </CarouselWrapper>
