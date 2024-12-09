@@ -4,13 +4,13 @@ import { useForm } from "react-hook-form";
 import Modal from "react-modal";
 import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import ButtonL from "../components/common/ButtonL";
 import ButtonS from "../components/common/ButtonS";
 import Form from "../components/common/Form";
 import Title from "../components/common/Title";
 import { IUser, loadUserInfo } from "../fetcher";
-import { toast } from "react-toastify";
 
 const SmsOption = styled.div`
   padding-top: 120px;
@@ -39,6 +39,7 @@ const Withdrawal = styled.span`
 
 export const ModalContent = styled.div`
   text-align: center;
+  line-height: 1.5;
   h3 {
     font-size: 18px;
     margin-bottom: 10px;
