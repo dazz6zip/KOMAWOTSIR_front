@@ -137,7 +137,11 @@ const AllPresents: React.FC = () => {
         </div>
         <div className="options">
           {yearList.map((year) => (
-            <div className="option" onClick={() => handleOptionClick(year)}>
+            <div
+              key={year}
+              className="option"
+              onClick={() => handleOptionClick(year)}
+            >
               {year == 0 ? "전체" : `${year}년`}
             </div>
           ))}

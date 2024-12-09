@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { PostStatus } from "./fetcher";
+import { Link } from "react-router-dom";
 
 export const DraftCard = styled.div`
   width: 90%;
@@ -605,3 +606,87 @@ export const customStyles = {
     backgroundColor: "rgba(0, 0, 0, 0.5)", // 더 어두운 오버레이
   },
 };
+
+export const HeaderContainer = styled.div`
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  background-color: #fff;
+`;
+
+export const MenuStyles = {
+  bmBurgerButton: {
+    position: "fixed",
+    width: "20px",
+    height: "20px",
+    left: "20px",
+    top: "15px",
+  },
+  bmBurgerBars: {
+    background: "#373a47",
+  },
+  bmCrossButton: {
+    position: "fixed",
+    width: "20px",
+    height: "20px",
+    left: "20px",
+    top: "15px",
+  },
+  bmMenu: {
+    background: "#f4f4f4",
+    padding: "20px",
+    fontSize: "1.15em",
+  },
+  bmOverlay: {
+    background: "rgba(0, 0, 0, 0.3)",
+  },
+};
+
+export const LogoImg = styled.img`
+  width: 100px;
+  height: auto;
+  display: inline-block;
+`;
+
+export const CustomIcon = styled.b`
+  color: #ed798d;
+  padding-right: 10px;
+`;
+
+export const StyledMenuItem = styled(Link)<{ $isSubMenu?: boolean }>`
+  display: block;
+  text-decoration: none;
+  color: ${(props) => (props.$isSubMenu ? "#888" : "#3A3B42")};
+  font-size: ${(props) => (props.$isSubMenu ? "16px" : "18px")};
+
+  padding-left: ${(props) => (props.$isSubMenu ? "20px" : "0")};
+  margin-top: ${(props) => (props.$isSubMenu ? "20px" : "30px")};
+
+  &:hover {
+    color: ${(props) => (props.$isSubMenu ? "#666" : "#333")};
+  }
+`;
+
+export const OverlayButton = styled.button`
+  position: fixed; /* 화면에 고정 */
+  top: 70px; /* 하단에서 30px 위로 배치 */
+  left: 20px; /* 좌측에서 20px 떨어짐 */
+  z-index: 1000; /* 다른 요소 위에 배치 */
+  background: none; /* 투명 배경 */
+  border: none; /* 테두리 제거 */
+  color: #333; /* 텍스트 색상 */
+  font-size: 16px; /* 텍스트 크기 */
+  cursor: pointer;
+
+  display: flex; /* 아이콘과 텍스트 정렬 */
+  align-items: center;
+
+  &:hover {
+    color: #000; /* 호버 시 텍스트 색상 변경 */
+  }
+
+  svg {
+    margin-right: 8px; /* 아이콘과 텍스트 간격 */
+  }
+`;
