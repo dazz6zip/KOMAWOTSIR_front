@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 2. Set AWS Credentials and Region
+      # 2. Configure AWS Credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -30,6 +30,7 @@ jobs:
       # 4. Build and Push Docker Image
       - name: Build and Push Docker Image
         run: |
+          REGION="ap-northeast-2"
           ECR_REPO_NAME="aendyear-front"
           IMAGE_TAG=$(date +%s)
 
@@ -37,10 +38,10 @@ jobs:
           docker build -t $ECR_REPO_NAME:$IMAGE_TAG .
 
           # Tag image for ECR
-          docker tag $ECR_REPO_NAME:$IMAGE_TAG ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
+          docker tag $ECR_REPO_NAME:$IMAGE_TAG ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$REGION.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
 
           # Push image to ECR
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$REGION.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
 
       # 5. Deploy to ECS
       - name: Deploy to ECS
@@ -48,8 +49,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
+          region: ap-northeast-2
           cluster: AendyearCluster
           service: komawotsir-front
-          region: ap-northeast-2
           image: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/aendyear-front:$IMAGE_TAG
