@@ -30,10 +30,12 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           ECR_REPO_NAME="aendyear-front"
-          IMAGE_TAG="latest" 
+          IMAGE_TAG="latest"
+          REPOSITORY_URI="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/$ECR_REPO_NAME"
+
           docker build -t $ECR_REPO_NAME:$IMAGE_TAG .
-          docker tag $ECR_REPO_NAME:$IMAGE_TAG ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
+          docker tag $ECR_REPO_NAME:$IMAGE_TAG $REPOSITORY_URI:$IMAGE_TAG
+          docker push $REPOSITORY_URI:$IMAGE_TAG
 
       # 5. Deploy to ECS
       - name: Deploy to ECS

@@ -2,8 +2,8 @@
   "family": "aendyear-task",
   "containerDefinitions": [
     {
-      "name": "aendyear-container",
-      "image": "${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/aendyear-front:latest",
+      "name": "aendyear-front",
+      "image": "123456789012.dkr.ecr.ap-northeast-2.amazonaws.com/aendyear-front:latest",
       "memory": 512,
       "cpu": 256,
       "essential": true,
