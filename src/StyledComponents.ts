@@ -165,7 +165,7 @@ export const PreviewArea = styled.div<{
   color: ${(props) => props.fColor};
   font-family: ${(props) => props.fFamily};
   width: 300px;
-  min-height: 160px;
+  min-height: 200px;
   display: block;
   text-align: center;
   align-items: center;
