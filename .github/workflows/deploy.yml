@@ -39,7 +39,7 @@ jobs:
       - name: Deploy to ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          cluster: AendyearCluster # ECS 클러스터 이름
-          service: komawotsir-front # ECS 서비스 이름
-          task-definition: aendyear-task-definition.json # 작업 정의 파일
+          cluster: AendyearCluster
+          service: komawotsir-front
+          task-definition: aendyear-task-definition.json
           wait-for-service-stability: true
