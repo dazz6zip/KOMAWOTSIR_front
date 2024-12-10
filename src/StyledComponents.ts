@@ -261,10 +261,10 @@ export const Tab = styled.button<{ isActive: boolean }>`
 
 export const ColorBox = styled.div<{ color: string; isSelected: boolean }>`
   width: 100%;
-  padding-top: 75%; /* 4:3 Aspect Ratio */
+  padding-top: 66.6%;
   position: relative;
   background-image: url(${(props) => `${props.color}`});
-  background-size: contain;
+  background-size: cover;
   border: ${(props) => (props.isSelected ? "4px solid #000" : "none")};
   border-radius: 10px;
   cursor: pointer;

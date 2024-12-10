@@ -68,6 +68,8 @@ function BackgroundList() {
   };
 
   const selectImageProc = (imageId: number, url: string) => {
+    console.log(imageId);
+    console.log(url);
     setSelectImageUrl(url);
     setSelectImageId(imageId);
   };
