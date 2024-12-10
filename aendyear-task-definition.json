@@ -1,5 +1,5 @@
 {
-  "family": "aendyear-task",
+  "family": "AendyearContainer-front",
   "networkMode": "awsvpc",
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "256",
@@ -7,7 +7,7 @@
   "executionRoleArn": "arn:aws:iam::537124932562:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
-      "name": "aendyear-front",
+      "name": "AendyearContainer-front",
       "image": "537124932562.dkr.ecr.ap-northeast-2.amazonaws.com/aendyear-front:latest",
       "portMappings": [
         {
