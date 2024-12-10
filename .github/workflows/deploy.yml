@@ -1,4 +1,4 @@
-name: Deploy to EC2 directly
+name: Deploy to ECS
 
 on:
   push:
@@ -10,20 +10,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Add SSH Key
-        run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
+      # 1. Checkout Repository
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Deploy to EC2
+      # 2. Log in to Amazon ECR
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # 3. Build and Push Docker Image
+      - name: Build and Push Docker Image
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@<EC2_IP> "
-          cd /path/to/project &&
-          git pull origin main &&
-          npm install &&
-          npm run build &&
-          pm2 restart app
-          "
+          REGION="ap-northeast-2"
+          ECR_REPO_NAME="aendyear-front"
+          IMAGE_TAG=$(date +%s)
+
+          # Build Docker image
+          docker build -t $ECR_REPO_NAME:$IMAGE_TAG .
+
+          # Tag image for ECR
+          docker tag $ECR_REPO_NAME:$IMAGE_TAG ${{ secrets.EC2_SSH_KEY }}.dkr.ecr.$REGION.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
+
+          # Push image to ECR
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$REGION.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
+
+      # 4. Deploy to ECS
+      - name: Deploy to ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          cluster: AendyearCluster
+          service: komawotsir-front
+          region: ap-northeast-2
+          image: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/aendyear-front:$IMAGE_TAG
