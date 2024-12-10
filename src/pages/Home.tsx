@@ -72,7 +72,7 @@ function Home() {
       <Description>
         디지털 연하장 서비스에 <br />
         오신 것을 환영합니다! <br />
-        따뜻한 마음을 담아ㅇㅇㅇㅇdfasldhfalskdh
+        따뜻한 마음을 담아
         <br /> AI와 함께 연하장을 제작해 보세요.
       </Description>
       {userId ? (
