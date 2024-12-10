@@ -49,7 +49,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: ap-northeast-2
           cluster: AendyearCluster
           service: komawotsir-front
+          region: ap-northeast-2
           image: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/aendyear-front:$IMAGE_TAG
