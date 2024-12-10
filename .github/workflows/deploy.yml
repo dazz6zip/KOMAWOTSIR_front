@@ -48,6 +48,5 @@ jobs:
         with:
           cluster: AendyearCluster
           service: komawotsir-front
-          task-definition: aendyear-task
-          launch-type: FARGATE
+          task-definition: aendyear-task-definition.json
           wait-for-service-stability: true
