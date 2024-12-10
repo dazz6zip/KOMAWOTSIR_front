@@ -19,7 +19,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-        region: ap-northeast-2 # AWS 리전을 명시적으로 추가
+          region: ap-northeast-2 # AWS 리전을 명시적으로 추가
 
       # 3. Build and Push Docker Image
       - name: Build and Push Docker Image
@@ -32,7 +32,7 @@ jobs:
           docker build -t $ECR_REPO_NAME:$IMAGE_TAG .
 
           # Tag image for ECR
-          docker tag $ECR_REPO_NAME:$IMAGE_TAG ${{ secrets.EC2_SSH_KEY }}.dkr.ecr.$REGION.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
+          docker tag $ECR_REPO_NAME:$IMAGE_TAG ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$REGION.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
 
           # Push image to ECR
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$REGION.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
