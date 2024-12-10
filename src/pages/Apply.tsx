@@ -1,31 +1,86 @@
 // 회원이 수신사 신청
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
+import { useHistory } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { ASenderState } from "../atoms";
 import ButtonL from "../components/common/ButtonL";
 import DescriptionS from "../components/common/DescriptionS";
 import Form from "../components/common/Form";
 import Title from "../components/common/Title";
-import { getQuestion, IQuestionItem } from "../fetcher";
+import {
+  getQuestion,
+  IQuestionItem,
+  IReceiverQuestionToAdd,
+  IReceiverSet,
+  IReceiverToAdd,
+} from "../fetcher";
 
 function Apply() {
-  const { register, watch, handleSubmit } = useForm();
-  // register: onChange, value, useState를 모두 대체하는 함수!
-  // watch: form의 입력값 추적
-  // handleSubmit: validation, preventDefault 담당
+  const { register, watch, getValues, handleSubmit } = useForm();
+  const history = useHistory();
 
   const receiverId = parseInt(sessionStorage.getItem("userId") || "0");
   const sender = useRecoilValue(ASenderState);
-
-  const onValid = (data: any) => {};
+  const [questions, setQuestions] = useState<IQuestionItem[]>();
 
   const { isLoading, data } = useQuery<IQuestionItem[]>(
     ["questionLoad", sender.id],
     () => getQuestion(sender.id)
   );
 
-  const checkReceiver = () => {};
+  const getInquiry = async () => {
+    try {
+      const response = await axios.get<IQuestionItem[]>(
+        `/api/inquiry/${sender.id}` // 질문목록 불러오기
+      );
+      if (response.data.length > 0) {
+        setQuestions(response.data);
+      } else {
+        getInquiry();
+      }
+    } catch (error) {
+      console.error("질문 목록 불러오기 실패:", error);
+    }
+  };
+
+  const onValid = () => {
+    const formData = getValues(); // 모든 폼 데이터 가져오기
+
+    const receiver: IReceiverToAdd = {
+      senderId: sender.id,
+      tel: formData.tel,
+      nickname: formData.nickname,
+      memo: formData.info,
+    };
+
+    const receiverQuestions: IReceiverQuestionToAdd[] = (questions || []).map(
+      (q) => ({
+        inquiryItemId: q.id ?? 0, // id가 없을 경우 기본값 0
+        answer: formData[`question_${q.id}`] ?? "", // 입력값 없으면 빈 문자열
+      })
+    );
+
+    const receiverAdder: IReceiverSet = {
+      receiver: receiver,
+      answers: receiverQuestions,
+    };
+    addReceiverSet(receiverAdder);
+  };
+
+  const addReceiverSet = async (receiverAdder: IReceiverSet) => {
+    try {
+      const response = await axios.post(
+        `/api/users/${sender.id}/receivers`,
+        receiverAdder
+      );
+      history.push("/apply/done");
+    } catch (error) {
+      console.error("신청 중 오류 발생:", error);
+      alert("신청 처리 중 문제가 발생했습니다. 다시 시도해 주세요.");
+    }
+  };
 
   return (
     <>
@@ -55,7 +110,7 @@ function Apply() {
             </>
           ))}
         </Form>
-        <ButtonL category="pink" onClick={checkReceiver}>
+        <ButtonL category="pink" type="submit">
           신청하기
         </ButtonL>
       </>

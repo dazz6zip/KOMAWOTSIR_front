@@ -1,10 +1,10 @@
 // 비회원 신청: 전화번호로 회원 & receiver 등록 여부 체크
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "react-modal";
-import { useHistory, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useHistory } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { ASenderState } from "../atoms";
 import ButtonL from "../components/common/ButtonL";
 import ButtonRow from "../components/common/ButtonRow";
@@ -66,8 +66,6 @@ function ApplyGuest() {
       if (response.data.length > 0) {
         setQuestions(response.data);
         setCanContinue(true);
-      } else {
-        getInquiry();
       }
     } catch (error) {
       console.error("질문 목록 불러오기 실패:", error);

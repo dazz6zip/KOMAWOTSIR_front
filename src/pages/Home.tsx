@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { ASenderState } from "../atoms";
 import ButtonS from "../components/common/ButtonS";
 import Description from "../components/common/Description";
@@ -67,7 +67,7 @@ function Home() {
     }
   }, []);
 
-  const setSender = useSetRecoilState(ASenderState);
+  const [sender, setSender] = useRecoilState(ASenderState);
 
   const sendToApplyPage = (link: string) => {
     const validateUrl = async () => {
@@ -78,13 +78,29 @@ function Home() {
           },
         });
         setSender(response.data);
-        nav.push("/apply");
+        checkUser();
       } catch (error) {
         console.error("URL 검증 실패:", error);
       }
     };
 
     validateUrl();
+  };
+
+  const checkUser = async () => {
+    const response = await axios.get<boolean>(
+      `/api/users/${sender.id}/receivers/check/id`,
+      {
+        params: {
+          id: userId,
+        },
+      }
+    );
+    if (response.data) {
+      nav.push(`/already`);
+    } else {
+      nav.push("/apply");
+    }
   };
   return (
     <>
