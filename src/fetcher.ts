@@ -158,6 +158,10 @@ export interface Iimage {
   userId: number;
 }
 
+export interface Ilink {
+  link: string;
+}
+
 export enum ESoureceType {
   SERVICE = "SERVICE",
   USER = "USER",

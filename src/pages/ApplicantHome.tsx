@@ -5,7 +5,6 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import styled from "styled-components";
 import { ASenderState } from "../atoms";
 import ButtonL from "../components/common/ButtonL";
 import Description from "../components/common/Description";
@@ -43,24 +42,6 @@ function ApplicantHome() {
   const setSender = useSetRecoilState(ASenderState);
   const sender = useRecoilValue(ASenderState);
   const history = useHistory();
-
-  // useEffect(() => {
-  //   const senderId = 12;
-  //   // 나중에 밑에 두 줄로 바꾸기
-  //   // const urlParams = new URLSearchParams(window.location.search);
-  //   // const senderId = urlParams.get("sender");
-
-  //   if (senderId) {
-  //     axios
-  //       .get<IUser>(`/api/users/${senderId}`)
-  //       .then((response) => {
-  //         setSender(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.error("수신자 정보 확인 불가능", error);
-  //       });
-  //   }
-  // }, []);
 
   const kakaoLogin = async () => {
     try {

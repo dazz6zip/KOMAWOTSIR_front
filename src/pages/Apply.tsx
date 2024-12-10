@@ -31,15 +31,15 @@ function Apply() {
     <>
       <>
         <Title>
-          {sender}님에게
+          {sender.name}님에게
           <br /> 연하장 신청하기
         </Title>
         <Form onSubmit={handleSubmit(onValid)}>
           <label htmlFor="nickname">닉네임</label>
           <DescriptionS>
-            {sender}님이 알아볼 수 있는 이름으로 입력해 주세요.
+            {sender.name}님이 알아볼 수 있는 이름으로 입력해 주세요.
           </DescriptionS>
-          <input {...(register("nickname"), { required: true })} />
+          <input {...register("nickname", { required: true })} />
 
           <label htmlFor="info">소속 / 기타</label>
           <DescriptionS>확실한 구분을 위한 정보를 입력해 주세요</DescriptionS>
@@ -47,9 +47,11 @@ function Apply() {
 
           {data?.map((q) => (
             <>
-              <label key={q.id}>{q.question}</label>
-              <DescriptionS>{q.description}</DescriptionS>
-              <input />
+              <div key={q.id}>
+                <label>{q.question}</label>
+                <DescriptionS>{q.description}</DescriptionS>
+                <input />
+              </div>
             </>
           ))}
         </Form>

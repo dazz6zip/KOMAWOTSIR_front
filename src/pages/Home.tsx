@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { ASenderState } from "../atoms";
+import ButtonS from "../components/common/ButtonS";
 import Description from "../components/common/Description";
 import Img from "../components/common/Img";
 import { IUser } from "../fetcher";
 import kakao from "../images/kakao.png";
 import main from "../images/main.png";
-import ButtonS from "../components/common/ButtonS";
 import { ImgWrapper, LogoSection } from "../StyledComponents";
 
 interface KakaoLoginResponse {
@@ -54,7 +56,7 @@ function Home() {
             nav.push(`/update-info`);
           } else if (link != null) {
             sessionStorage.removeItem("apply_kakao");
-            nav.push(`/apply/to/${link}`);
+            sendToApplyPage(link);
           } else {
             nav.push(`/`);
           }
@@ -64,6 +66,26 @@ function Home() {
         });
     }
   }, []);
+
+  const setSender = useSetRecoilState(ASenderState);
+
+  const sendToApplyPage = (link: string) => {
+    const validateUrl = async () => {
+      try {
+        const response = await axios.get<IUser>(`/api/inquiry/validate/url`, {
+          params: {
+            link: link,
+          },
+        });
+        setSender(response.data);
+        nav.push("/apply");
+      } catch (error) {
+        console.error("URL 검증 실패:", error);
+      }
+    };
+
+    validateUrl();
+  };
   return (
     <>
       <LogoSection>

@@ -55,7 +55,7 @@ function Router() {
           <PrivateRouter path="/design" exact component={CardDesigner} />
           <PrivateRouter path="/update-info" component={UpdateMyInfo} />
           <Route path="/apply/to/:link" exact component={ApplicantHome} />
-          <PrivateRouter path="/apply1" exact component={Apply} />
+          <PrivateRouter path="/apply" exact component={Apply} />
           <Route path="/apply/guest" exact component={ApplyGuest} />
           <Route path="/apply/done" exact component={ApplyCompletedGuest} />
           <PrivateRouter path="/background" exact component={ImageList} />
