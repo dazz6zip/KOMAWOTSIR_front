@@ -30,7 +30,7 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           ECR_REPO_NAME="aendyear-front"
-          IMAGE_TAG="latest" # 최신 태그로 설정
+          IMAGE_TAG="latest" 
           docker build -t $ECR_REPO_NAME:$IMAGE_TAG .
           docker tag $ECR_REPO_NAME:$IMAGE_TAG ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
