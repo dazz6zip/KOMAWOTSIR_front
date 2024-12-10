@@ -104,8 +104,8 @@ const YearlyPresents: React.FC = () => {
                     <div
                       // 각 카드별 ref 할당
                       style={{
-                        width: "12rem",
-                        height: "12rem",
+                        width: "15rem",
+                        height: "10rem",
                         backgroundImage: `url(${card?.thumbnailPic})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
@@ -129,55 +129,49 @@ const YearlyPresents: React.FC = () => {
                           }`,
                           color: `${card?.fontColor}`,
                         }}
-                      >
-                        <link href={card?.fontUrl} rel="stylesheet" />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <b>from. {card.senderNickname}</b>
-                      </span>
+                      ></span>
                     </div>
                   </Card>
                   <Card onClick={() => flipCard(i)}>
-                    <div
-                      ref={(el) => (captureRefs.current[i] = el)}
-                      // 각 카드별 ref 할당
-                      style={{
-                        width: "12rem",
-                        height: "12rem",
-                        backgroundImage: `url(${card?.backgroundPic})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        display: "flex", // Flexbox 적용
-                        alignItems: "center", // 수직 가운데 정렬
-                        justifyContent: "center", // 수평 가운데 정렬
-                        textAlign: "center",
-                        color: `${
-                          card?.fontColor === EFontColor.white
-                            ? "white"
-                            : "black"
-                        }`,
-                      }}
-                    >
-                      <span
+                    <div ref={(el) => (captureRefs.current[i] = el)}>
+                      <div
+                        // 각 카드별 ref 할당
                         style={{
-                          whiteSpace: "pre-wrap",
-                          fontFamily: `${card?.fontName}`,
-                          fontSize: `${
-                            card?.fontSize === EFontSize.defaultSize ? 16 : 24
+                          width: "15rem",
+                          height: "10rem",
+                          backgroundImage: `url(${card?.backgroundPic})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          display: "flex", // Flexbox 적용
+                          alignItems: "center", // 수직 가운데 정렬
+                          justifyContent: "center", // 수평 가운데 정렬
+                          textAlign: "center",
+                          color: `${
+                            card?.fontColor === EFontColor.white
+                              ? "white"
+                              : "black"
                           }`,
-                          color: `${card?.fontColor}`,
                         }}
                       >
-                        <link href={card?.fontUrl} rel="stylesheet" />
-                        <br />
-                        {card?.contents}
-                        <br />
-                        <br />
-                        <br />
-                        <b>from. {card?.senderNickname}</b>
-                      </span>
+                        <span
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            fontFamily: `${card?.fontName}`,
+                            fontSize: `${
+                              card?.fontSize === EFontSize.defaultSize ? 16 : 24
+                            }`,
+                            color: `${card?.fontColor}`,
+                          }}
+                        >
+                          <link href={card?.fontUrl} rel="stylesheet" />
+                          <br />
+                          {card?.contents}
+                          <br />
+                          <br />
+                          <br />
+                          <b>from. {card?.senderNickname}</b>
+                        </span>
+                      </div>
                     </div>
                     <br />
                     <ButtonS category="pink" onClick={() => handleDownload(i)}>

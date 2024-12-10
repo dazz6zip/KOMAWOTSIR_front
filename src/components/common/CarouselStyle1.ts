@@ -69,8 +69,8 @@ export const CardContainer = styled.div<{
 `;
 
 export const CardStyled = styled.div<{ absOffset: number }>`
-  width: 15rem;
-  height: 17rem;
+  width: 17rem;
+  height: 15rem;
   padding: 2rem;
   display: inline-block;
   background-color: hsl(

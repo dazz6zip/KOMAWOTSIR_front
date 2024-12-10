@@ -46,18 +46,11 @@ const AllPresents: React.FC = () => {
     setIsOpen(false);
   };
 
-  // const selectCard = (card: IPresent) => {
-  //   setCardSelected(card);
-  //   setIsModalOpen(true);
-  // };
-
   const captureRefs = useRef<(HTMLDivElement | null)[]>([]); // 각 카드별 ref 배열
-  // const modalCaptureRef = useRef<HTMLDivElement | null>(null); // Modal 내부 ref
 
   useEffect(() => {
     axios
       .get<IPresent[]>(`/api/receivers/${userId}/posts/all`)
-      // .get<IPresent[]>("api/posts/all")
       .then((response) => {
         setCards(response.data);
         const years = Array.from(
@@ -110,20 +103,6 @@ const AllPresents: React.FC = () => {
       link.click();
     }
   };
-
-  // const handleDownloadModal = async () => {
-  //   if (modalCaptureRef.current) {
-  //     const canvas = await html2canvas(modalCaptureRef.current, {
-  //       useCORS: true,
-  //       allowTaint: false,
-  //     });
-  //     const dataURL = canvas.toDataURL("image/png");
-  //     const link = document.createElement("a");
-  //     link.href = dataURL;
-  //     link.download = `${cardSelected?.senderNickname}로부터.png`;
-  //     link.click();
-  //   }
-  // };
 
   return (
     <>
@@ -182,10 +161,9 @@ const AllPresents: React.FC = () => {
                     <Description>클릭해서 내용을 확인해보세요!</Description>
                     <br />
                     <div
-                      // 각 카드별 ref 할당
                       style={{
-                        width: "12rem",
-                        height: "12rem",
+                        width: "15rem",
+                        height: "10rem",
                         backgroundImage: `url(${card?.thumbnailPic})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
@@ -209,63 +187,48 @@ const AllPresents: React.FC = () => {
                           }`,
                           color: `${card?.fontColor}`,
                         }}
-                      >
-                        <link href={card?.fontUrl} rel="stylesheet" />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <b>from. {card.senderNickname}</b>
-                      </span>
+                      ></span>
                     </div>
-                    {/* <ButtonRow>
-                <ButtonS category="pink" onClick={() => handleDownload(i)}>
-                  이미지 다운로드
-                </ButtonS>
-                <ButtonS category="hotpink" onClick={() => selectCard(card)}>
-                  열어보기
-                </ButtonS>
-              </ButtonRow> */}
                   </Card>
                   <Card onClick={() => flipCard(i)}>
-                    <div
-                      ref={(el) => (captureRefs.current[i] = el)}
-                      // 각 카드별 ref 할당
-                      style={{
-                        width: "12rem",
-                        height: "12rem",
-                        backgroundImage: `url(${card?.backgroundPic})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        display: "flex", // Flexbox 적용
-                        alignItems: "center", // 수직 가운데 정렬
-                        justifyContent: "center", // 수평 가운데 정렬
-                        textAlign: "center",
-                        color: `${
-                          card?.fontColor === EFontColor.white
-                            ? "white"
-                            : "black"
-                        }`,
-                      }}
-                    >
-                      <span
+                    <div ref={(el) => (captureRefs.current[i] = el)}>
+                      <div
                         style={{
-                          whiteSpace: "pre-wrap",
-                          fontFamily: `${card?.fontName}`,
-                          fontSize: `${
-                            card?.fontSize === EFontSize.defaultSize ? 16 : 24
+                          width: "15rem",
+                          height: "10rem",
+                          backgroundImage: `url(${card?.backgroundPic})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          display: "flex", // Flexbox 적용
+                          alignItems: "center", // 수직 가운데 정렬
+                          justifyContent: "center", // 수평 가운데 정렬
+                          textAlign: "center",
+                          color: `${
+                            card?.fontColor === EFontColor.white
+                              ? "white"
+                              : "black"
                           }`,
-                          color: `${card?.fontColor}`,
                         }}
                       >
-                        <link href={card?.fontUrl} rel="stylesheet" />
-                        <br />
-                        {card?.contents}
-                        <br />
-                        <br />
-                        <br />
-                        <b>from. {card?.senderNickname}</b>
-                      </span>
+                        <span
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            fontFamily: `${card?.fontName}`,
+                            fontSize: `${
+                              card?.fontSize === EFontSize.defaultSize ? 16 : 24
+                            }`,
+                            color: `${card?.fontColor}`,
+                          }}
+                        >
+                          <link href={card?.fontUrl} rel="stylesheet" />
+                          <br />
+                          {card?.contents}
+                          <br />
+                          <br />
+                          <br />
+                          <b>from. {card?.senderNickname}</b>
+                        </span>
+                      </div>
                     </div>
                     <br />
                     <ButtonS category="pink" onClick={() => handleDownload(i)}>
