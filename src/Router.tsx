@@ -20,7 +20,7 @@ import ImageList from "./pages/ImageList";
 import Inquiry from "./pages/Inquiry";
 import ReceiverAdder from "./pages/ReceiverAdder";
 import ReceiverList from "./pages/ReceiverList";
-import UpdateMyInfo from "./pages/UpdateMyInfo";
+import UpdateMyInfo from "./pages/UpdateProfile";
 import YearlyPresents from "./pages/YearlyPresents";
 import PrivateRouter from "./PrivateRouter";
 

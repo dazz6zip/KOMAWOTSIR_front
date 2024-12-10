@@ -64,7 +64,6 @@ function Home() {
         });
     }
   }, []);
-
   return (
     <>
       <LogoSection>

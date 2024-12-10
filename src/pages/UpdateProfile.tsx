@@ -17,7 +17,7 @@ import {
   Withdrawal,
 } from "../StyledComponents";
 
-function UpdateMyInfo() {
+function UpdateProfile() {
   // userId 임의로 가정하기
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
 
@@ -153,4 +153,4 @@ function UpdateMyInfo() {
   );
 }
 
-export default UpdateMyInfo;
+export default UpdateProfile;
