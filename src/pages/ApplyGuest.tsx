@@ -22,6 +22,8 @@ import {
 } from "../fetcher";
 
 function ApplyGuest() {
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
+
   const [isContinueModalOpen, setIsContinueModalOpen] = useState(false);
   const [canContinue, setCanContinue] = useState(false);
   const closeContinueModal = () => setIsContinueModalOpen(false);
@@ -85,6 +87,7 @@ function ApplyGuest() {
     const receiverQuestions: IReceiverQuestionToAdd[] = (questions || []).map(
       (q) => ({
         inquiryItemId: q.id ?? 0, // id가 없을 경우 기본값 0
+        receiverId: userId,
         answer: formData[`question_${q.id}`] ?? "", // 입력값 없으면 빈 문자열
       })
     );
