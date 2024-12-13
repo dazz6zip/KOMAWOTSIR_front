@@ -27,8 +27,14 @@ function Apply() {
   const sender = useRecoilValue(ASenderState);
   const [questions, setQuestions] = useState<IQuestionItem[]>();
 
-  const { data } = useQuery<IQuestionItem[]>(["questionLoad", sender.id], () =>
-    getQuestion(sender.id)
+  const { data } = useQuery<IQuestionItem[]>(
+    ["questionLoad", sender.id],
+    () => getQuestion(sender.id),
+    {
+      onSuccess: (d) => {
+        setQuestions(d);
+      },
+    }
   );
 
   const onValid = () => {
