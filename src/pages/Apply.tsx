@@ -17,8 +17,10 @@ import {
   IReceiverSet,
   IReceiverToAdd,
 } from "../fetcher";
+import { toast } from "react-toastify";
 
 function Apply() {
+  const userId = parseInt(sessionStorage.getItem("userId") || "0");
   const { register, getValues, handleSubmit } = useForm();
   const history = useHistory();
 
@@ -42,6 +44,7 @@ function Apply() {
     const receiverQuestions: IReceiverQuestionToAdd[] = (questions || []).map(
       (q) => ({
         inquiryItemId: q.id ?? 0, // id가 없을 경우 기본값 0
+        receiverId: userId,
         answer: formData[`question_${q.id}`] ?? "", // 입력값 없으면 빈 문자열
       })
     );
@@ -58,8 +61,8 @@ function Apply() {
       await axios.post(`/api/users/${sender.id}/receivers`, receiverAdder);
       history.push("/apply/done");
     } catch (error) {
+      toast.error("신청에 실패했습니다. 다시 시도해 주세요.");
       console.error("신청 중 오류 발생:", error);
-      alert("신청 처리 중 문제가 발생했습니다. 다시 시도해 주세요.");
     }
   };
 
