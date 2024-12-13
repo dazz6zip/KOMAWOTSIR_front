@@ -61,7 +61,6 @@ function Router() {
           <PrivateRouter path="/background" exact component={ImageList} />
           <PrivateRouter path="/add-receiver" exact component={ReceiverAdder} />
           <PrivateRouter path="/receiver-list" exact component={ReceiverList} />
-
           <PrivateRouter path="/yearly-presents" component={YearlyPresents} />
           <PrivateRouter path="/all-presents" component={AllPresents} />
           <PrivateRouter path="/carousel-test" component={CarouselEx} />

@@ -30,6 +30,7 @@ function ApplicantHome() {
             link: link,
           },
         });
+        console.log(response);
         setSender(response.data);
       } catch (error) {
         console.error("URL 검증 실패:", error);

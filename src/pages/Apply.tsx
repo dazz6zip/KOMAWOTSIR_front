@@ -1,4 +1,5 @@
-// 회원이 수신사 신청
+// 회원이 수신 신청
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
@@ -18,32 +19,15 @@ import {
 } from "../fetcher";
 
 function Apply() {
-  const { register, watch, getValues, handleSubmit } = useForm();
+  const { register, getValues, handleSubmit } = useForm();
   const history = useHistory();
 
-  const receiverId = parseInt(sessionStorage.getItem("userId") || "0");
   const sender = useRecoilValue(ASenderState);
   const [questions, setQuestions] = useState<IQuestionItem[]>();
 
-  const { isLoading, data } = useQuery<IQuestionItem[]>(
-    ["questionLoad", sender.id],
-    () => getQuestion(sender.id)
+  const { data } = useQuery<IQuestionItem[]>(["questionLoad", sender.id], () =>
+    getQuestion(sender.id)
   );
-
-  const getInquiry = async () => {
-    try {
-      const response = await axios.get<IQuestionItem[]>(
-        `/api/inquiry/${sender.id}` // 질문목록 불러오기
-      );
-      if (response.data.length > 0) {
-        setQuestions(response.data);
-      } else {
-        getInquiry();
-      }
-    } catch (error) {
-      console.error("질문 목록 불러오기 실패:", error);
-    }
-  };
 
   const onValid = () => {
     const formData = getValues(); // 모든 폼 데이터 가져오기
@@ -71,10 +55,7 @@ function Apply() {
 
   const addReceiverSet = async (receiverAdder: IReceiverSet) => {
     try {
-      const response = await axios.post(
-        `/api/users/${sender.id}/receivers`,
-        receiverAdder
-      );
+      await axios.post(`/api/users/${sender.id}/receivers`, receiverAdder);
       history.push("/apply/done");
     } catch (error) {
       console.error("신청 중 오류 발생:", error);
@@ -105,14 +86,14 @@ function Apply() {
               <div key={q.id}>
                 <label>{q.question}</label>
                 <DescriptionS>{q.description}</DescriptionS>
-                <input />
+                <input {...register(`question_${q.id}`, { required: true })} />
               </div>
             </>
           ))}
+          <ButtonL category="pink" type="submit">
+            신청하기
+          </ButtonL>
         </Form>
-        <ButtonL category="pink" type="submit">
-          신청하기
-        </ButtonL>
       </>
     </>
   );
