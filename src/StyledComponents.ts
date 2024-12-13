@@ -744,3 +744,22 @@ export const AppContainer = styled.div`
 export const Content = styled.div`
   flex-grow: 1;
 `;
+
+export const LoadingWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8); /* 반투명 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* 최상단 레이어 */
+  pointer-events: none; /* 클릭 차단 */
+`;
+
+export const LoadingImage = styled.img`
+  width: 400px;
+  margin-bottom: 100px;
+`;
