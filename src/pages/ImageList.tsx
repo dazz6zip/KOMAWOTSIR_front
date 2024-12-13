@@ -54,37 +54,42 @@ function BackgroundList() {
 
   const saveImage = () => {
     let imageBrightState = EFontColor.black;
-    if (location.state.isFront) {
-      axios
-        .get(`/api/images/analyze`, {
-          params: {
-            imageKey: selectImageUrl,
-          },
-        })
-        .then((res) => {
+
+    const analyzeBrightness = async () => {
+      if (location.state.isFront) {
+        try {
+          const res = await axios.get(`/api/images/analyze`, {
+            params: { imageKey: selectImageUrl },
+          });
+
+          console.log(res);
           if (res.data === "dark") {
+            console.log("dark");
             imageBrightState = EFontColor.white;
           }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    };
 
-    setDesign((prevDesign) => ({
-      ...prevDesign,
-      ...(location.state.isFront
-        ? {
-            backgroundPic: selectImageUrl,
-            backgroundId: selectImageId,
-            fontColor: imageBrightState,
-          }
-        : {
-            thumbnailPic: selectImageUrl,
-            thumbnailId: selectImageId,
-          }),
-    }));
-    nav.push("../design");
+    // 비동기 함수 호출 후 디자인 업데이트
+    analyzeBrightness().then(() => {
+      setDesign((prevDesign) => ({
+        ...prevDesign,
+        ...(location.state.isFront
+          ? {
+              backgroundPic: selectImageUrl,
+              backgroundId: selectImageId,
+              fontColor: imageBrightState,
+            }
+          : {
+              thumbnailPic: selectImageUrl,
+              thumbnailId: selectImageId,
+            }),
+      }));
+      nav.push("../design");
+    });
   };
 
   const selectImageProc = (imageId: number, url: string) => {
