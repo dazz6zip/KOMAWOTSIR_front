@@ -1,4 +1,4 @@
-// 회원이 수신사 신청
+// 회원이 수신 신청
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
@@ -18,10 +18,9 @@ import {
 } from "../fetcher";
 
 function Apply() {
-  const { register, watch, getValues, handleSubmit } = useForm();
+  const { register, getValues, handleSubmit } = useForm();
   const history = useHistory();
 
-  const receiverId = parseInt(sessionStorage.getItem("userId") || "0");
   const sender = useRecoilValue(ASenderState);
   const [questions, setQuestions] = useState<IQuestionItem[]>();
 
@@ -30,6 +29,7 @@ function Apply() {
   );
 
   const onValid = () => {
+    alert("폼 제출 중");
     const formData = getValues(); // 모든 폼 데이터 가져오기
 
     const receiver: IReceiverToAdd = {
@@ -90,10 +90,10 @@ function Apply() {
               </div>
             </>
           ))}
+          <ButtonL category="pink" type="submit">
+            신청하기
+          </ButtonL>
         </Form>
-        <ButtonL category="pink" type="submit">
-          신청하기
-        </ButtonL>
       </>
     </>
   );
