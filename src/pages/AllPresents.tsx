@@ -46,12 +46,15 @@ const AllPresents: React.FC = () => {
     setIsOpen(false);
   };
 
+  const [loading, setLoading] = useState(false);
+
   const captureRefs = useRef<(HTMLDivElement | null)[]>([]); // 각 카드별 ref 배열
 
   useEffect(() => {
     axios
       .get<IPresent[]>(`/api/receivers/${userId}/posts/all`)
       .then((response) => {
+        setLoading(true);
         setCards(response.data);
         const years = Array.from(
           new Set(response.data.map((card) => card.year))
@@ -63,6 +66,7 @@ const AllPresents: React.FC = () => {
 
         // 초기 isFlipped 배열 설정
         setIsFlipped(new Array(response.data.length).fill(false));
+        setLoading(false);
       })
       .catch((error) => {
         console.error("연하장 목록 불러오기 실패:", error);

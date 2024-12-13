@@ -97,6 +97,8 @@ function ApplyGuest() {
   };
 
   const addReceiverSet = async (receiverAdder: IReceiverSet) => {
+    console.log(sender.id);
+    console.log(receiverAdder);
     try {
       const response = await axios.post(
         `/api/users/${sender.id}/receivers`,
