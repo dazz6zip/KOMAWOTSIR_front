@@ -9,7 +9,12 @@ import Img from "../components/common/Img";
 import { IUser } from "../fetcher";
 import kakao from "../images/kakao.png";
 import main from "../images/main.png";
-import { ImgWrapper, LogoSection } from "../StyledComponents";
+import {
+  ImgWrapper,
+  LoadingImage,
+  LoadingWrapper,
+  LogoSection,
+} from "../StyledComponents";
 
 interface KakaoLoginResponse {
   redirectUri: string;
@@ -48,7 +53,7 @@ function Home() {
       axios
         .get<IUser>(`/api/users/kakao/login-test?code=${code}`)
         .then((response) => {
-          console.log("로그인 성공", response);
+          // console.log("로그인 성공", response);
           sessionStorage.setItem("userId", response.data.id.toString());
 
           const link = sessionStorage.getItem("apply_kakao");

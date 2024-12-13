@@ -161,10 +161,7 @@ function ReceiverList() {
       </ButtonRow>
       {(InfiniteLoading || questionLoading) && (
         <LoadingWrapper>
-          <LoadingImage
-            src="https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/etc/loading.gif"
-            alt="Loading"
-          />
+          <LoadingImage src="https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/etc/loading.gif" />
         </LoadingWrapper>
       )}
       {rlData ? (
@@ -287,9 +284,7 @@ function ReceiverList() {
       >
         <ModalContent>
           <h3>응답 내역</h3>
-          {questionLoading ? (
-            <p>로딩 중...</p>
-          ) : questionData && questionData.length > 0 ? (
+          {questionData && questionData.length > 0 ? (
             questionData.map((q) => (
               <div key={q.id}>
                 <p>
