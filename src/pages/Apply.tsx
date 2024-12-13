@@ -16,11 +16,14 @@ import {
   IReceiverQuestionToAdd,
   IReceiverSet,
   IReceiverToAdd,
+  IUser,
+  loadUserInfo,
 } from "../fetcher";
 import { toast } from "react-toastify";
 
 function Apply() {
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
+  const [tel, setTel] = useState("");
   const { register, getValues, handleSubmit } = useForm();
   const history = useHistory();
 
@@ -37,12 +40,22 @@ function Apply() {
     }
   );
 
+  const { data: userData } = useQuery<IUser>(
+    ["loadUserInfo", userId],
+    () => loadUserInfo(userId),
+    {
+      onSuccess: (data) => {
+        setTel(data.tel);
+      },
+    }
+  );
+
   const onValid = () => {
     const formData = getValues(); // 모든 폼 데이터 가져오기
 
     const receiver: IReceiverToAdd = {
       senderId: sender.id,
-      tel: formData.tel,
+      tel: tel,
       nickname: formData.nickname,
       memo: formData.info,
     };
