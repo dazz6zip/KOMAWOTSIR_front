@@ -76,7 +76,6 @@ function Apply() {
   };
 
   const addReceiverSet = async (receiverAdder: IReceiverSet) => {
-    console.log("전송 데이터:", receiverAdder);
     try {
       await axios.post(`/api/users/${sender.id}/receivers`, receiverAdder);
       history.push("/apply/done");
