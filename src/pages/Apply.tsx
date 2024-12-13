@@ -25,25 +25,9 @@ function Apply() {
   const sender = useRecoilValue(ASenderState);
   const [questions, setQuestions] = useState<IQuestionItem[]>();
 
-  const { isLoading, data } = useQuery<IQuestionItem[]>(
-    ["questionLoad", sender.id],
-    () => getQuestion(sender.id)
+  const { data } = useQuery<IQuestionItem[]>(["questionLoad", sender.id], () =>
+    getQuestion(sender.id)
   );
-
-  const getInquiry = async () => {
-    try {
-      const response = await axios.get<IQuestionItem[]>(
-        `/api/inquiry/${sender.id}` // 질문목록 불러오기
-      );
-      if (response.data.length > 0) {
-        setQuestions(response.data);
-      } else {
-        getInquiry();
-      }
-    } catch (error) {
-      console.error("질문 목록 불러오기 실패:", error);
-    }
-  };
 
   const onValid = () => {
     const formData = getValues(); // 모든 폼 데이터 가져오기
@@ -71,10 +55,7 @@ function Apply() {
 
   const addReceiverSet = async (receiverAdder: IReceiverSet) => {
     try {
-      const response = await axios.post(
-        `/api/users/${sender.id}/receivers`,
-        receiverAdder
-      );
+      await axios.post(`/api/users/${sender.id}/receivers`, receiverAdder);
       history.push("/apply/done");
     } catch (error) {
       console.error("신청 중 오류 발생:", error);
@@ -105,7 +86,7 @@ function Apply() {
               <div key={q.id}>
                 <label>{q.question}</label>
                 <DescriptionS>{q.description}</DescriptionS>
-                <input />
+                <input {...register(`question_${q.id}`, { required: true })} />
               </div>
             </>
           ))}

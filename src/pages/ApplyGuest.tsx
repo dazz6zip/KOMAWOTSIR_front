@@ -109,6 +109,10 @@ function ApplyGuest() {
     }
   };
 
+  const open = () => {
+    alert("hi");
+  };
+
   return (
     <>
       <Title>
@@ -173,7 +177,7 @@ function ApplyGuest() {
               </div>
             ))}
 
-            <ButtonL category="pink" type="submit">
+            <ButtonL category="pink" onClick={open}>
               신청하기
             </ButtonL>
           </>
