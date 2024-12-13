@@ -1,4 +1,5 @@
 // 회원이 수신 신청
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
@@ -29,7 +30,6 @@ function Apply() {
   );
 
   const onValid = () => {
-    alert("폼 제출 중");
     const formData = getValues(); // 모든 폼 데이터 가져오기
 
     const receiver: IReceiverToAdd = {
