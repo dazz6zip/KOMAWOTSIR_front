@@ -13,6 +13,8 @@ import {
   ColorGrid,
   Header,
   InputFile,
+  LoadingImage,
+  LoadingWrapper,
   PreviewContainer,
   SubTitle,
   Tab,
@@ -137,6 +139,15 @@ function BackgroundList() {
         <Title>2025 연하장</Title>
         <SubTitle>디자인 {FrontOrBack} 변경하기</SubTitle>
       </Header>
+
+      {isLoading && ( // 로딩 상태일 때 표시
+        <LoadingWrapper>
+          <LoadingImage
+            src="https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/etc/loading.gif"
+            alt="Loading"
+          />
+        </LoadingWrapper>
+      )}
 
       <Tabs>
         {category.map((tab) => (

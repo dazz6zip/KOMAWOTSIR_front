@@ -24,6 +24,8 @@ import {
   customStyles,
   Dropdown,
   HeaderItem,
+  LoadingImage,
+  LoadingWrapper,
   MemoArea,
   ModalContent,
   ReceiverLabel,
@@ -51,6 +53,7 @@ function ReceiverList() {
     data: rlData,
     isFetchingNextPage,
     hasNextPage,
+    isLoading: InfiniteLoading,
     fetchNextPage,
   } = useInfiniteQuery<{ content: IReceiver[]; last: boolean }, Error>(
     ["receiver", userId, statusState],
@@ -156,6 +159,14 @@ function ReceiverList() {
           <ButtonS category="pink">디자인 수정하기</ButtonS>{" "}
         </Link>
       </ButtonRow>
+      {(InfiniteLoading || questionLoading) && (
+        <LoadingWrapper>
+          <LoadingImage
+            src="https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/etc/loading.gif"
+            alt="Loading"
+          />
+        </LoadingWrapper>
+      )}
       {rlData ? (
         <>
           <CheckForm>
