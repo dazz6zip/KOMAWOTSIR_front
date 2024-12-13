@@ -54,7 +54,6 @@ function BackgroundList() {
 
   const saveImage = () => {
     let imageBrightState = EFontColor.black;
-<<<<<<< Updated upstream
     if (location.state.isFront) {
       axios
         .get(`/api/images/analyze`, {
@@ -63,15 +62,6 @@ function BackgroundList() {
           },
         })
         .then((res) => {
-=======
-
-    const analyzeBrightness = async () => {
-      if (location.state.isFront) {
-        try {
-          const res = await axios.get(`/api/images/analyze`, {
-            params: { imageKey: selectImageUrl },
-          });
->>>>>>> Stashed changes
           if (res.data === "dark") {
             imageBrightState = EFontColor.white;
           }
@@ -81,7 +71,6 @@ function BackgroundList() {
         });
     }
 
-<<<<<<< Updated upstream
     setDesign((prevDesign) => ({
       ...prevDesign,
       ...(location.state.isFront
@@ -96,24 +85,6 @@ function BackgroundList() {
           }),
     }));
     nav.push("../design");
-=======
-    analyzeBrightness().then(() => {
-      setDesign((prevDesign) => ({
-        ...prevDesign,
-        ...(location.state.isFront
-          ? {
-              backgroundPic: selectImageUrl,
-              backgroundId: selectImageId,
-              fontColor: imageBrightState,
-            }
-          : {
-              thumbnailPic: selectImageUrl,
-              thumbnailId: selectImageId,
-            }),
-      }));
-      nav.push("../design");
-    });
->>>>>>> Stashed changes
   };
 
   const selectImageProc = (imageId: number, url: string) => {
