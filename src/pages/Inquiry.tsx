@@ -64,7 +64,7 @@ function FormMaker() {
       .get<string>(`/api/inquiry/${userId}/get/url`)
       .then((res) => {
         let hmacRes = res.data;
-        setLinkToCopy(`localhost:3000/apply/to/${hmacRes}`);
+        setLinkToCopy(`고마워써.com/apply/to/${hmacRes}`);
         // console.log(hmacRes);
       })
       .catch((err) => {

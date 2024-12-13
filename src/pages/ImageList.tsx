@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ButtonL from "../components/common/ButtonL";
 import ButtonRow from "../components/common/ButtonRow";
 import { useQuery } from "react-query";
-import { Iimage, imageLoad } from "../fetcher";
+import { EFontColor, Iimage, imageLoad } from "../fetcher";
 import { useHistory, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ADesignState } from "../atoms";
@@ -51,13 +51,78 @@ function BackgroundList() {
 
   const [design, setDesign] = useRecoilState(ADesignState);
 
+  // const saveImage = () => {
+  //   setDesign((prevDesign) => ({
+  //     ...prevDesign,
+  //     ...(location.state.isFront
+  //       ? {
+  //           backgroundPic: selectImageUrl,
+  //           backgroundId: selectImageId,
+  //         }
+  //       : {
+  //           thumbnailPic: selectImageUrl,
+  //           thumbnailId: selectImageId,
+  //         }),
+  //   }));
+  //   nav.push("../design");
+  // };
+
   const saveImage = () => {
+    let imageBrightState = EFontColor.black;
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = selectImageUrl as string;
+
+    img.onload = () => {
+      // Canvas 생성
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      // Canvas 크기를 이미지 크기로 설정
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      if (!ctx) {
+        console.error("CanvasRenderingContext2D를 가져오지 못했습니다.");
+        return;
+      }
+
+      // 이미지를 Canvas에 그리기
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+
+      // 이미지 데이터 가져오기
+      const imageData = ctx.getImageData(0, 0, img.width, img.height);
+      const data = imageData.data;
+
+      // 밝기 계산
+      let totalBrightness = 0;
+      const totalPixels = data.length / 4; // 픽셀 개수 (R, G, B, A 4바이트씩)
+
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i]; // Red
+        const g = data[i + 1]; // Green
+        const b = data[i + 2]; // Blue
+
+        // 밝기 계산 (가중 평균 방식)
+        const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
+        totalBrightness += brightness;
+      }
+
+      const averageBrightness = totalBrightness / totalPixels;
+
+      if (averageBrightness > 127.5) {
+        imageBrightState = EFontColor.white;
+      }
+    };
+
     setDesign((prevDesign) => ({
       ...prevDesign,
       ...(location.state.isFront
         ? {
             backgroundPic: selectImageUrl,
             backgroundId: selectImageId,
+            fontColor: imageBrightState,
           }
         : {
             thumbnailPic: selectImageUrl,
