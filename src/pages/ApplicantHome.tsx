@@ -51,8 +51,6 @@ function ApplicantHome() {
       );
       const { clientId, redirectUri } = response.data;
 
-      console.log(response.data);
-
       sessionStorage.setItem("apply_kakao", link);
 
       // 카카오 인증 페이지로 리디렉션

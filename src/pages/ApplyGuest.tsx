@@ -20,6 +20,7 @@ import {
   IReceiverSet,
   IReceiverToAdd,
 } from "../fetcher";
+import { toast } from "react-toastify";
 
 function ApplyGuest() {
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
@@ -100,8 +101,6 @@ function ApplyGuest() {
   };
 
   const addReceiverSet = async (receiverAdder: IReceiverSet) => {
-    console.log(sender.id);
-    console.log(receiverAdder);
     try {
       const response = await axios.post(
         `/api/users/${sender.id}/receivers`,
@@ -109,8 +108,8 @@ function ApplyGuest() {
       );
       history.push("/apply/done");
     } catch (error) {
+      toast.error("신청에 실패했습니다. 다시 시도해 주세요.");
       console.error("신청 중 오류 발생:", error);
-      alert("신청 처리 중 문제가 발생했습니다. 다시 시도해 주세요.");
     }
   };
 
