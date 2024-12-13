@@ -19,6 +19,7 @@ import {
   Tabs,
   Title,
 } from "../StyledComponents";
+import { toast } from "react-toastify";
 
 function BackgroundList() {
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
@@ -67,69 +68,87 @@ function BackgroundList() {
   //   nav.push("../design");
   // };
 
-  const saveImage = () => {
+  const saveImage = async () => {
     let imageBrightState = EFontColor.black;
 
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = selectImageUrl as string;
+    if (location.state.isFront) {
+      try {
+        // Fetch로 이미지 Blob 가져오기
+        const response = await fetch(selectImageUrl as string, {
+          mode: "cors",
+        });
+        if (!response.ok) throw new Error("Failed to fetch image");
 
-    img.onload = () => {
-      // Canvas 생성
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
+        const blob = await response.blob();
+        const imgUrl = URL.createObjectURL(blob); // Blob URL 생성
 
-      // Canvas 크기를 이미지 크기로 설정
-      canvas.width = img.width;
-      canvas.height = img.height;
+        const img = new Image();
+        img.src = imgUrl;
 
-      if (!ctx) {
-        console.error("CanvasRenderingContext2D를 가져오지 못했습니다.");
-        return;
-      }
+        img.onload = () => {
+          // Canvas 생성
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
 
-      // 이미지를 Canvas에 그리기
-      ctx.drawImage(img, 0, 0, img.width, img.height);
+          // Canvas 크기를 이미지 크기로 설정
+          canvas.width = img.width;
+          canvas.height = img.height;
 
-      // 이미지 데이터 가져오기
-      const imageData = ctx.getImageData(0, 0, img.width, img.height);
-      const data = imageData.data;
-
-      // 밝기 계산
-      let totalBrightness = 0;
-      const totalPixels = data.length / 4; // 픽셀 개수 (R, G, B, A 4바이트씩)
-
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i]; // Red
-        const g = data[i + 1]; // Green
-        const b = data[i + 2]; // Blue
-
-        // 밝기 계산 (가중 평균 방식)
-        const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
-        totalBrightness += brightness;
-      }
-
-      const averageBrightness = totalBrightness / totalPixels;
-
-      if (averageBrightness > 127.5) {
-        imageBrightState = EFontColor.white;
-      }
-    };
-
-    setDesign((prevDesign) => ({
-      ...prevDesign,
-      ...(location.state.isFront
-        ? {
-            backgroundPic: selectImageUrl,
-            backgroundId: selectImageId,
-            fontColor: imageBrightState,
+          if (!ctx) {
+            console.error("CanvasRenderingContext2D를 가져오지 못했습니다.");
+            return;
           }
-        : {
-            thumbnailPic: selectImageUrl,
-            thumbnailId: selectImageId,
-          }),
-    }));
-    nav.push("../design");
+
+          // 이미지를 Canvas에 그리기
+          ctx.drawImage(img, 0, 0, img.width, img.height);
+
+          // 이미지 데이터 가져오기
+          const imageData = ctx.getImageData(0, 0, img.width, img.height);
+          const data = imageData.data;
+
+          // 밝기 계산
+          let totalBrightness = 0;
+          const totalPixels = data.length / 4; // 픽셀 개수 (R, G, B, A 4바이트씩)
+
+          for (let i = 0; i < data.length; i += 4) {
+            const r = data[i]; // Red
+            const g = data[i + 1]; // Green
+            const b = data[i + 2]; // Blue
+
+            // 밝기 계산 (가중 평균 방식)
+            const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
+            totalBrightness += brightness;
+          }
+
+          const averageBrightness = totalBrightness / totalPixels;
+
+          if (averageBrightness > 127.5) {
+            imageBrightState = EFontColor.white;
+          }
+
+          // Blob URL 해제
+          URL.revokeObjectURL(imgUrl);
+
+          // 디자인 상태 업데이트
+          setDesign((prevDesign) => ({
+            ...prevDesign,
+            ...(location.state.isFront
+              ? {
+                  backgroundPic: selectImageUrl,
+                  backgroundId: selectImageId,
+                  fontColor: imageBrightState,
+                }
+              : {
+                  thumbnailPic: selectImageUrl,
+                  thumbnailId: selectImageId,
+                }),
+          }));
+          nav.push("../design");
+        };
+      } catch (error) {
+        console.error("이미지 처리 중 오류 발생:", error);
+      }
+    }
   };
 
   const selectImageProc = (imageId: number, url: string) => {
@@ -171,6 +190,7 @@ function BackgroundList() {
 
       setSelectImageUrl(fileUrl as string);
     } catch (error) {
+      toast.error("업로드에 실패했습니다. 다시 시도해 보세요.");
       console.error("파일 업로드 실패:", error);
     }
   };
