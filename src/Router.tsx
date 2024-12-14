@@ -8,14 +8,10 @@ import Apply from "./pages/Apply";
 import ApplyCompletedGuest from "./pages/ApplyCompletedGuest";
 import ApplyGuest from "./pages/ApplyGuest";
 import CardDesigner from "./pages/CardDesigner";
-import CardFlipEx from "./pages/CardFlipEx";
 import CardWriter from "./pages/CardWriter";
-import Carousel1 from "./pages/Carousel1";
 import DraftList from "./pages/DraftList";
-import CarouselEx from "./pages/ExCarousel";
 import FontList from "./pages/FontList";
 import Home from "./pages/Home";
-import Html2CanvasEx from "./pages/Html2CanvasEx";
 import ImageList from "./pages/ImageList";
 import Inquiry from "./pages/Inquiry";
 import ReceiverAdder from "./pages/ReceiverAdder";
@@ -63,13 +59,9 @@ function Router() {
           <PrivateRouter path="/receiver-list" exact component={ReceiverList} />
           <PrivateRouter path="/yearly-presents" component={YearlyPresents} />
           <PrivateRouter path="/all-presents" component={AllPresents} />
-          <PrivateRouter path="/carousel-test" component={CarouselEx} />
-          <PrivateRouter path="/carousel-test1" component={Carousel1} />
           <PrivateRouter path="/draft" component={DraftList} />
           <PrivateRouter path="/font-list" component={FontList} />
           <PrivateRouter path="/already" component={AlreadyApplied} />
-          <Route path="/kk" exact component={Html2CanvasEx} />
-          <Route path="/hh" exact component={CardFlipEx} />
         </Switch>
       </Container>
     </>
