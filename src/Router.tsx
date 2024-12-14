@@ -16,6 +16,7 @@ import ImageList from "./pages/ImageList";
 import Inquiry from "./pages/Inquiry";
 import ReceiverAdder from "./pages/ReceiverAdder";
 import ReceiverList from "./pages/ReceiverList";
+import AnimatedStackedCards from "./pages/TestStackedCards";
 import UpdateMyInfo from "./pages/UpdateProfile";
 import YearlyPresents from "./pages/YearlyPresents";
 import PrivateRouter from "./PrivateRouter";
@@ -62,6 +63,7 @@ function Router() {
           <PrivateRouter path="/draft" component={DraftList} />
           <PrivateRouter path="/font-list" component={FontList} />
           <PrivateRouter path="/already" component={AlreadyApplied} />
+          <Route path="/s/c" exact component={AnimatedStackedCards} />
         </Switch>
       </Container>
     </>
