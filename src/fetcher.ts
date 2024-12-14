@@ -132,6 +132,12 @@ export interface IFont {
   url: string;
 }
 
+export interface IPresentImage {
+  id: number;
+  front: string;
+  back: string;
+}
+
 export interface IPresent {
   // 내가 받은 연하장
   postId: number;
