@@ -161,6 +161,7 @@ const AnimatedStackedCards = () => {
             padding: "0", // 내부 여백 제거
             width: "auto",
             height: "auto",
+            overflow: "hidden",
           },
           overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.3)", // 약간의 투명 배경 추가 (선택 사항)
@@ -170,17 +171,18 @@ const AnimatedStackedCards = () => {
       >
         <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
           {/* 앞면 */}
-          <div
-            style={{
-              width: "15rem",
-              height: "10rem",
-              backgroundImage: `url(${selectedCard?.front})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
+          <div>
+            <div
+              style={{
+                width: "15rem",
+                height: "10rem",
+                backgroundImage: `url(${selectedCard?.front})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            ></div>
             <ButtonS onClick={() => flipCard()} category="pink">
-              Flip to Back
+              편지 읽기
             </ButtonS>
           </div>
 

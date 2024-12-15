@@ -115,12 +115,6 @@ const TestYearly = () => {
         isOpen={isModalOpen}
         style={{
           content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
             background: "transparent", // 배경색 제거
             border: "none", // 경계선 제거
             padding: "0", // 내부 여백 제거
@@ -135,17 +129,18 @@ const TestYearly = () => {
       >
         <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
           {/* 앞면 */}
-          <div
-            style={{
-              width: "15rem",
-              height: "10rem",
-              backgroundImage: `url(${selectedCard?.backgroundPic})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
+          <div>
+            <div
+              style={{
+                width: "15rem",
+                height: "10rem",
+                backgroundImage: `url(${selectedCard?.thumbnailPic})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            ></div>
             <ButtonS onClick={() => flipCard()} category="pink">
-              Flip to Back
+              편지 읽기
             </ButtonS>
           </div>
 
@@ -156,7 +151,7 @@ const TestYearly = () => {
                 style={{
                   width: "15rem",
                   height: "10rem",
-                  backgroundImage: `url(${selectedCard?.thumbnailPic})`,
+                  backgroundImage: `url(${selectedCard?.backgroundPic})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   display: "flex", // Flexbox 적용
