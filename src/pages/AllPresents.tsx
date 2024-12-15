@@ -135,6 +135,14 @@ const AllPresents: React.FC = () => {
     }
   };
 
+  const makeImage = async (postId: number) => {
+    try {
+      await axios.get(`/api/posts/image/${postId}`);
+    } catch (err) {
+      alert("err: " + err);
+    }
+  };
+
   return (
     <>
       <Title>연하장 수신 목록</Title>
@@ -270,6 +278,12 @@ const AllPresents: React.FC = () => {
                       onClick={() => handleSendToBackend(i, card.postId)}
                     >
                       서버로 이미지 전송
+                    </ButtonS>
+                    <ButtonS
+                      category="hotpink"
+                      onClick={() => makeImage(card.postId)}
+                    >
+                      이미지 저장처리 테스트
                     </ButtonS>
                   </Card>
                 </ReactCardFlip>
