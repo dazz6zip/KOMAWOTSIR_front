@@ -17,8 +17,8 @@ import Inquiry from "./pages/Inquiry";
 import ReceiverAdder from "./pages/ReceiverAdder";
 import ReceiverList from "./pages/ReceiverList";
 import AnimatedStackedCards from "./pages/TestStackedCards";
+import TestYearly from "./pages/TestYearlyPresents";
 import UpdateMyInfo from "./pages/UpdateProfile";
-import YearlyPresents from "./pages/YearlyPresents";
 import PrivateRouter from "./PrivateRouter";
 
 const Container = styled.div`
@@ -58,7 +58,7 @@ function Router() {
           <PrivateRouter path="/background" exact component={ImageList} />
           <PrivateRouter path="/add-receiver" exact component={ReceiverAdder} />
           <PrivateRouter path="/receiver-list" exact component={ReceiverList} />
-          <PrivateRouter path="/yearly-presents" component={YearlyPresents} />
+          <PrivateRouter path="/yearly-presents" component={TestYearly} />
           <PrivateRouter path="/all-presents" component={AllPresents} />
           <PrivateRouter path="/draft" component={DraftList} />
           <PrivateRouter path="/font-list" component={FontList} />
