@@ -115,11 +115,18 @@ const TestYearly = () => {
         isOpen={isModalOpen}
         style={{
           content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
             background: "transparent", // 배경색 제거
             border: "none", // 경계선 제거
             padding: "0", // 내부 여백 제거
             width: "auto",
             height: "auto",
+            overflow: "hidden",
           },
           overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.3)", // 약간의 투명 배경 추가 (선택 사항)
@@ -139,6 +146,9 @@ const TestYearly = () => {
                 backgroundPosition: "center",
               }}
             ></div>
+            <ButtonS onClick={() => setIsModalOpen(false)} category="gray">
+              닫기
+            </ButtonS>
             <ButtonS onClick={() => flipCard()} category="pink">
               편지 읽기
             </ButtonS>
@@ -185,8 +195,11 @@ const TestYearly = () => {
                 </span>
               </div>
             </div>
+            <ButtonS onClick={() => setIsModalOpen(false)} category="gray">
+              닫기
+            </ButtonS>
             <ButtonS onClick={() => flipCard()} category="hotpink">
-              Flip to Front
+              앞면보기
             </ButtonS>
             <ButtonS category="pink" onClick={() => handleDownload()}>
               이미지 다운로드
