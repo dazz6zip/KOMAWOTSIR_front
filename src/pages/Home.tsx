@@ -111,6 +111,7 @@ function Home() {
       <LogoSection>
         <Img src={main} width="100%" alt="Main" className="logo-image" />
       </LogoSection>
+
       <Description>
         디지털 연하장 서비스에 <br />
         오신 것을 환영합니다! <br />

@@ -37,7 +37,11 @@ function UpdateProfile() {
     }
   };
 
-  const onInvalid = (errors: any) => {};
+  const onInvalid = (errors: any) => {
+    if (errors.tel) {
+      toast.error(errors.tel.message); // 전화번호 오류 메시지를 toast로 출력
+    }
+  };
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
@@ -46,6 +50,7 @@ function UpdateProfile() {
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
 
   const closeSuccessModal = () => {
+    sessionStorage.removeItem("userId");
     setIsSuccessModalOpen(false);
     nav.push("/");
   };
@@ -92,8 +97,14 @@ function UpdateProfile() {
         <input {...register("kakaoId", { required: true })} disabled />
         <label htmlFor="tel">전화번호</label>
         <input
-          {...register("tel", { required: true })}
-          placeholder="- 없이 쓰삼"
+          {...register("tel", {
+            required: "전화번호를 입력해 주세요.",
+            pattern: {
+              value: /^(010|011)\d{8}$/,
+              message: "전화번호를 확인해 주세요.",
+            },
+          })}
+          placeholder="- 없이 작성해 주세요"
         />
         <SmsOption>
           <span>
@@ -139,7 +150,7 @@ function UpdateProfile() {
       >
         <ModalContent>
           <h3>탈퇴 처리가 완료되었습니다.</h3>
-          <p>다음에 또 만나요~~~~</p>
+          <p>다음에 또 만나요.</p>
           <ButtonS
             category="pink"
             className="confirm"
