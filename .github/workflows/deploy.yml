@@ -1,0 +1,52 @@
+name: Deploy to ECS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout Repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 2. Set AWS Credentials
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      # 3. Log in to Amazon ECR
+      - name: Log in to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # 4. Build and Push Docker Image
+      - name: Build and Push Docker Image
+        run: |
+          ECR_REPO_NAME="aendyear-front"
+          IMAGE_TAG="latest"
+          REPOSITORY_URI="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-2.amazonaws.com/$ECR_REPO_NAME"
+
+          # Build Docker image
+          docker build -t $ECR_REPO_NAME:$IMAGE_TAG .
+
+          # Tag the image for ECR
+          docker tag $ECR_REPO_NAME:$IMAGE_TAG $REPOSITORY_URI:$IMAGE_TAG
+
+          # Push the image to ECR
+          docker push $REPOSITORY_URI:$IMAGE_TAG
+
+      # 5. Deploy to ECS
+      - name: Deploy to ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          cluster: AendyearCluster
+          service: komawotsir-front
+          task-definition: ./aendyear-task-definition.json
+          wait-for-service-stability: true

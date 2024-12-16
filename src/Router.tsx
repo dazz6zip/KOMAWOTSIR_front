@@ -1,29 +1,32 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Coin from "./pages/Coin";
-import Home from "./pages/Home";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import FormMaker from "./pages/FormMaker";
+import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-import Home1 from "./pages/Home1";
+import Header from "./components/Header";
+import AllPresents from "./pages/AllPresents";
+import AlreadyApplied from "./pages/AlreadyApplied";
 import ApplicantHome from "./pages/ApplicantHome";
-import ApplicantDone from "./pages/ApplicantDone";
-import CardWriter from "./pages/CardWriter";
-import BackgroundList from "./pages/BackgroundList";
-import UpdateMyInfo from "./pages/UpdateMyInfo";
+import Apply from "./pages/Apply";
+import ApplyCompletedGuest from "./pages/ApplyCompletedGuest";
+import ApplyGuest from "./pages/ApplyGuest";
 import CardDesigner from "./pages/CardDesigner";
-import Apply1 from "./pages/Apply1";
-import Apply2 from "./pages/Apply2";
+import CardWriter from "./pages/CardWriter";
+import DraftList from "./pages/DraftList";
+import FontList from "./pages/FontList";
+import Home from "./pages/Home";
+import ImageList from "./pages/ImageList";
+import Inquiry from "./pages/Inquiry";
 import ReceiverAdder from "./pages/ReceiverAdder";
-import DesignList from "./pages/DesignList";
+import ReceiverList from "./pages/ReceiverList";
+import AnimatedStackedCards from "./pages/TestStackedCards";
+import TestYearly from "./pages/TestYearlyPresents";
+import UpdateMyInfo from "./pages/UpdateProfile";
+import PrivateRouter from "./PrivateRouter";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 85vh;
-  font-family: "Apple SD Gothic Neo", sans-serif;
+  height: 90%;
   padding: 15px 10px 25px 10px;
   box-sizing: border-box;
 
@@ -43,48 +46,26 @@ function Router() {
       <hr />
       <Container>
         <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/1" exact>
-            <Home1 />
-          </Route>
-          <Route path="/create-form">
-            <FormMaker />
-          </Route>
-          <Route path="/write">
-            <CardWriter />
-          </Route>
-          <Route path="/design" exact>
-            <CardDesigner />
-          </Route>
-          <Route path="/update-info">
-            <UpdateMyInfo />
-          </Route>
-          <Route path="/apply" exact>
-            <ApplicantHome />
-          </Route>
-          <Route path="/apply1" exact>
-            <Apply1 />
-          </Route>
-          <Route path="/apply2" exact>
-            <Apply2 />
-          </Route>
-          <Route path="/apply/done" exact>
-            <ApplicantDone />
-          </Route>
-          <Route path="/background" exact>
-            <BackgroundList />
-          </Route>
-          <Route path="/add-receiver" exact>
-            <ReceiverAdder />
-          </Route>
-          <Route path="/design-list" exact>
-            <DesignList />
-          </Route>
+          <Route path="/" exact component={Home} />
+          <PrivateRouter path="/create-form" component={Inquiry} />
+          <PrivateRouter path="/write" component={CardWriter} />
+          <PrivateRouter path="/design" exact component={CardDesigner} />
+          <PrivateRouter path="/update-info" component={UpdateMyInfo} />
+          <Route path="/apply/to/:link" exact component={ApplicantHome} />
+          <PrivateRouter path="/apply" exact component={Apply} />
+          <Route path="/apply/guest" exact component={ApplyGuest} />
+          <Route path="/apply/done" exact component={ApplyCompletedGuest} />
+          <PrivateRouter path="/background" exact component={ImageList} />
+          <PrivateRouter path="/add-receiver" exact component={ReceiverAdder} />
+          <PrivateRouter path="/receiver-list" exact component={ReceiverList} />
+          <PrivateRouter path="/yearly-presents" component={TestYearly} />
+          <PrivateRouter path="/all-presents" component={AllPresents} />
+          <PrivateRouter path="/draft" component={DraftList} />
+          <PrivateRouter path="/font-list" component={FontList} />
+          <PrivateRouter path="/already" component={AlreadyApplied} />
+          <Route path="/s/c" exact component={AnimatedStackedCards} />
         </Switch>
       </Container>
-      <Footer />
     </>
   );
 }

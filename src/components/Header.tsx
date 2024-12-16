@@ -1,112 +1,97 @@
-import styled from "styled-components";
-import logo from "../images/logo.png";
-import Sidebar from "react-sidebar";
-import Title from "./common/Title";
-import { Link } from "react-router-dom";
+import axios from "axios";
 import { useState } from "react";
+import { slide as Menu } from "react-burger-menu";
 import { FaArrowLeft } from "react-icons/fa";
-
-const HeaderContainer = styled.div`
-  height: 60px; /* 고정된 높이 */
-  display: flex;
-  justify-content: space-between; /* 버튼과 로고를 양쪽으로 배치 */
-  align-items: center;
-  padding: 0 20px; /* 좌우 패딩 추가 */
-  background-color: #fff;
-  border-bottom: 1px solid #e0e0e0;
-
-  .menu-button {
-    font-size: 24px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-  }
-`;
-
-const LogoImg = styled.img`
-  width: 100px; /* 로고 크기 고정 */
-  height: auto;
-  display: inline-block;
-`;
-
-// 햄버거 메뉴 스타일
-const MenuContent = styled.div`
-  width: 250px;
-  padding: 20px;
-  background-color: #f4f4f4;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const MenuItem = styled(Link)<{ $isSubMenu?: boolean }>`
-  display: block;
-  text-decoration: none;
-  color: ${(props) => (props.$isSubMenu ? "gray" : "black")};
-  font-size: ${(props) => (props.$isSubMenu ? "16px" : "18px")};
-  margin-top: ${(props) => (props.$isSubMenu ? "0" : "16px")};
-  margin-bottom: 15px;
-  margin-left: ${(props) => (props.$isSubMenu ? "20px" : "0")};
-
-  &:hover {
-    color: ${(props) => (props.$isSubMenu ? "#333" : "#555")};
-  }
-`;
+import { GiHamburgerMenu } from "react-icons/gi";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import logo from "../images/logo.png";
+import {
+  CustomIcon,
+  HeaderContainer,
+  LogoImg,
+  MenuStyles,
+  OverlayButton,
+  StyledMenuItem,
+} from "../StyledComponents";
 
 function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+  const nav = useHistory();
+  const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const closeMenu = () => setIsMenuOpen(false);
 
-  const closeMenu = () => {
-    setIsOpen(false);
+  const logoutProc = () => {
+    sessionStorage.removeItem("userId");
+    axios
+      .post(`/api/users/logout`)
+      .then((res) => {
+        // console.log(res);
+
+        closeMenu();
+        nav.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <>
-      <Sidebar
-        sidebar={
-          <MenuContent onClick={closeMenu}>
-            <FaArrowLeft />
-            <MenuItem to="/update-info">회원정보 수정</MenuItem>
-            <MenuItem to="">나의 편지함</MenuItem>
-            <MenuItem to="" $isSubMenu>
-              올해 받은 연하장
-            </MenuItem>
-            <MenuItem to="" $isSubMenu>
-              전체 수신 목록
-            </MenuItem>
-            <MenuItem to="">편지 보내기</MenuItem>
-            <MenuItem to="" $isSubMenu>
-              신청받기
-            </MenuItem>
-            <MenuItem to="" $isSubMenu>
-              작성하기
-            </MenuItem>
-            <MenuItem to="" $isSubMenu>
-              디자인하기
-            </MenuItem>
-            <MenuItem to="">로그아웃</MenuItem>
-          </MenuContent>
-        }
-        open={isOpen}
-        onSetOpen={setIsOpen}
-        styles={{
-          sidebar: { background: "white", zIndex: 1000 as any },
-          overlay: { background: "rgba(0, 0, 0, 0.3)" },
-        }}
+      {location.pathname !== "/" && (
+        <OverlayButton
+          onClick={() => {
+            nav.goBack();
+          }}
+        >
+          <FaArrowLeft
+            color="#EEB0B2"
+            size="20"
+            style={{ marginRight: "10px" }}
+          />
+        </OverlayButton>
+      )}
+
+      <Menu
+        customBurgerIcon={<GiHamburgerMenu size={"30"} />}
+        customCrossIcon={<FaArrowLeft size={"30"} />}
+        width={"250px"}
+        isOpen={isMenuOpen}
+        onStateChange={({ isOpen }) => setIsMenuOpen(isOpen)}
+        styles={MenuStyles}
       >
-        <HeaderContainer>
-          <button onClick={toggleMenu} className="menu-button">
-            ☰
-          </button>
-          <Link to="/">
-            <LogoImg src={logo} alt="Logo" />
-          </Link>
-        </HeaderContainer>
-      </Sidebar>
+        <StyledMenuItem to="/update-info" onClick={closeMenu}>
+          회원정보 수정
+        </StyledMenuItem>
+        <StyledMenuItem to="/yearly-presents" onClick={closeMenu}>
+          나의 편지함
+        </StyledMenuItem>
+        <StyledMenuItem to="/yearly-presents" onClick={closeMenu} $isSubMenu>
+          <CustomIcon>✶</CustomIcon>올해 받은 연하장
+        </StyledMenuItem>
+        <StyledMenuItem to="/all-presents" onClick={closeMenu} $isSubMenu>
+          <CustomIcon>✷</CustomIcon>전체 수신 목록
+        </StyledMenuItem>
+        <StyledMenuItem to="/create-form">편지 보내기</StyledMenuItem>
+        <StyledMenuItem to="/create-form" onClick={closeMenu} $isSubMenu>
+          <CustomIcon>✶</CustomIcon>신청받기
+        </StyledMenuItem>
+        <StyledMenuItem to="/receiver-list" onClick={closeMenu} $isSubMenu>
+          <CustomIcon>✷</CustomIcon>작성하기
+        </StyledMenuItem>
+        <StyledMenuItem to="/design" onClick={closeMenu} $isSubMenu>
+          <CustomIcon>✸</CustomIcon>디자인하기
+        </StyledMenuItem>
+        <StyledMenuItem to="" onClick={logoutProc}>
+          로그아웃
+        </StyledMenuItem>
+      </Menu>
+
+      <HeaderContainer>
+        <Link to="/">
+          <LogoImg src={logo} alt="Logo" />
+        </Link>
+      </HeaderContainer>
     </>
   );
 }
