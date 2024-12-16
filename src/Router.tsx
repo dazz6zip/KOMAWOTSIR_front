@@ -47,14 +47,15 @@ function Router() {
       <Container>
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/apply/to/:link" exact component={ApplicantHome} />
+          <Route path="/apply/done" exact component={ApplyCompletedGuest} />
+          <Route path="/apply/guest" exact component={ApplyGuest} />
+          <Route path="/s/c" exact component={AnimatedStackedCards} />
           <PrivateRouter path="/create-form" component={Inquiry} />
           <PrivateRouter path="/write" component={CardWriter} />
           <PrivateRouter path="/design" exact component={CardDesigner} />
           <PrivateRouter path="/update-info" component={UpdateMyInfo} />
-          <Route path="/apply/to/:link" exact component={ApplicantHome} />
           <PrivateRouter path="/apply" exact component={Apply} />
-          <Route path="/apply/guest" exact component={ApplyGuest} />
-          <Route path="/apply/done" exact component={ApplyCompletedGuest} />
           <PrivateRouter path="/background" exact component={ImageList} />
           <PrivateRouter path="/add-receiver" exact component={ReceiverAdder} />
           <PrivateRouter path="/receiver-list" exact component={ReceiverList} />
@@ -63,7 +64,6 @@ function Router() {
           <PrivateRouter path="/draft" component={DraftList} />
           <PrivateRouter path="/font-list" component={FontList} />
           <PrivateRouter path="/already" component={AlreadyApplied} />
-          <Route path="/s/c" exact component={AnimatedStackedCards} />
         </Switch>
       </Container>
     </>
