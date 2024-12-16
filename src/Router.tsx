@@ -43,7 +43,6 @@ function Router() {
   return (
     <>
       <Header />
-      <hr />
       <Container>
         <Switch>
           <Route path="/" exact component={Home} />

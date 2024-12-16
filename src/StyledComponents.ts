@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { PostStatus } from "./fetcher";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { display } from "html2canvas/dist/types/css/property-descriptors/display";
+import { borderRightStyle } from "html2canvas/dist/types/css/property-descriptors/border-style";
 
 export const DraftCard = styled.div`
   width: 90%;
@@ -612,8 +614,19 @@ export const HeaderContainer = styled.div`
   height: 40px;
   display: flex;
   justify-content: center;
+  width: 375px;
+
+  text-align: center;
   padding-top: 10px;
   background-color: #fff;
+`;
+
+export const HeaderAndMenu = styled.div`
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #bccbd2;
+  width: 100%;
 `;
 
 export const MenuStyles = {
@@ -621,26 +634,35 @@ export const MenuStyles = {
     position: "fixed",
     width: "20px",
     height: "20px",
-    left: "20px",
     top: "15px",
+    transform: "translateX(20px)", // 왼쪽으로 20px 이동
   },
   bmBurgerBars: {
     background: "#373a47",
   },
   bmCrossButton: {
-    position: "fixed",
     width: "20px",
     height: "20px",
     left: "20px",
     top: "15px",
   },
+  bmMenuWrap: {
+    position: "absolute", // 부모 컨테이너 기준으로 설정
+    overflow: "hidden", // 넘치는 애니메이션 숨김
+    height: "100vh", // 세로 높이 전체를 덮기
+    top: "0", // 상단에서 시작
+  },
   bmMenu: {
-    background: "#f4f4f4",
+    background: "#f5f5f5",
     padding: "20px",
     fontSize: "1.15em",
+    height: "100%",
+    boxShadow: "none",
+    transform: "translateX(0)",
+    transition: "transform 0.3s ease-in-out",
   },
   bmOverlay: {
-    background: "rgba(0, 0, 0, 0.3)",
+    display: "none",
   },
 };
 
@@ -670,7 +692,7 @@ export const StyledMenuItem = styled(Link)<{ $isSubMenu?: boolean }>`
 `;
 
 export const OverlayButton = styled.button`
-  position: fixed; /* 화면에 고정 */
+  position: absolute; /* 부모 컨테이너 기준으로 위치 설정 */
   top: 70px; /* 하단에서 30px 위로 배치 */
   left: 20px; /* 좌측에서 20px 떨어짐 */
   z-index: 1000; /* 다른 요소 위에 배치 */
@@ -739,6 +761,10 @@ export const AppContainer = styled.div`
   flex-direction: column;
   min-height: 100vh;
   overflow: hidden; /* 넘치는 부분 숨김 */
+  max-width: 375px;
+  margin: 0 auto; /* 가운데 정렬 */
+  position: relative; /* 기준 위치 설정 */
+  background-color: #fff; /* 필요시 배경색 */
 `;
 
 export const Content = styled.div`

@@ -35,6 +35,12 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     line-height: 1;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #BCCBD2; 
   }
   menu, ol, ul {
     list-style: none;
