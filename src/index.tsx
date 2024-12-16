@@ -15,13 +15,6 @@ fontLink.href =
 fontLink.rel = "stylesheet";
 document.head.appendChild(fontLink);
 
-// 광고 스크립트 추가
-const adScript = document.createElement("script");
-adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1639750615440525"; // 광고 스크립트 URL
-adScript.async = true;
-adScript.crossOrigin = "anonymous";
-document.head.appendChild(adScript);
-
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
