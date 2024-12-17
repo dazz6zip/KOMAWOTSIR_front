@@ -611,20 +611,19 @@ export const customStyles = {
 };
 
 export const HeaderContainer = styled.div`
-  height: 40px;
   display: flex;
-  justify-content: center;
-  width: 375px;
-
-  text-align: center;
-  padding-top: 10px;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  width: 100%; /* 전체 너비 */
+  max-width: 400px; /* 최대 너비 제한 */
+  margin: 0 auto; /* 가운데 정렬 */
+  padding: 10px 0; /* 위아래 여백 */
   background-color: #fff;
 `;
 
 export const HeaderAndMenu = styled.div`
   display: flex;
   align-items: center;
-  padding-bottom: 10px;
   border-bottom: 1px solid #bccbd2;
   width: 100%;
 `;
@@ -667,9 +666,12 @@ export const MenuStyles = {
 };
 
 export const LogoImg = styled.img`
-  width: 100px;
-  height: auto;
-  display: inline-block;
+  display: block; /* 인라인 속성 제거 및 블록 요소로 변경 */
+  margin: 0 auto; /* 좌우 중앙 정렬 */
+  max-width: 100%; /* 부모 컨테이너에 맞게 조정 */
+  height: auto; /* 비율 유지 */
+  width: 125px;
+  max-height: 100px; /* 최대 높이 설정 (선택사항) */
 `;
 
 export const CustomIcon = styled.b`
@@ -763,7 +765,7 @@ export const AppContainer = styled.div`
   overflow: hidden;
 
   width: 100%; /* 화면 너비를 100%로 설정 */
-  max-width: 400px; /* 최대 너비는 400px로 제한 */
+  max-width: 428px; /* 최대 너비는 400px로 제한 */
   margin: 0 auto; /* 가운데 정렬 */
 
   position: relative; /* 기준 위치 설정 */
