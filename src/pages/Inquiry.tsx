@@ -16,6 +16,8 @@ import {
   Input,
   InputGroup,
   InquiryLabel,
+  LoadingImage,
+  LoadingWrapper,
   ModalContent,
   NicknameInput,
   QuestionBox,
@@ -109,6 +111,18 @@ function FormMaker() {
   // 기존 데이터와 비교하여 수정 / 추가 / 삭제 구분
   // 구분에 맞춰 처리함
   const onSubmit = (formData: { questions: IQuestionItem[] }) => {
+    let hasError = false;
+
+    fields.forEach((_, index) => {
+      const questionError = errors?.questions?.[index]?.question;
+      if (questionError) {
+        toast.error(`${index + 1}번 질문 오류! ${questionError.message}`);
+        hasError = true;
+      }
+    });
+
+    if (hasError) return; // 에러가 있으면 함수 종료
+
     const currentQuestions = formData.questions;
 
     // 수정된 항목
@@ -228,6 +242,12 @@ function FormMaker() {
           </ButtonL>
         </ModalContent>
       </Modal>
+
+      {isLoading && (
+        <LoadingWrapper>
+          <LoadingImage src="https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/etc/loading.gif" />
+        </LoadingWrapper>
+      )}
 
       <QuestionForm onSubmit={handleSubmit(onSubmit)}>
         {fields.map((field, index) => (
