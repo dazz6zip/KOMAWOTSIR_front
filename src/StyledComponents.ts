@@ -763,12 +763,11 @@ export const AppContainer = styled.div`
   flex-direction: column;
   min-height: 100vh;
   overflow: hidden;
+  width: 100%;
+  max-width: 428px;
+  margin: 0 auto;
 
-  width: 100%; /* 화면 너비를 100%로 설정 */
-  max-width: 428px; /* 최대 너비는 400px로 제한 */
-  margin: 0 auto; /* 가운데 정렬 */
-
-  position: relative; /* 기준 위치 설정 */
+  position: relative;
 `;
 
 export const Content = styled.div`

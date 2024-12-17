@@ -14,6 +14,7 @@ import {
   OverlayButton,
   StyledMenuItem,
 } from "../StyledComponents";
+import { toast } from "react-toastify";
 
 function Header() {
   const nav = useHistory();
@@ -30,6 +31,7 @@ function Header() {
         // console.log(res);
 
         closeMenu();
+        toast.success("로그아웃되었습니다. 다음에 또 만나요!");
         nav.push("/");
       })
       .catch((err) => {
