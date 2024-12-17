@@ -165,7 +165,7 @@ function CardWriter() {
         연하장 작성하기
       </Title>
       <PreviewArea
-        bimage={`/${designPostData?.backgroundPic}`}
+        bimage={designPostData?.backgroundPic}
         fFamily={designPostData?.fontName}
         fsize={designPostData?.fontSize === EFontSize.defaultSize ? 16 : 24}
         fColor={
