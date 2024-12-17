@@ -33,6 +33,15 @@ const GlobalStyle = createGlobalStyle`
   *[hidden] {
     display: none;
   }
+  html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 428px; /* 최대 가로 길이 고정 */
+  margin: 0 auto; /* 페이지를 가운데 정렬 */
+  overflow-x: hidden; /* 가로 스크롤 방지 */
+  box-sizing: border-box;
+}
   body {
     line-height: 1;
     justify-content: center;
@@ -40,7 +49,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     display: flex;
-    background-color: #BCCBD2; 
+    background-color: #BCCBD2;
   }
   menu, ol, ul {
     list-style: none;

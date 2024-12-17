@@ -615,7 +615,7 @@ export const HeaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 400px;
+  max-width: 428px;
   margin: 0 auto;
   padding: 10px 0;
   background-color: #fff;
@@ -625,6 +625,7 @@ export const HeaderAndMenu = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid #bccbd2;
+  margin-bottom: 5px;
   width: 100%;
 `;
 
@@ -697,7 +698,7 @@ export const OverlayButton = styled.button`
   position: absolute; /* 부모 컨테이너 기준으로 위치 설정 */
   top: 70px; /* 하단에서 30px 위로 배치 */
   left: 20px; /* 좌측에서 20px 떨어짐 */
-  z-index: 1000; /* 다른 요소 위에 배치 */
+  z-index: 10; /* 다른 요소 위에 배치 */
   background: none; /* 투명 배경 */
   border: none; /* 테두리 제거 */
   color: #333; /* 텍스트 색상 */
@@ -766,7 +767,7 @@ export const AppContainer = styled.div`
   width: 100%;
   max-width: 428px;
   margin: 0 auto;
-
+  box-sizing: border-box;
   position: relative;
 `;
 
