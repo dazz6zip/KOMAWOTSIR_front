@@ -612,12 +612,12 @@ export const customStyles = {
 
 export const HeaderContainer = styled.div`
   display: flex;
-  justify-content: center; /* 수평 중앙 정렬 */
-  align-items: center; /* 수직 중앙 정렬 */
-  width: 100%; /* 전체 너비 */
-  max-width: 400px; /* 최대 너비 제한 */
-  margin: 0 auto; /* 가운데 정렬 */
-  padding: 10px 0; /* 위아래 여백 */
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 10px 0;
   background-color: #fff;
 `;
 
