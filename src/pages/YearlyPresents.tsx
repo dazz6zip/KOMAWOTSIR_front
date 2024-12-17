@@ -34,12 +34,14 @@ const YearlyPresents: React.FC = () => {
   const captureRefs = useRef<(HTMLDivElement | null)[]>([]); // 각 카드별 ref 배열
 
   const year = new Date().getFullYear();
-
+  console.log(year);
+  console.log(year - 1);
   useEffect(() => {
     axios
       .get<IPresent[]>(`/api/receivers/${userId}/posts/${year - 1}`)
       // .get<IPresent[]>(`/api/receivers/${userId}/posts/${year}`)
       .then((response) => {
+        console.log(response.data);
         setCards(response.data);
         setCount(response.data.length);
 

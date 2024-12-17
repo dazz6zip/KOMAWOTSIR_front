@@ -22,6 +22,8 @@ import {
 } from "../fetcher";
 import {
   customStyles,
+  LoadingImage,
+  LoadingWrapper,
   ModalContent,
   PreviewArea,
   TextArea,
@@ -164,6 +166,11 @@ function CardWriter() {
         <br />
         연하장 작성하기
       </Title>
+      {(checkLoading || contentsLoading || gptLoading) && (
+        <LoadingWrapper>
+          <LoadingImage src="https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/etc/loading.gif" />
+        </LoadingWrapper>
+      )}
       <PreviewArea
         bimage={designPostData?.backgroundPic}
         fFamily={designPostData?.fontName}
