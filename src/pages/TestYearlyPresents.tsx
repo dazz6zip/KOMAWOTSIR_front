@@ -5,7 +5,8 @@ import ReactCardFlip from "react-card-flip";
 import Modal from "react-modal";
 import styled from "styled-components";
 import ButtonS from "../components/common/ButtonS";
-import { EFontColor, EFontSize, IPresent } from "../fetcher";
+import { IPresent } from "../fetcher";
+import { Title } from "../StyledComponents";
 
 const CardStack = styled.div`
   position: relative;
@@ -73,43 +74,50 @@ const TestYearly = () => {
   };
   return (
     <>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <CardStack>
-        {cardData?.map((card, i) => (
-          <Card
-            key={card.postId}
-            style={{
-              transform: `rotateX(-30deg) rotateY(-20deg) translateZ(${
-                i * 50
-              }px)`,
-            }}
-          >
-            <div
-              style={{
-                width: "15rem",
-                height: "10rem",
-                backgroundImage: `url(${card?.backgroundPic})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              <ButtonS
-                onClick={() => {
-                  selectCard(i);
+      <Title>올해 받은 연하장</Title>
+      {cardData.length === 0 ? (
+        <h2>도착한 연하장이 없어요 ㅠㅠ</h2>
+      ) : (
+        <div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <CardStack>
+            {cardData?.map((card, i) => (
+              <Card
+                key={card.postId}
+                style={{
+                  transform: `rotateX(-30deg) rotateY(-20deg) translateZ(${
+                    i * 50
+                  }px)`,
                 }}
-                category="pink"
               >
-                카드 보기
-              </ButtonS>
-            </div>
-          </Card>
-        ))}
-      </CardStack>
+                <div
+                  style={{
+                    width: "15rem",
+                    height: "10rem",
+                    backgroundImage: `url(${card?.front})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                >
+                  <ButtonS
+                    onClick={() => {
+                      selectCard(i);
+                    }}
+                    category="pink"
+                  >
+                    카드 보기
+                  </ButtonS>
+                </div>
+              </Card>
+            ))}
+          </CardStack>
+        </div>
+      )}
 
       <Modal
         isOpen={isModalOpen}
@@ -141,7 +149,7 @@ const TestYearly = () => {
               style={{
                 width: "15rem",
                 height: "10rem",
-                backgroundImage: `url(${selectedCard?.thumbnailPic})`,
+                backgroundImage: `url(${selectedCard?.front})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -161,39 +169,12 @@ const TestYearly = () => {
                 style={{
                   width: "15rem",
                   height: "10rem",
-                  backgroundImage: `url(${selectedCard?.backgroundPic})`,
+                  backgroundImage: `url(${selectedCard?.back})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
-                  display: "flex", // Flexbox 적용
-                  alignItems: "center", // 수직 가운데 정렬
-                  justifyContent: "center", // 수평 가운데 정렬
-                  textAlign: "center",
-                  color: `${
-                    selectedCard?.fontColor === EFontColor.white
-                      ? "white"
-                      : "black"
-                  }`,
+                  display: "flex",
                 }}
-              >
-                <span
-                  style={{
-                    whiteSpace: "pre-wrap",
-                    fontFamily: `${selectedCard?.fontName}`,
-                    fontSize: `${
-                      selectedCard?.fontSize === EFontSize.defaultSize ? 16 : 24
-                    }`,
-                    color: `${selectedCard?.fontColor}`,
-                  }}
-                >
-                  <link href={selectedCard?.fontUrl} rel="stylesheet" />
-                  <br />
-                  {selectedCard?.contents}
-                  <br />
-                  <br />
-                  <br />
-                  <b>from. {selectedCard?.senderNickname}</b>
-                </span>
-              </div>
+              ></div>
             </div>
             <ButtonS onClick={() => setIsModalOpen(false)} category="gray">
               닫기

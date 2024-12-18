@@ -3,7 +3,6 @@ import html2canvas from "html2canvas";
 import React, { useEffect, useRef, useState } from "react";
 import ReactCardFlip from "react-card-flip";
 import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
-import styled from "styled-components";
 import ButtonS from "../components/common/ButtonS";
 import {
   CardContainer,
@@ -13,10 +12,7 @@ import {
 } from "../components/common/CarouselStyle1";
 import Description from "../components/common/Description";
 import Title from "../components/common/Title";
-import { EFontColor, EFontSize, IPresent } from "../fetcher";
-
-// 틀 (효선 : 지우면 안 됨;;)
-const Card = styled.div``;
+import { IPresent } from "../fetcher";
 
 const YearlyPresents: React.FC = () => {
   const [active, setActive] = useState(0);
@@ -98,7 +94,7 @@ const YearlyPresents: React.FC = () => {
                   isFlipped={isFlipped[i]}
                   flipDirection="horizontal"
                 >
-                  <Card onClick={() => flipCard(i)}>
+                  <div onClick={() => flipCard(i)}>
                     <Description>클릭해서 내용을 확인해보세요!</Description>
                     <br />
                     <div
@@ -106,78 +102,32 @@ const YearlyPresents: React.FC = () => {
                       style={{
                         width: "15rem",
                         height: "10rem",
-                        backgroundImage: `url(${card?.thumbnailPic})`,
+                        backgroundImage: `url(${card?.front})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        display: "flex", // Flexbox 적용
-                        alignItems: "center", // 수직 가운데 정렬
-                        justifyContent: "center", // 수평 가운데 정렬
-                        textAlign: "center",
-                        color: `${
-                          card?.fontColor === EFontColor.white
-                            ? "white"
-                            : "black"
-                        }`,
+                        display: "flex",
                       }}
-                    >
-                      <span
-                        style={{
-                          whiteSpace: "pre-wrap",
-                          fontFamily: `${card?.fontName}`,
-                          fontSize: `${
-                            card?.fontSize === EFontSize.defaultSize ? 16 : 24
-                          }`,
-                          color: `${card?.fontColor}`,
-                        }}
-                      ></span>
-                    </div>
-                  </Card>
-                  <Card onClick={() => flipCard(i)}>
+                    ></div>
+                  </div>
+                  <div onClick={() => flipCard(i)}>
                     <div ref={(el) => (captureRefs.current[i] = el)}>
                       <div
                         // 각 카드별 ref 할당
                         style={{
                           width: "15rem",
                           height: "10rem",
-                          backgroundImage: `url(${card?.backgroundPic})`,
+                          backgroundImage: `url(${card?.back})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
-                          display: "flex", // Flexbox 적용
-                          alignItems: "center", // 수직 가운데 정렬
-                          justifyContent: "center", // 수평 가운데 정렬
-                          textAlign: "center",
-                          color: `${
-                            card?.fontColor === EFontColor.white
-                              ? "white"
-                              : "black"
-                          }`,
+                          display: "flex",
                         }}
-                      >
-                        <span
-                          style={{
-                            whiteSpace: "pre-wrap",
-                            fontFamily: `${card?.fontName}`,
-                            fontSize: `${
-                              card?.fontSize === EFontSize.defaultSize ? 16 : 24
-                            }`,
-                            color: `${card?.fontColor}`,
-                          }}
-                        >
-                          <link href={card?.fontUrl} rel="stylesheet" />
-                          <br />
-                          {card?.contents}
-                          <br />
-                          <br />
-                          <br />
-                          <b>from. {card?.senderNickname}</b>
-                        </span>
-                      </div>
+                      ></div>
                     </div>
                     <br />
                     <ButtonS category="pink" onClick={() => handleDownload(i)}>
                       이미지 다운로드
                     </ButtonS>
-                  </Card>
+                  </div>
                 </ReactCardFlip>
               </div>
             </CardStyled>

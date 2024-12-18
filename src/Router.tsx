@@ -16,7 +16,6 @@ import ImageList from "./pages/ImageList";
 import Inquiry from "./pages/Inquiry";
 import ReceiverAdder from "./pages/ReceiverAdder";
 import ReceiverList from "./pages/ReceiverList";
-import AnimatedStackedCards from "./pages/TestStackedCards";
 import TestYearly from "./pages/TestYearlyPresents";
 import UpdateMyInfo from "./pages/UpdateProfile";
 import PrivateRouter from "./PrivateRouter";
@@ -49,7 +48,6 @@ function Router() {
           <Route path="/apply/to/:link" exact component={ApplicantHome} />
           <Route path="/apply/done" exact component={ApplyCompletedGuest} />
           <Route path="/apply/guest" exact component={ApplyGuest} />
-          <Route path="/s/c" exact component={AnimatedStackedCards} />
           <PrivateRouter path="/create-form" component={Inquiry} />
           <PrivateRouter path="/write" component={CardWriter} />
           <PrivateRouter path="/design" exact component={CardDesigner} />
