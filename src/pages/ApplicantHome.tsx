@@ -29,6 +29,10 @@ function ApplicantHome() {
           params: {
             link: link,
           },
+          headers: {
+            Accept: "application/json", // JSON 응답 요청
+            "Content-Type": "application/json", // 요청 본문 유형 설정
+          },
         });
         setSender(response.data);
       } catch (error) {

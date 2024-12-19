@@ -147,7 +147,7 @@ const AllPresents: React.FC = () => {
     <>
       <Title>연하장 수신 목록</Title>
       {filteredCards.length === 0 ? (
-        <h2>empty</h2>
+        <h2>도착한 연하장이 없어요.</h2>
       ) : (
         <div>
           <br />
