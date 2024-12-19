@@ -90,7 +90,7 @@ const TestYearly = () => {
               <Card
                 key={card.postId}
                 style={{
-                  transform: `rotateX(-30deg) rotateY(-20deg) translateZ(${
+                  transform: `rotateX(-50deg) rotateY(-30deg) translateZ(${
                     i * 50
                   }px)`,
                 }}
@@ -180,10 +180,7 @@ const TestYearly = () => {
               닫기
             </ButtonS>
             <ButtonS onClick={() => flipCard()} category="hotpink">
-              앞면보기
-            </ButtonS>
-            <ButtonS category="pink" onClick={() => handleDownload()}>
-              이미지 다운로드
+              앞면 보기
             </ButtonS>
           </div>
         </ReactCardFlip>

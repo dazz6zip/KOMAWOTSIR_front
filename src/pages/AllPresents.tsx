@@ -1,5 +1,4 @@
 import axios from "axios";
-import html2canvas from "html2canvas";
 import React, { useEffect, useRef, useState } from "react";
 import ReactCardFlip from "react-card-flip";
 import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
@@ -86,20 +85,20 @@ const AllPresents: React.FC = () => {
     updateFilterdCards();
   }, [selectedOption, cards]);
 
-  const handleDownload = async (index: number) => {
-    const targetRef = captureRefs.current[index];
-    if (targetRef) {
-      const canvas = await html2canvas(targetRef, {
-        useCORS: true, // CORS 사용
-        allowTaint: false, // Cross-Origin 이미지를 제대로 처리
-      });
-      const dataURL = canvas.toDataURL("image/png"); // PNG 형식 이미지
-      const link = document.createElement("a");
-      link.href = dataURL;
-      link.download = `thumbnail-${index + 1}.png`;
-      link.click();
-    }
-  };
+  // const handleDownload = async (index: number) => {
+  //   const targetRef = captureRefs.current[index];
+  //   if (targetRef) {
+  //     const canvas = await html2canvas(targetRef, {
+  //       useCORS: true, // CORS 사용
+  //       allowTaint: false, // Cross-Origin 이미지를 제대로 처리
+  //     });
+  //     const dataURL = canvas.toDataURL("image/png"); // PNG 형식 이미지
+  //     const link = document.createElement("a");
+  //     link.href = dataURL;
+  //     link.download = `thumbnail-${index + 1}.png`;
+  //     link.click();
+  //   }
+  // };
 
   // const handleSendToBackend = async (index: number, postId: number) => {
   //   const targetRef = captureRefs.current[index];
@@ -133,6 +132,18 @@ const AllPresents: React.FC = () => {
   //     }
   //   }
   // };
+
+  const downLoadImage = (index: number) => {
+    const imageUrl = cards[index]?.back; // 카드의 back URL 가져오기
+    if (imageUrl) {
+      const link = document.createElement("a"); // <a> 태그 생성
+      link.href = imageUrl; // 이미지 URL 설정
+      link.download = `image-${index + 1}.png`; // 다운로드 파일 이름 설정
+      link.click(); // 다운로드 트리거
+    } else {
+      console.error("이미지 URL이 유효하지 않습니다.");
+    }
+  };
 
   return (
     <>
@@ -224,7 +235,7 @@ const AllPresents: React.FC = () => {
                         <br />
                         <ButtonS
                           category="pink"
-                          onClick={() => handleDownload(i)}
+                          onClick={() => downLoadImage(i)}
                         >
                           이미지 다운로드
                         </ButtonS>
