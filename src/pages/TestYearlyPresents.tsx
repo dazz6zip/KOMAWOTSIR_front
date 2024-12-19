@@ -44,7 +44,7 @@ const TestYearly = () => {
   const year = new Date().getFullYear();
   useEffect(() => {
     axios
-      .get<IPresent[]>(`/api/receivers/${userId}/posts/${year - 1}`)
+      .get<IPresent[]>(`/api/receivers/${userId}/posts/2025`)
       .then((response) => {
         setCards(response.data);
       })

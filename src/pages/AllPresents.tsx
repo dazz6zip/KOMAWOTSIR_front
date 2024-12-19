@@ -58,8 +58,7 @@ const AllPresents: React.FC = () => {
         setFilteredCards(response.data);
         setCount(response.data.length);
 
-        // 초기 isFlipped 배열 설정
-        setIsFlipped(new Array(response.data.length).fill(false));
+        setIsFlipped(new Array(response.data.length).fill(false)); // 초기 isFlipped 배열 설정
         setLoading(false);
       })
       .catch((error) => {
@@ -102,46 +101,38 @@ const AllPresents: React.FC = () => {
     }
   };
 
-  const handleSendToBackend = async (index: number, postId: number) => {
-    const targetRef = captureRefs.current[index];
-    if (targetRef) {
-      try {
-        // 캔버스 생성
-        const canvas = await html2canvas(targetRef, {
-          useCORS: true,
-          allowTaint: false,
-        });
+  // const handleSendToBackend = async (index: number, postId: number) => {
+  //   const targetRef = captureRefs.current[index];
+  //   if (targetRef) {
+  //     try {
+  //       // 캔버스 생성
+  //       const canvas = await html2canvas(targetRef, {
+  //         useCORS: true,
+  //         allowTaint: false,
+  //       });
 
-        // 이미지 데이터 URL 변환
-        const dataURL = canvas.toDataURL("image/png");
-        const blob = await (await fetch(dataURL)).blob(); // Blob으로 변환
+  //       // 이미지 데이터 URL 변환
+  //       const dataURL = canvas.toDataURL("image/png");
+  //       const blob = await (await fetch(dataURL)).blob(); // Blob으로 변환
 
-        // FormData 생성
-        const formData = new FormData();
-        formData.append("image", blob, `post-${postId}.png`); // 백엔드에서 받을 필드명과 파일명
+  //       // FormData 생성
+  //       const formData = new FormData();
+  //       formData.append("image", blob, `post-${postId}.png`); // 백엔드에서 받을 필드명과 파일명
 
-        // POST 요청
-        const response = await axios.post("/api/posts/", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data", // FormData 전송 헤더
-          },
-        });
-        console.log("이미지 업로드 성공:", response.data);
-        alert("이미지가 성공적으로 업로드되었습니다!");
-      } catch (error) {
-        console.error("이미지 업로드 실패:", error);
-        alert("이미지 업로드 중 오류가 발생했습니다.");
-      }
-    }
-  };
-
-  const makeImage = async (postId: number) => {
-    try {
-      await axios.get(`/api/posts/image/${postId}`);
-    } catch (err) {
-      alert("err: " + err);
-    }
-  };
+  //       // POST 요청
+  //       const response = await axios.post("/api/posts/", formData, {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data", // FormData 전송 헤더
+  //         },
+  //       });
+  //       console.log("이미지 업로드 성공:", response.data);
+  //       alert("이미지가 성공적으로 업로드되었습니다!");
+  //     } catch (error) {
+  //       console.error("이미지 업로드 실패:", error);
+  //       alert("이미지 업로드 중 오류가 발생했습니다.");
+  //     }
+  //   }
+  // };
 
   return (
     <>
@@ -237,18 +228,12 @@ const AllPresents: React.FC = () => {
                         >
                           이미지 다운로드
                         </ButtonS>
-                        <ButtonS
+                        {/* <ButtonS
                           category="pink"
                           onClick={() => handleSendToBackend(i, card.postId)}
                         >
                           서버로 이미지 전송
-                        </ButtonS>
-                        <ButtonS
-                          category="hotpink"
-                          onClick={() => makeImage(card.postId)}
-                        >
-                          이미지 저장처리 테스트
-                        </ButtonS>
+                        </ButtonS> */}
                       </div>
                     </ReactCardFlip>
                   </div>
