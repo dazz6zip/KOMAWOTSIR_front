@@ -1,6 +1,4 @@
-import axios from "axios";
-import html2canvas from "html2canvas";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ReactCardFlip from "react-card-flip";
 import Modal from "react-modal";
 import styled from "styled-components";
@@ -29,44 +27,50 @@ const Card = styled.div`
   }
 `;
 
-const TestYearly = () => {
+const Test = () => {
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<IPresent>();
-  const [cardData, setCards] = useState<IPresent[]>([]);
+  const [cardData, setCards] = useState<IPresent[]>([
+    {
+      postId: 1,
+      year: 2025,
+      sender: "Alice",
+      front:
+        "https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/komawotsir-1734620570550.png ", // 예시 이미지 URL
+      back: "https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/komawotsir-1734620570550.png ", // 예시 이미지 URL
+    },
+    {
+      postId: 2,
+      year: 2025,
+      sender: "Bob",
+      front:
+        "https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/komawotsir-1734620570550.png ",
+      back: "https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/komawotsir-1734620570550.png ",
+    },
+    {
+      postId: 3,
+      year: 2025,
+      sender: "Charlie",
+      front:
+        "https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/komawotsir-1734620570550.png ",
+      back: "https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/komawotsir-1734620570550.png ",
+    },
+    {
+      postId: 4,
+      year: 2025,
+      sender: "Diana",
+      front:
+        "https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/komawotsir-1734620570550.png ",
+      back: "https://first-s3-of-aendyear.s3.ap-northeast-2.amazonaws.com/komawotsir-1734620570550.png ",
+    },
+  ]);
 
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const flipCard = () => {
     setIsFlipped(!isFlipped);
   };
   const captureRefs = useRef<HTMLDivElement | null>();
-
-  const year = new Date().getFullYear();
-  useEffect(() => {
-    axios
-      .get<IPresent[]>(`/api/receivers/${userId}/posts/2025`)
-      .then((response) => {
-        setCards(response.data);
-      })
-      .catch((error) => {
-        console.error("연하장 목록 불러오기 실패:", error);
-      });
-  }, []);
-
-  const handleDownload = async () => {
-    const targetRef = captureRefs.current;
-    if (targetRef) {
-      const canvas = await html2canvas(targetRef, {
-        useCORS: true, // CORS 사용
-        allowTaint: false, // Cross-Origin 이미지를 제대로 처리
-      });
-      const dataURL = canvas.toDataURL("image/png"); // PNG 형식 이미지
-      const link = document.createElement("a");
-      link.href = dataURL;
-      link.download = `present.png`;
-      link.click();
-    }
-  };
 
   const selectCard = (i: number) => {
     setSelectedCard(cardData[i]);
@@ -191,4 +195,4 @@ const TestYearly = () => {
   );
 };
 
-export default TestYearly;
+export default Test;

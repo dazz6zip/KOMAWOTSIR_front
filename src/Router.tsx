@@ -16,6 +16,7 @@ import ImageList from "./pages/ImageList";
 import Inquiry from "./pages/Inquiry";
 import ReceiverAdder from "./pages/ReceiverAdder";
 import ReceiverList from "./pages/ReceiverList";
+import Test from "./pages/Test";
 import TestYearly from "./pages/TestYearlyPresents";
 import UpdateMyInfo from "./pages/UpdateProfile";
 import PrivateRouter from "./PrivateRouter";
@@ -61,6 +62,7 @@ function Router() {
           <PrivateRouter path="/draft" component={DraftList} />
           <PrivateRouter path="/font-list" component={FontList} />
           <PrivateRouter path="/already" component={AlreadyApplied} />
+          <Route path="/test/cards/design" exact component={Test} />
         </Switch>
       </Container>
     </>
