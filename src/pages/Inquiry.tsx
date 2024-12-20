@@ -102,8 +102,10 @@ function FormMaker() {
     try {
       await axios.post(`/api/inquiry/${userId}/${nickname}`);
       setIsNicknameModalOpen(false);
+      toast.success("닉네임이 저장되었습니다.");
     } catch (error) {
       console.error("닉네임 저장 실패:", error);
+      toast.error("닉네임 설정에 실패했습니다. 다시 시도해 보세요.");
     }
   };
 
