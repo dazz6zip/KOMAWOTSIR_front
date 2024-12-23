@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "react-modal";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import { ASenderState } from "../atoms";
 import ButtonL from "../components/common/ButtonL";
@@ -20,7 +21,6 @@ import {
   IReceiverSet,
   IReceiverToAdd,
 } from "../fetcher";
-import { toast } from "react-toastify";
 
 function ApplyGuest() {
   const userId = parseInt(sessionStorage.getItem("userId") || "0");
@@ -35,7 +35,6 @@ function ApplyGuest() {
     getValues,
     formState: { errors },
   } = useForm();
-  // watch: 실시간 변화 관찰, getValues: 특정 시점 값 읽기
 
   const [sender, setSender] = useRecoilState(ASenderState);
   const [questions, setQuestions] = useState<IQuestionItem[]>();
@@ -68,8 +67,8 @@ function ApplyGuest() {
       );
       if (response.data.length > 0) {
         setQuestions(response.data);
-        setCanContinue(true);
       }
+      setCanContinue(true);
     } catch (error) {
       console.error("질문 목록 불러오기 실패:", error);
     }
